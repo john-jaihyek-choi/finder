@@ -1,7 +1,7 @@
 {
-  "name": "final-project-finder",
+  "name": "finder",
   "version": "1.0.0",
-  "description": "A food search application which allows its users to search food based on location.",
+  "description": "A food search application which allows its users to conveniently search food based on location.",
   "main": "server/index.js",
   "scripts": {
     "dev": "npm-run-all --silent --parallel dev:*",
@@ -110,19 +110,8 @@
     "lint-staged": "9.5.0",
     "nodemon": "2.0.2",
     "npm-run-all": "4.1.5",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/john-jaihyek-choi/finder.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/john-jaihyek-choi/finder/issues"
-  },
-  "homepage": "https://github.com/john-jaihyek-choi/finder#readme"
+    "webpack": "4.41.5",
+    "webpack-cli": "3.3.10",
+    "webpack-dev-server": "3.10.1"
+  }
 }
