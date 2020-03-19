@@ -56,6 +56,8 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE public.test (
+    testid integer,
+    testname integer
 );
 
 
@@ -63,7 +65,8 @@ CREATE TABLE public.test (
 -- Data for Name: test; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.test  FROM stdin;
+COPY public.test (testid, testname) FROM stdin;
+23	10
 \.
 
 
