@@ -19,6 +19,27 @@ app.get('/api/health-check', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('api/users', (req, res, next) => {
+  const sql = `
+  select *
+  from "users"
+  `;
+  db.query(sql)
+    .then(result => {
+      console.log(result)
+      const users = results.rows;
+      if (!result) {
+        res.status(404).json({ error: 'Cannot be found' })
+      }
+      res.status(200).json(users)
+    })
+    .catch(err => {
+      console.erro(err)
+      res.status(500).json({ error: 'An unexpected error occured' })
+    }
+  // ------------------------
+})
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
