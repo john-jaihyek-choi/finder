@@ -1,5 +1,5 @@
 import React from 'react';
-import IntroPage from './introPage'
+import IntroPages from './introPages'
 
 export default class App extends React.Component {
     render() {
