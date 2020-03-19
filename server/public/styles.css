@@ -2,3 +2,9 @@
   background: rgb(254,59,115);
   background: linear-gradient(45deg, rgba(254,59,115,1) 30%, rgba(255,104,92,1) 100%);
 }
+button, input {
+  border-radius: 50px;
+  background-color: transparent;
+  border: 1.5px solid white;
+  color: white;
+}
