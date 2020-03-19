@@ -2,9 +2,10 @@
   background: rgb(254,59,115);
   background: linear-gradient(45deg, rgba(254,59,115,1) 30%, rgba(255,104,92,1) 100%);
 }
-button, input {
-  border-radius: 50px;
+/* lets use this block of css rule for consistency. I have included button-outline to be styled with below code as well. */
+button, .button-outline, input {
+  border-radius: 30px;
   background-color: transparent;
-  border: 1.5px solid white;
+  border: 2px solid white;
   color: white;
 }
