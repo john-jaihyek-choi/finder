@@ -19,26 +19,57 @@ app.get('/api/health-check', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('api/users', (req, res, next) => {
+app.get('/api/users', (req, res, next) => {
   const sql = `
   select *
   from "users"
   `;
   db.query(sql)
     .then(result => {
-      console.log(result)
-      const users = results.rows;
+      const users = result.rows;
       if (!result) {
         res.status(404).json({ error: 'Cannot be found' })
       }
       res.status(200).json(users)
     })
     .catch(err => {
-      console.erro(err)
-      res.status(500).json({ error: 'An unexpected error occured' })
-    }
+      // the query failed for some reason
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
   // ------------------------
 })
+
+app.get('/api/users/:userId', (req, res, next) =>{
+  const {userId} = req.params;
+  if(!parseInt(userId,10)){
+    return res.status(400).json({ error: '"userId" must be a positive integer'})
+  }
+  const sql = `
+  select *
+  from "users"
+  where "userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      console.log(result)
+      const user = result.rows[0]
+      if(!user){
+        res.status(404).json({ error: `Cannot find user with "userId" ${userId}`})
+      }
+      else{
+        res.status(200).json(user)
+      }
+    })
+    .catch(err => {
+      console.error(err)
+      res.status(500).json({error: 'An unexpected error occured'})
+    })
+})
+
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
