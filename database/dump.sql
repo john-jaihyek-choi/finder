@@ -67,6 +67,7 @@ CREATE TABLE public.test (
 
 COPY public.test (testid, testname) FROM stdin;
 23	10
+100	101
 \.
 
 
