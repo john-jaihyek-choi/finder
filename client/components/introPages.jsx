@@ -9,11 +9,10 @@ export default class IntroPages extends React.Component {
   render() {
     return (
       <div
-        className='mx-auto d-flex flex-column text-white align-items-center justify-content-center gradient'
-        style={{ width: '100vw', height: '100vh' }}>
-        <div className='w-100 h-25 mb-3 bg-white'></div>
-        <div className='w-100 h-25 mb-3 bg-white'></div>
-        <div className='w-100 h-25 bg-white'></div>
+        className='mx-auto vw-100 vh-100 d-flex flex-column text-white align-items-center justify-content-center gradient'>
+        <div className='w-100 h-25 mb-3'></div>
+        <div className='w-100 h-25 mb-3'></div>
+        <div className='w-100 h-25'></div>
       </div>
     );
   }
