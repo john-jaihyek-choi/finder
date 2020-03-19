@@ -24,6 +24,7 @@ app.post('/api/users', (req, res, next) => {
   db.query(guestUser, guesUsersValue)
     .then(result => {
       const [guestUserInfo] = result.rows
+      req.session.userInfo = guestUserInfo
       res.status(201).json(guestUserInfo)
     })
 })
