@@ -2,3 +2,8 @@
   background: rgb(254,59,115);
   background: linear-gradient(45deg, rgba(254,59,115,1) 30%, rgba(255,104,92,1) 100%);
 }
+
+.button-outline {
+  border: 2px white solid;
+  border-radius: 30px;
+}
