@@ -294,6 +294,8 @@ COPY public."reviewedRestaurants" ("reviewedRestaurantId", "userId", "yelpId", "
 --
 
 COPY public.users ("userId", "userName", "distanceRadius") FROM stdin;
+1	test1	10
+2	test2	15
 \.
 
 
@@ -329,7 +331,7 @@ SELECT pg_catalog.setval('public."reviewedRestaurants_userId_seq"', 1, false);
 -- Name: users_userId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."users_userId_seq"', 1, false);
+SELECT pg_catalog.setval('public."users_userId_seq"', 2, true);
 
 
 --
