@@ -20,7 +20,6 @@ ALTER TABLE ONLY public."reviewedRestaurants" DROP CONSTRAINT "reviewedRestauran
 ALTER TABLE ONLY public."reviewedRestaurants" DROP CONSTRAINT "reviewedRestaurants_fk0";
 ALTER TABLE ONLY public."likedRestaurants" DROP CONSTRAINT "likedRestaurants_fk1";
 ALTER TABLE ONLY public."likedRestaurants" DROP CONSTRAINT "likedRestaurants_fk0";
-ALTER TABLE ONLY public.users DROP CONSTRAINT "users_userName_key";
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_pk;
 ALTER TABLE ONLY public."reviewedRestaurants" DROP CONSTRAINT "reviewedRestaurants_pk";
 ALTER TABLE ONLY public.restaurants DROP CONSTRAINT "restaurants_yelpUrl_key";
@@ -206,7 +205,6 @@ ALTER SEQUENCE public."reviewedRestaurants_userId_seq" OWNED BY public."reviewed
 
 CREATE TABLE public.users (
     "userId" integer NOT NULL,
-    "userName" text NOT NULL,
     "distanceRadius" numeric NOT NULL
 );
 
@@ -295,9 +293,10 @@ COPY public."reviewedRestaurants" ("reviewedRestaurantId", "userId", "yelpId", "
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.users ("userId", "userName", "distanceRadius") FROM stdin;
-1	Test1	10
-2	Test2	15
+COPY public.users ("userId", "distanceRadius") FROM stdin;
+1	10
+2	15
+3	10
 \.
 
 
@@ -333,7 +332,7 @@ SELECT pg_catalog.setval('public."reviewedRestaurants_userId_seq"', 1, false);
 -- Name: users_userId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."users_userId_seq"', 2, true);
+SELECT pg_catalog.setval('public."users_userId_seq"', 4, true);
 
 
 --
@@ -382,14 +381,6 @@ ALTER TABLE ONLY public."reviewedRestaurants"
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pk PRIMARY KEY ("userId");
-
-
---
--- Name: users users_userName_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT "users_userName_key" UNIQUE ("userName");
 
 
 --
