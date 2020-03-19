@@ -3,6 +3,7 @@ import React from 'react';
 import LogIn from './logIn';
 import SignUp from './signUp';
 import Splash from './splash';
+import GuestLogIn from './guestLogIn';
 
 export default class IntroPages extends React.Component {
   render() {
@@ -10,7 +11,8 @@ export default class IntroPages extends React.Component {
 
       <div
         className='mx-auto vw-100 vh-100 d-flex flex-column text-white align-items-center justify-content-center gradient'>
-        <SignUp registerUser={this.props.registerUser} setView={this.props.setView}/>
+        {/* <SignUp registerUser={this.props.registerUser} setView={this.props.setView}/> */}
+        <GuestLogIn registerUser={this.props.registerUser} setView={this.props.setView} />
       </div>
     );
   }
