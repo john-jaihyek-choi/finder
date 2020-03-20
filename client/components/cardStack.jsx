@@ -27,9 +27,11 @@ export default class CardStack extends React.Component {
   render() {
     console.log('restaurantData', this.state.restaurants);
     let price = [];
-    for (let i = 0; i < this.state.restaurants[0].price.length; i++) price.push(<i className="fas fa-dollar-sign"></i>);
+    for (let i = 0; i < this.state.restaurants[this.state.index].price.length; i++) price.push(<i className="fas fa-dollar-sign"></i>);
+
     let rating = [];
-    for (let i = 0; i < this.state.restaurants[0].price.length; i++) rating.push(<i className="fas fa-star"></i>);
+    for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className="fas fa-star"></i>);
+    if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i class="fas fa-star-half"></i>);
 
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center gradient'>
@@ -48,12 +50,12 @@ export default class CardStack extends React.Component {
               <div className='w-50'>{price}</div>
             </div>
             <div className='w-100 h-100'>
-              <img className='rounded' src={this.state.restaurants[0].storeImageUrl} alt="" style={{ objectFit: 'cover', height: '250px', width: '100%' }}/>
+              <img className='rounded' src={this.state.restaurants[this.state.index].storeImageUrl} alt="" style={{ objectFit: 'cover', height: '250px', width: '100%' }}/>
             </div>
             <div className='w-100 h-100 text-center text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center'>
-              <div>{this.state.restaurants[0].restaurantName}</div>
-              <div>{this.state.restaurants[0].location.city}, {this.state.restaurants[0].location.state}</div>
-              <div><i className="fas fa-map-marker-alt mr-2"></i>{(this.state.restaurants[0].distance * 0.000621371).toFixed(1)} mi
+              <div>{this.state.restaurants[this.state.index].restaurantName}</div>
+              <div>{this.state.restaurants[this.state.index].location.city}, {this.state.restaurants[this.state.index].location.state}</div>
+              <div><i className="fas fa-map-marker-alt mr-2"></i>{(this.state.restaurants[this.state.index].distance * 0.000621371).toFixed(1)} mi
               </div>
             </div>
           </div>
