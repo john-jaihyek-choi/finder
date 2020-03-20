@@ -7,14 +7,9 @@ export default class GuestLogIn extends React.Component {
   }
 
   guestClick(event) {
-  event.preventDefault();
-  this.props.setView('splash');
-    fetch("/api/users", {
-      method: 'POST'
-      // headers: {"Content-Type": "application/json"}
-      // body: JSON.stringify()
-    })
-    .then(response => console.log(response))
+    event.preventDefault();
+    this.props.setView('splash');
+    this.props.guestLogIn();
   }
 
 render() {
