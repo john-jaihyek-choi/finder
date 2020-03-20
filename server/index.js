@@ -56,11 +56,42 @@ app.post('/api/users', (req, res, next) => {
   .catch(err => next(err));
 })
 
-app.get('/api/health-check', (req, res, next) => {
-  db.query(`select 'successfully connected' as "message"`)
-    .then(result => res.json(result.rows[0]))
-    .catch(err => next(err));
-});
+app.get('/api/likedRestaurants', (req, res, next) => {
+  const likedRestaurants = `
+    select *
+    from "likedRestaurants"
+    where "userId" = $1
+  `
+  const currentUserId = [req.session.userInfo.userId]
+
+  
+
+  db.query(likedRestaurants, currentUserId)
+    .then(yelpId => {
+      const restaurantsValue = []
+      yelpId.rows.map( liked => {
+        restaurantsValue.push(liked.yelpId)
+      })
+      
+      const likedRestaurantsArr = []
+
+      restaurantsValue.map((yelpId, index) => {
+        const restaurants = `
+        select *
+        from "restaurants"
+        where "yelpId"= $1
+      `
+        console.log("running?")
+      db.query(restaurants, [yelpId])
+        .then(restaurant => {
+          likedRestaurantsArr.push(restaurant.rows[0])
+          if(index === restaurantsValue.length - 1) {
+            return res.status(200).json(likedRestaurantsArr)
+          }
+        })
+      })
+    })
+})
 
 app.get('/api/users', (req, res, next) => {
   const sql = `
