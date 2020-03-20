@@ -20,7 +20,7 @@ export default class CardStack extends React.Component {
     fetch('/api/likedRestaurants/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ restaurant })
+      body: JSON.stringify(restaurant)
     })
       .then(res => res.json())
       .then(data => {
@@ -39,7 +39,7 @@ export default class CardStack extends React.Component {
 
   toLikedRestaurant (e) {
     this.props.getLikedRestaurants();
-    this.props.setView('likedRestaurant');
+    this.props.setView('likedRestaurants');
   }
 
   renderCard() {
