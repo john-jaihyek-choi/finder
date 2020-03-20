@@ -74,7 +74,7 @@ export default class CardStack extends React.Component {
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className='w-100 h-100 my-3'>
           <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
-            <div className='d-flex align-items-center pink'><i className='fas fa-utensils fa-2x'></i></div>
+            <div className='d-flex align-items-center text-pink'><i className='fas fa-utensils fa-2x'></i></div>
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
