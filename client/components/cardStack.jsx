@@ -70,9 +70,6 @@ export default class CardStack extends React.Component {
   }
 
   render() {
-    console.log('restaurantData', this.state.restaurants);
-    console.log('index', this.state.index);
-
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className='w-100 h-100 my-3'>
@@ -86,15 +83,15 @@ export default class CardStack extends React.Component {
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
-          <div className='h-100 d-flex align-items-center justify-content-center'>
-            <button type='button' id='pass' className='mr-5 text-danger btn btn-outline-light button-outline shadow' onClick={this.handleClick}>
-              <i class='fas fa-times'></i>
+          <div className='h-100 d-flex align-items-center justify-content-around'>
+            <button type='button' id='pass' className='stack-button pink btn button-outline shadow' onClick={this.handleClick}>
+              <i class='fas fa-times fa-lg'></i>
             </button>
-            <button type='button' id='rewind' className='text-warning mr-5 btn btn-outline-light button-outline shadow' onClick={this.handleClick}>
-              <i class='fas fa-undo'></i>
+            <button type='button' id='rewind' className='stack-button yellow btn button-outline shadow' onClick={this.handleClick}>
+              <i class='fas fa-undo fa-lg'></i>
             </button>
-            <button type='button' id='like' className='text-success btn btn-outline-light button-outline shadow' onClick={this.handleClick}>
-              <i class='fas fa-heart'></i>
+            <button type='button' id='like' className='stack-button green btn button-outline shadow' onClick={this.handleClick}>
+              <i class='fas fa-heart fa-lg'></i>
             </button>
           </div>
         </div>
