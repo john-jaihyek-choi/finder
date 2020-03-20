@@ -32,11 +32,14 @@ export default class App extends React.Component {
       .then(newUser => console.log(newUser));
   }
 
-  render() { 
-    return <LikedRestaurants />;
-    <CardStack />;
+  getLikedRestaurants() {
+    fetch('/api/likedRestaurants')
+      .then(result => result.json())
+      .then(likedRestaurants => console.log(likedRestaurants))
+  }
 
-  render() {
+
+  render() { 
     console.log(this.state.likedRestaurants)
     if(this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
@@ -46,6 +49,9 @@ export default class App extends React.Component {
     }
     if (this.state.view === "cardstack") {
       return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} />;
+    }
+    if (this.state.view === "likedRestaurants") {
+      return <LikedRestaurants getLikedRestaurants={this.getLikedRestaurants}/>;
     }
   }
 }
