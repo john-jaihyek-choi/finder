@@ -299,6 +299,7 @@ COPY public.users ("userId", "distanceRadius") FROM stdin;
 1	10
 2	15
 3	10
+
 \.
 
 
@@ -335,6 +336,7 @@ SELECT pg_catalog.setval('public."reviewedRestaurants_userId_seq"', 1, false);
 --
 
 SELECT pg_catalog.setval('public."users_userId_seq"', 4, true);
+
 
 
 --

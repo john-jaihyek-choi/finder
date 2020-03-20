@@ -14,6 +14,22 @@ app.use(sessionMiddleware);
 app.use(express.json());
 
 app.post('/api/users', (req, res, next) => {
+  const guestUser = `
+    insert into "users" ("distanceRadius")
+    values ($1)
+    returning *
+  `
+  const guesUsersValue = [10]
+
+  db.query(guestUser, guesUsersValue)
+    .then(result => {
+      const [guestUserInfo] = result.rows
+      req.session.userInfo = guestUserInfo
+      res.status(201).json(guestUserInfo)
+    })
+})
+
+app.post('/api/users', (req, res, next) => {
   const user =  `
   insert into "users" ("userName", "distanceRadius")
   values ($1, $2)
