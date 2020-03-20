@@ -10,8 +10,8 @@ export default class App extends React.Component {
     this.state = {
       view: "login"
     }
-    this.registerUser = this.registerUser.bind(this);
     this.setView = this.setView.bind(this);
+    this.registerUser = this.registerUser.bind(this);
   }
 
   setView(viewMode) {
@@ -27,11 +27,25 @@ export default class App extends React.Component {
       body: JSON.stringify(userName)
     })
       .then(result => result.json())
-      .then(newUser => console.log(newUser))
+      .then(newUser => console.log(newUser));
   }
 
+  // loginUser() {
+  //   fetch("/api/users", {
+  //     method: 'POST'
+  //   })
+  //     .then(result => result.json())
+  //     .then(logInUser => {
+  //       console.log(logInUser)
+  //     });
+  // }
+
   render() {
-    return <IntroPages registerUser={this.registerUser} setView={this.setView}/>;
-    <Splash setView={this.setView}/>;
+    if(this.state.view === "login") {
+      return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
+    }
+    if(this.state.view === "splash") {
+      return <Splash setView={this.setView}/>;
+    }
   }
 }
