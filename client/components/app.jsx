@@ -33,7 +33,7 @@ export default class App extends React.Component {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
     if(this.state.view === "splash") {
-      return <Splash setView={this.setView}/>;
+      return <Splash setView={this.setView} />;
     }
   }
 }
