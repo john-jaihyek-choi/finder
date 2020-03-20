@@ -1,6 +1,7 @@
 import React from 'react';
 import IntroPages from './introPages';
 import Splash from './splash';
+import CardStack from './cardStack';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -28,9 +29,8 @@ export default class App extends React.Component {
       .then(result => result.json())
       .then(newUser => console.log(newUser))
   }
-  
+
   render() {
-    return <IntroPages registerUser={this.registerUser} setView={this.setView}/>;
-    <Splash />;
+    return <CardStack />;
   }
 }
