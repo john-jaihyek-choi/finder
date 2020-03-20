@@ -31,7 +31,28 @@ button, .button-outline, input {
 
 .green {
   color: #4CCC93;
+}
 
-h1 {
+h1, h3, h6 {
   font-family: 'Roboto', sans-serif;
+}
+
+.tab {
+  padding: 18px;
+  box-shadow: 2px 4px 2px #888888;
+}
+
+.cardShadow {
+  box-shadow: 2px 2px 8px #888888;
+}
+
+.navTop {
+  height: 16%;
+}
+
+.restaurantPhoto {
+  object-fit: cover;
+  height: 180px;
+  width: 100%;
+  border-radius: 15px;
 }
