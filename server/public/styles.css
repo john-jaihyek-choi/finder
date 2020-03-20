@@ -31,4 +31,7 @@ button, .button-outline, input {
 
 .green {
   color: #4CCC93;
+
+h1 {
+  font-family: 'Roboto', sans-serif;
 }
