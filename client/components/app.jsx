@@ -30,7 +30,7 @@ export default class App extends React.Component {
       .then(newUser => console.log(newUser));
   }
 
-  render() {
+  render() { 
     return <LikedRestaurants />;
     <CardStack />;
     if(this.state.view === "login") {
