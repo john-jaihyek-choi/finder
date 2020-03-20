@@ -4,7 +4,7 @@ import restaurantData from '../../database/restaurants.json';
 export default class CardStack extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { restaurants: restaurantData, index: 0 };
+    this.state = { restaurants: restaurantData, index: 0, canRewind: false };
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -19,9 +19,9 @@ export default class CardStack extends React.Component {
   }
 
   handleClick(e) {
-    if (e.target.id === 'like') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length });
-    if (e.target.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length });
-    if (e.target.id === 'redo') return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length });
+    if (e.target.id === 'like') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true });
+    if (e.target.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true });
+    if (e.target.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false });
   }
 
   render() {
@@ -63,7 +63,7 @@ export default class CardStack extends React.Component {
         <div className='w-100 h-100 mb-3'>
           <div className='h-100 d-flex align-items-center justify-content-around'>
             <button type='button' id='pass' className='mr-5 btn btn-outline-light button-outline shadow' onClick={this.handleClick}>X</button>
-            <button type='button' id='redo' className='mr-5 btn btn-outline-light button-outline shadow' onClick={this.handleClick}>REDO</button>
+            <button type='button' id='rewind' className='mr-5 btn btn-outline-light button-outline shadow' onClick={this.handleClick}>REDO</button>
             <button type='button' id='like' className='btn btn-outline-light button-outline shadow' onClick={this.handleClick}>O</button>
           </div>
         </div>
