@@ -6,7 +6,6 @@ import GuestLogIn from './guestLogIn'
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    // until now, there should be 3 total states (login, signup, splash)
     this.state = {
       view: "login"
     }
@@ -29,16 +28,6 @@ export default class App extends React.Component {
       .then(result => result.json())
       .then(newUser => console.log(newUser));
   }
-
-  // loginUser() {
-  //   fetch("/api/users", {
-  //     method: 'POST'
-  //   })
-  //     .then(result => result.json())
-  //     .then(logInUser => {
-  //       console.log(logInUser)
-  //     });
-  // }
 
   render() {
     if(this.state.view === "login") {
