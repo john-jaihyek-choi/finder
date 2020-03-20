@@ -170,12 +170,9 @@ app.get('/api/users/:userId', (req, res, next) => {
 })
 
 app.get('/api/search', (req, res, next) => {
-  console.log(req.body)
-  console.log('hey work already')
   const latitude = req.body.latitude
   const longitude = req.body.longitude
   const term = req.body.term
-
   fetch(`https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=${term}`,
     {
       method: 'GET',
@@ -183,28 +180,9 @@ app.get('/api/search', (req, res, next) => {
         'Authorization': 'Bearer TljklZD_vCJIAGuMk_wgWfXyabofiHuFIO2LE1DKCATtNuYKSHnj26z8i8Q448jAOoLNAZvT2X0ocNI7ReTfM9bIQpAGf4F7HyGfdwDGK3lBYGEXcuScqMfYu_lzXnYx'
       }
     })
-
     .then(response => response.json())
     .then(result => {
-      console.log(req.body)
-      const restaurants = result
-
-      if (!req.body) { return res.status(400).json({ error: 'missing longitude, latitude, and or term' }) }
-      res.status(200).json(restaurants)
-
-      const sql = `
-          insert into "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price" )
-            values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-          returning *
-          `
-      const val = [restaurants.id, restaurants.restaurantName, restaurants.url, restaurants.storeImageUrl, restaurants.distance, restaurants.photosUrl, restaurants.hours, restaurants.location, restaurants.categories, restaurants.coordinates, restaurants.reviews, restaurants.price]
-      db.query(sql, val)
-      .then(data => res.status(201).json(data.rows[0]))
-      console.log("hello:",restaurants.id)
-      console.log(result.id)
-
-      .catch(err => next(err))
-      // ---------------------
+      console.log(result)
     })
     .catch(err => {
       console.error(err)
