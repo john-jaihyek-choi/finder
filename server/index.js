@@ -15,15 +15,15 @@ app.use(express.json());
 
 app.post('/api/users', (req, res, next) => {
   const guestUser = `
-    insert into “users” (“distanceRadius”)
+    insert into "users" ("distanceRadius")
     values ($1)
     returning *
   `
   const guesUsersValue = [10]
+
   db.query(guestUser, guesUsersValue)
     .then(result => {
       const [guestUserInfo] = result.rows
-      console.log(guestUserInfo);
       req.session.userInfo = guestUserInfo
       return res.status(201).json(guestUserInfo)
     })
