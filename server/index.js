@@ -169,7 +169,7 @@ app.get('/api/users/:userId', (req, res, next) => {
     })
 })
 
-app.get('/api/search', (req, res) => {
+app.get('/api/search', (req, res, next) => {
   console.log(req.body)
   console.log('hey work already')
   const latitude = req.body.latitude
@@ -184,22 +184,28 @@ app.get('/api/search', (req, res) => {
       }
     })
 
-  const sql = `
- insert into "restaurants" ("restaurantId", "yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinate", "reviews", "price" )
-  values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-  returning *
- `
-
     .then(response => response.json())
-
     .then(result => {
       console.log(req.body)
       const restaurants = result
-      if (!result) {return res.status(404).json({ error: 'Cannot be found' })}
+
       if (!req.body) { return res.status(400).json({ error: 'missing longitude, latitude, and or term' }) }
       res.status(200).json(restaurants)
-    })
 
+      const sql = `
+          insert into "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price" )
+            values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+          returning *
+          `
+      const val = [restaurants.id, restaurants.restaurantName, restaurants.url, restaurants.storeImageUrl, restaurants.distance, restaurants.photosUrl, restaurants.hours, restaurants.location, restaurants.categories, restaurants.coordinates, restaurants.reviews, restaurants.price]
+      db.query(sql, val)
+      .then(data => res.status(201).json(data.rows[0]))
+      console.log("hello:",restaurants.id)
+      console.log(result.id)
+
+      .catch(err => next(err))
+      // ---------------------
+    })
     .catch(err => {
       console.error(err)
       res.status(500).json({ error: 'An unexpected error occured' })
