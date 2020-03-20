@@ -120,10 +120,7 @@ app.get('/api/search', (req, res) => {
   const latitude = req.body.latitude
   const longitude = req.body.longitude
   const term = req.body.term
-  // const sql = `
-  // select *
-  // from "restaurants"
-  // `
+
   fetch(`https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=${term}`,
     {
       method: 'GET',
@@ -132,10 +129,6 @@ app.get('/api/search', (req, res) => {
       }
     })
     .then(response => response.json())
-    .then((json) => { console.log(json) })
-    .catch(error => console.error(error))
-
-  // db.query(sql)
     .then(result => {
       console.log(result)
       const restaurants = result
