@@ -25,7 +25,7 @@ app.post('/api/users', (req, res, next) => {
     .then(result => {
       const [guestUserInfo] = result.rows
       req.session.userInfo = guestUserInfo
-      res.status(201).json(guestUserInfo)
+      return res.status(201).json(guestUserInfo)
     })
 })
 

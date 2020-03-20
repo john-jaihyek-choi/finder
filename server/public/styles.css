@@ -10,3 +10,7 @@ button, .button-outline, input {
   border: 2px solid white;
   color: white;
 }
+
+h1 {
+  font-family: 'Roboto', sans-serif;
+}
