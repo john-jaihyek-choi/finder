@@ -9,10 +9,12 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: "login"
+      view: "login",
+      likedRestaurants: []
     }
     this.setView = this.setView.bind(this);
     this.registerUser = this.registerUser.bind(this);
+    this.getLikedRestaurants = this.getLikedRestaurants.bind(this);
   }
 
   setView(viewMode) {
@@ -33,6 +35,7 @@ export default class App extends React.Component {
   render() { 
     return <LikedRestaurants />;
     <CardStack />;
+
     if(this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
