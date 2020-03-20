@@ -9,17 +9,29 @@ export default class CardStack extends React.Component {
   }
 
   getRestaurants() {
-    fetch('/api/restaurants/', {
+    fetch('/api/restaurants/')
+      .then(res => res.json())
+      .then(data => this.setState({ restaurants: data }))
+      .catch(err => console.error(err));
+  }
+
+  likeRestaurant(restaurant) {
+    fetch('/api/likedRestaurants/', {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(product)
+      body: JSON.stringify(restaurant)
     })
       .then(res => res.json())
-      .then(data => this.setState({ restaurants: [...this.state.restaurants, data] }))
+      .then(data => {
+        const newArr = Array.from(this.state.restaurants);
+        newArr.splice(newArr.indexOf(restaurant), 1);
+        this.setState({ restaurants: newArr, index: this.state.index % this.state.restaurants.length, canRewind: true });
+      })
       .catch(err => console.error(err));
   }
 
   handleClick(e) {
-    if (e.target.id === 'like') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true });
+    if (e.target.id === 'like') return this.likeRestaurant(this.state.restaurants[this.state.index]);
     if (e.target.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true });
     if (e.target.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false });
   }
@@ -31,7 +43,7 @@ export default class CardStack extends React.Component {
 
     let rating = [];
     for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className="fas fa-star"></i>);
-    if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i class="fas fa-star-half"></i>);
+    if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i className="fas fa-star-half"></i>);
 
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center gradient'>
