@@ -5,3 +5,4 @@
 node_modules
 server/sessions/*.json
 server/public/main.js*
+database/apiKeys.json

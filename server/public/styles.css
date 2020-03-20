@@ -3,6 +3,10 @@
   background: linear-gradient(45deg, rgba(254,59,115,1) 30%, rgba(255,104,92,1) 100%);
 }
 
+.text-pink {
+  color: rgb(254,59,115);
+}
+
 /* lets use this block of css rule for consistency. I have included button-outline to be styled with below code as well. */
 button, .button-outline, input {
   border-radius: 30px;
@@ -10,6 +14,23 @@ button, .button-outline, input {
   border: 2px solid white;
   color: white;
 }
+
+.stack-button {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+
+.yellow {
+  color: #FFCE65;
+}
+
+.pink {
+  color: #EB606A;
+}
+
+.green {
+  color: #4CCC93;
 
 h1 {
   font-family: 'Roboto', sans-serif;
