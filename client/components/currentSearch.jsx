@@ -3,31 +3,29 @@ import React from 'react';
 export default class CurrentSearch extends React.Component {
   constructor(props) {
     super(props);
-    this.currentQuery = this.currentQuery.bind(this);
+    // this.currentQuery = this.currentQuery.bind(this);
   }
 
-  guestClick(event) {
-    event.preventDefault();
-    this.props.setView(' ');
+  // guestClick(event) {
+  //   event.preventDefault();
+  //   this.props.setView(' ');
 
-  }
+  // }
 
   render() {
     return (
-      <div className='mx-auto vw-100 vh-100 d-flex flex-column text-white align-items-center justify-content-center'>
-        <div className='w-100 h-100 my-3'></div>
-        <div className="flex-row my-5">
-          <h1 className="title">finder<i className="fas fa-utensils fa-lg white mx-2"></i></h1>
+      <div className="container display-flex">
+        <div className="row display-flex justify-content-left">
+          <i className="fas fa-arrow-left fa-3x gray mx-3 my-3"></i>
         </div>
-        <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
-          <button
-            type='button'
-            className='w-75 py-3 btn btn-outline-light button-outline font-weight-bold'
-            onClick={this.guestClick}>
-            CONTINUE AS GUEST
-        </button>
+        <div className="column w-80 justify-content-flex-start">
+          <div className="row justify-content-left">
+            <h4 className="pink justify-content-left ml-3">Current Query</h4>
+          </div>
+          <div className="row justify-content-center">
+            <h4 className="search w-99 px-1 py-1 justify-content-center">dummy search type</h4>
+          </div>
         </div>
-        <div className='w-100 h-100 mb-3'></div>
       </div>
     );
   }

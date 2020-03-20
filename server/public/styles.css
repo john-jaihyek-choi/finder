@@ -21,6 +21,14 @@ button, .button-outline, input {
   height: 60px;
 }
 
+.search {
+  border-radius: 30px;
+  background-color: transparent;
+  border: 2px solid #EB606A;
+  color: #EB606A;
+  text-align: center;
+}
+
 .yellow {
   color: #FFCE65;
 }
@@ -31,6 +39,11 @@ button, .button-outline, input {
 
 .green {
   color: #4CCC93;
+}
+
+.gray {
+  color: #B7B7B7;
+}
 
 h1 {
   font-family: 'Roboto', sans-serif;

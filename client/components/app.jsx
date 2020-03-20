@@ -3,6 +3,7 @@ import IntroPages from './introPages';
 import Splash from './splash';
 import CardStack from './cardStack';
 import GuestLogIn from './guestLogIn'
+import CurrentSearch from './currentSearch'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -43,12 +44,13 @@ export default class App extends React.Component {
 
   render() {
     console.log(this.state.likedRestaurants)
-    return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants}/>;
-    if(this.state.view === "login") {
-      return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
-    }
-    if(this.state.view === "splash") {
-      return <Splash setView={this.setView} />;
-    }
+    // return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants}/>;
+    // if(this.state.view === "login") {
+    //   return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
+    // }
+    // if(this.state.view === "splash") {
+    //   return <Splash setView={this.setView} />;
+    // }
+    return <CurrentSearch />
   }
 }
