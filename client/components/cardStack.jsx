@@ -6,6 +6,7 @@ export default class CardStack extends React.Component {
     super(props);
     this.state = { restaurants: restaurantData, index: 0, canRewind: false };
     this.handleClick = this.handleClick.bind(this);
+    this.toLikedRestaurant = this.toLikedRestaurant.bind(this);
   }
 
   getRestaurants() {
@@ -34,6 +35,11 @@ export default class CardStack extends React.Component {
     if (e.currentTarget.id === 'like') return this.likeRestaurant(this.state.restaurants[this.state.index]);
     if (e.currentTarget.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true });
     if (e.currentTarget.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false });
+  }
+
+  toLikedRestaurant (e) {
+    this.props.getLikedRestaurants();
+    this.props.setView('likedRestaurant');
   }
 
   renderCard() {
@@ -75,7 +81,7 @@ export default class CardStack extends React.Component {
         <div className='w-100 h-100 my-3'>
           <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
             <div className='d-flex align-items-center text-pink'><i className='fas fa-utensils fa-2x'></i></div>
-            <div className='d-flex align-items-center text-pink'><i className='fas fa-heart fa-2x'></i></div>
+            <div className='d-flex align-items-center text-pink' onClick={this.toLikedRestaurant}><i className='fas fa-heart fa-2x'></i></div>
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
@@ -86,13 +92,13 @@ export default class CardStack extends React.Component {
         <div className='w-100 h-100 mb-3'>
           <div className='h-100 d-flex align-items-center justify-content-around'>
             <button type='button' id='pass' className='stack-button pink btn button-outline shadow' onClick={this.handleClick}>
-              <i class='fas fa-times fa-lg'></i>
+              <i className='fas fa-times fa-lg'></i>
             </button>
             <button type='button' id='rewind' className='stack-button yellow btn button-outline shadow' onClick={this.handleClick}>
-              <i class='fas fa-undo fa-lg'></i>
+              <i className='fas fa-undo fa-lg'></i>
             </button>
             <button type='button' id='like' className='stack-button green btn button-outline shadow' onClick={this.handleClick}>
-              <i class='fas fa-heart fa-lg'></i>
+              <i className='fas fa-heart fa-lg'></i>
             </button>
           </div>
         </div>
