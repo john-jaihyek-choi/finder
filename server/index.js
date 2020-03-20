@@ -31,7 +31,7 @@ app.post('/api/users', (req, res, next) => {
 })
 
 app.post('/api/users', (req, res, next) => {
-  const user =  `
+  const user = `
   insert into "users" ("userName", "distanceRadius")
   values ($1, $2)
   on conflict ("userName")
@@ -47,14 +47,14 @@ app.post('/api/users', (req, res, next) => {
 
   const userValue = [userName, 0]
   db.query(user, userValue)
-  .then(user => {
-    if (user.rows.length === 0) {
-      return res.status(400).json({ err: 'User already exists' })
-    }
-    const [addedUser] = user.rows
-    return res.status(201).json(addedUser)
-  })
-  .catch(err => next(err));
+    .then(user => {
+      if (user.rows.length === 0) {
+        return res.status(400).json({ err: 'User already exists' })
+      }
+      const [addedUser] = user.rows
+      return res.status(201).json(addedUser)
+    })
+    .catch(err => next(err));
 })
 
 app.get('/api/health-check', (req, res, next) => {
@@ -86,10 +86,10 @@ app.get('/api/users', (req, res, next) => {
   // ------------------------
 })
 
-app.get('/api/users/:userId', (req, res, next) =>{
-  const {userId} = req.params;
-  if(!parseInt(userId,10)){
-    return res.status(400).json({ error: '"userId" must be a positive integer'})
+app.get('/api/users/:userId', (req, res, next) => {
+  const { userId } = req.params;
+  if (!parseInt(userId, 10)) {
+    return res.status(400).json({ error: '"userId" must be a positive integer' })
   }
   const sql = `
   select *
@@ -101,32 +101,12 @@ app.get('/api/users/:userId', (req, res, next) =>{
     .then(result => {
       console.log(result)
       const user = result.rows[0]
-      if(!user){
-        res.status(404).json({ error: `Cannot find user with "userId" ${userId}`})
+      if (!user) {
+        res.status(404).json({ error: `Cannot find user with "userId" ${userId}` })
       }
-      else{
+      else {
         res.status(200).json(user)
       }
-    })
-    .catch(err => {
-      console.error(err)
-      res.status(500).json({error: 'An unexpected error occured'})
-    })
-})
-
-app.get('/api/restaurant', (req,res,next) => {
-  const sql =`
-  select *
-  from "restaurants"
-  `
-  db.query(sql)
-    .then(result => {
-    console.log(result)
-    const users = result.rows;
-    if(!result){
-      res.status(404).json({ error: 'Cannot be found'})
-    }
-    res.status(200).json(users)
     })
     .catch(err => {
       console.error(err)
@@ -134,15 +114,39 @@ app.get('/api/restaurant', (req,res,next) => {
     })
 })
 
-const init = {
-  method: 'GET',
-  headers: {
-    'Authorization': 'Bearer TljklZD_vCJIAGuMk_wgWfXyabofiHuFIO2LE1DKCATtNuYKSHnj26z8i8Q448jAOoLNAZvT2X0ocNI7ReTfM9bIQpAGf4F7HyGfdwDGK3lBYGEXcuScqMfYu_lzXnYx'
-  }
-fetch(`https://api.yelp.com/v3/businesses/search?location=${location}`, init)
-  .then(response => response.json())
-  .then(data => doSomeStuff(data))
-  .catch(error => console.error(error));
+app.get('/api/restaurant', (req, res, next) => {
+  const {keyword, latitude, longitude} = req.body
+  console.log(req.body)
+  console.log('hi')
+  const sql = `
+  select *
+  from "restaurants"
+  `
+  db.query(sql)
+    .then(result => {
+      console.log(result)
+      const users = result.rows;
+      if (!result) {
+        res.status(404).json({ error: 'Cannot be found' })
+      }
+      res.status(200).json(users)
+    })
+    .catch(err => {
+      console.error(err)
+      res.status(500).json({ error: 'An unexpected error occured' })
+    })
+})
+
+  // `https://api.yelp.com/v3/businesses/search?location=${location}`
+
+// fetch(`https://api.yelp.com/v3/businesses/search?coordinates=${coordinates}&categories=${categories}`,
+//   { method: 'GET',
+//     headers: {
+//       'Authorization': 'Bearer TljklZD_vCJIAGuMk_wgWfXyabofiHuFIO2LE1DKCATtNuYKSHnj26z8i8Q448jAOoLNAZvT2X0ocNI7ReTfM9bIQpAGf4F7HyGfdwDGK3lBYGEXcuScqMfYu_lzXnYx'
+//   }})
+//   .then(response => response.json())
+//   .then(data => doSomeStuff(data))
+//   .catch(error => console.error(error));
 
 
 app.use('/api', (req, res, next) => {
