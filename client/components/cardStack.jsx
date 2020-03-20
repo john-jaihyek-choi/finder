@@ -25,7 +25,7 @@ export default class CardStack extends React.Component {
       .then(data => {
         const newArr = Array.from(this.state.restaurants);
         newArr.splice(newArr.indexOf(restaurant), 1);
-        this.setState({ restaurants: newArr, index: this.state.index % this.state.restaurants.length, canRewind: true });
+        return this.setState({ restaurants: newArr, canRewind: false });
       })
       .catch(err => console.error(err));
   }
@@ -38,13 +38,14 @@ export default class CardStack extends React.Component {
 
   renderCard() {
     if (!this.state.restaurants.length) return <h1 className='text-pink text-center font-weight-bold'>No matches found</h1>;
+    if (!this.state.restaurants[this.state.index]) return this.setState({ index: 0 });
 
     const price = [];
-    for (let i = 0; i < this.state.restaurants[this.state.index].price.length; i++) price.push(<i className="fas fa-dollar-sign"></i>);
+    for (let i = 0; i < this.state.restaurants[this.state.index].price.length; i++) price.push(<i className="fas fa-dollar-sign" key={'price' + i}></i>);
 
     const rating = [];
-    for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className="fas fa-star"></i>);
-    if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i className="fas fa-star-half"></i>);
+    for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className="fas fa-star" key={'rating' + i}></i>);
+    if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i className="fas fa-star-half" key={'rating' + rating.length}></i>);
 
     return (
       <React.Fragment>
@@ -53,7 +54,11 @@ export default class CardStack extends React.Component {
           <div className='w-50'>{price}</div>
         </div>
         <div className='w-100 h-100'>
-          <img className='rounded' src={this.state.restaurants[this.state.index].storeImageUrl} alt="" style={{ objectFit: 'cover', height: '250px', width: '100%' }} />
+          <img
+            className='rounded'
+            src={this.state.restaurants[this.state.index].storeImageUrl}
+            alt={this.state.restaurants[this.state.index].restaurantName}
+            style={{ objectFit: 'cover', height: '250px', width: '100%' }} />
         </div>
         <div className='w-100 h-100 text-center text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center'>
           <div>{this.state.restaurants[this.state.index].restaurantName}</div>
@@ -66,14 +71,13 @@ export default class CardStack extends React.Component {
 
   render() {
     console.log('restaurantData', this.state.restaurants);
+    console.log('index', this.state.index);
 
     return (
-      <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center gradient'>
+      <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className='w-100 h-100 my-3'>
           <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
-            <button type='button' className='btn btn-outline-light button-outline shadow'>PROFILES</button>
-            <button className='d-flex align-items-center btn btn-outline-light button-outline shadow'>STACK</button>
-            <button type='button' className='btn btn-outline-light button-outline shadow'>LIKED</button>
+            <div className='d-flex align-items-center text-secondary btn btn-outline-light button-outline shadow'><i className='fas fa-utensils fa-2x'></i></div>
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
@@ -84,7 +88,7 @@ export default class CardStack extends React.Component {
         <div className='w-100 h-100 mb-3'>
           <div className='h-100 d-flex align-items-center justify-content-around'>
             <button type='button' id='pass' className='mr-5 btn btn-outline-light button-outline shadow' onClick={this.handleClick}>X</button>
-            <button type='button' id='rewind' className='mr-5 btn btn-outline-light button-outline shadow' onClick={this.handleClick}>REDO</button>
+            <button type='button' id='rewind' className='mr-5 btn btn-outline-light button-outline shadow' onClick={this.handleClick}>Y</button>
             <button type='button' id='like' className='btn btn-outline-light button-outline shadow' onClick={this.handleClick}>O</button>
           </div>
         </div>
