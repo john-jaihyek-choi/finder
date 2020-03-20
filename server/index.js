@@ -131,7 +131,7 @@ app.get('/api/search', (req, res) => {
         'Authorization': 'Bearer TljklZD_vCJIAGuMk_wgWfXyabofiHuFIO2LE1DKCATtNuYKSHnj26z8i8Q448jAOoLNAZvT2X0ocNI7ReTfM9bIQpAGf4F7HyGfdwDGK3lBYGEXcuScqMfYu_lzXnYx'
       }
     })
-    // .then(response => response.json())
+    .then(response => response.json())
     .then((json) => { console.log(json) })
     .catch(error => console.error(error))
 
