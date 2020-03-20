@@ -31,9 +31,9 @@ export default class CardStack extends React.Component {
   }
 
   handleClick(e) {
-    if (e.target.id === 'like') return this.likeRestaurant(this.state.restaurants[this.state.index]);
-    if (e.target.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true });
-    if (e.target.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false });
+    if (e.currentTarget.id === 'like') return this.likeRestaurant(this.state.restaurants[this.state.index]);
+    if (e.currentTarget.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true });
+    if (e.currentTarget.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false });
   }
 
   renderCard() {
@@ -41,11 +41,11 @@ export default class CardStack extends React.Component {
     if (!this.state.restaurants[this.state.index]) return this.setState({ index: 0 });
 
     const price = [];
-    for (let i = 0; i < this.state.restaurants[this.state.index].price.length; i++) price.push(<i className="fas fa-dollar-sign" key={'price' + i}></i>);
+    for (let i = 0; i < this.state.restaurants[this.state.index].price.length; i++) price.push(<i className='fas fa-dollar-sign' key={'price' + i}></i>);
 
     const rating = [];
-    for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className="fas fa-star" key={'rating' + i}></i>);
-    if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i className="fas fa-star-half" key={'rating' + rating.length}></i>);
+    for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className='fas fa-star' key={'rating' + i}></i>);
+    if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i className='fas fa-star-half' key={'rating' + rating.length}></i>);
 
     return (
       <React.Fragment>
@@ -77,7 +77,7 @@ export default class CardStack extends React.Component {
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className='w-100 h-100 my-3'>
           <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
-            <div className='d-flex align-items-center text-secondary btn btn-outline-light button-outline shadow'><i className='fas fa-utensils fa-2x'></i></div>
+            <div className='d-flex align-items-center text-secondary'><i className='fas fa-utensils fa-2x'></i></div>
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
@@ -86,10 +86,16 @@ export default class CardStack extends React.Component {
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
-          <div className='h-100 d-flex align-items-center justify-content-around'>
-            <button type='button' id='pass' className='mr-5 btn btn-outline-light button-outline shadow' onClick={this.handleClick}>X</button>
-            <button type='button' id='rewind' className='mr-5 btn btn-outline-light button-outline shadow' onClick={this.handleClick}>Y</button>
-            <button type='button' id='like' className='btn btn-outline-light button-outline shadow' onClick={this.handleClick}>O</button>
+          <div className='h-100 d-flex align-items-center justify-content-center'>
+            <button type='button' id='pass' className='mr-5 text-danger btn btn-outline-light button-outline shadow' onClick={this.handleClick}>
+              <i class='fas fa-times'></i>
+            </button>
+            <button type='button' id='rewind' className='text-warning mr-5 btn btn-outline-light button-outline shadow' onClick={this.handleClick}>
+              <i class='fas fa-undo'></i>
+            </button>
+            <button type='button' id='like' className='text-success btn btn-outline-light button-outline shadow' onClick={this.handleClick}>
+              <i class='fas fa-heart'></i>
+            </button>
           </div>
         </div>
       </div>
