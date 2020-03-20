@@ -4,7 +4,7 @@ import restaurantData from '../../database/restaurants.json';
 export default class CardStack extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { restaurants: restaurantData };
+    this.state = { restaurants: restaurantData, index: 0 };
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -19,15 +19,17 @@ export default class CardStack extends React.Component {
   }
 
   handleClick(e) {
-    return null;
+    if (e.target.id === 'like') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length });
+    // if (e.target.id === 'redo')
+    if (e.target.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length });
   }
 
   render() {
     console.log('restaurantData', this.state.restaurants);
     let price = [];
-    for (let i = 0; i < this.state.restaurants[0].price.length; i++) price.push(<i class="fas fa-dollar-sign"></i>);
+    for (let i = 0; i < this.state.restaurants[0].price.length; i++) price.push(<i className="fas fa-dollar-sign"></i>);
     let rating = [];
-    for (let i = 0; i < this.state.restaurants[0].price.length; i++) rating.push(<i class="fas fa-star"></i>);
+    for (let i = 0; i < this.state.restaurants[0].price.length; i++) rating.push(<i className="fas fa-star"></i>);
 
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center gradient'>
