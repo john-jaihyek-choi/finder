@@ -72,7 +72,7 @@ app.get('/api/likedRestaurants', (req, res, next) => {
       if(yelpId.rows.length === 0) {
         return res.status(200).json(restaurantsValue)
       }
-      
+
       yelpId.rows.map( liked => {
         restaurantsValue.push(liked.yelpId)
       })
@@ -85,7 +85,7 @@ app.get('/api/likedRestaurants', (req, res, next) => {
           from "restaurants"
           where "yelpId"= $1
         `
-        
+
         db.query(restaurants, [yelpId])
           .then(restaurant => {
             likedRestaurantsArr.push(restaurant.rows[0])
@@ -96,7 +96,26 @@ app.get('/api/likedRestaurants', (req, res, next) => {
           })
       })
     })
-})
+});
+
+app.post('/api/likedRestaurants', (req, res, next) => {
+  const { restaurant } = req.body;
+  if (!req.session.userInfo) return res.status(400).json({ error: 'missing userInfo' });
+  if (!restaurant) return res.status(400).json({ error: 'missing restaurant' });
+
+  const text = `
+    insert into "likedRestaurants" ("userId", "yelpId")
+    values      ($1, $2)
+    on conflict ("userId", "yelpId")
+    do nothing
+    returning   *;
+  `;
+  const values = [req.session.userInfo.userId, restaurant.yelpId];
+
+  db.query(text, values)
+    .then(data => res.status(201).json(data.rows[0]))
+    .catch(err => next(err));
+});
 
 app.get('/api/users', (req, res, next) => {
   const sql = `
