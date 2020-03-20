@@ -70,11 +70,11 @@ app.get('/api/likedRestaurants', (req, res, next) => {
     .then(yelpId => {
       const restaurantsValue = []
 
-      if(yelpId.rows.length === 0) {
+      if (yelpId.rows.length === 0) {
         return res.status(200).json(restaurantsValue)
       }
 
-      yelpId.rows.map( liked => {
+      yelpId.rows.map(liked => {
         restaurantsValue.push(liked.yelpId)
       })
 
@@ -90,7 +90,7 @@ app.get('/api/likedRestaurants', (req, res, next) => {
         db.query(restaurants, [yelpId])
           .then(restaurant => {
             likedRestaurantsArr.push(restaurant.rows[0])
-            if(index === restaurantsValue.length - 1) {
+            if (index === restaurantsValue.length - 1) {
               req.session.userInfo.likedRestaurants = likedRestaurantsArr
               return res.status(200).json(likedRestaurantsArr)
             }
@@ -183,15 +183,23 @@ app.get('/api/search', (req, res) => {
         'Authorization': 'Bearer TljklZD_vCJIAGuMk_wgWfXyabofiHuFIO2LE1DKCATtNuYKSHnj26z8i8Q448jAOoLNAZvT2X0ocNI7ReTfM9bIQpAGf4F7HyGfdwDGK3lBYGEXcuScqMfYu_lzXnYx'
       }
     })
+
+  const sql = `
+ insert into "restaurants" ("restaurantId", "yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinate", "reviews", "price" )
+  values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+  returning *
+ `
+
     .then(response => response.json())
+
     .then(result => {
-      console.log(result)
+      console.log(req.body)
       const restaurants = result
-      if (!result) {
-        res.status(404).json({ error: 'Cannot be found' })
-      }
+      if (!result) {return res.status(404).json({ error: 'Cannot be found' })}
+      if (!req.body) { return res.status(400).json({ error: 'missing longitude, latitude, and or term' }) }
       res.status(200).json(restaurants)
     })
+
     .catch(err => {
       console.error(err)
       res.status(500).json({ error: 'An unexpected error occured' })
