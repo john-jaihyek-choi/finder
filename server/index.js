@@ -114,45 +114,41 @@ app.get('/api/users/:userId', (req, res, next) => {
     })
 })
 
-app.get('/api/restaurant', (req, res) => {
+app.get('/api/search', (req, res) => {
   console.log(req.body)
   console.log('hey work already')
-  const lat = req.body.latitude
-  const long = req.body.longtitude
+  const latitude = req.body.latitude
+  const longitude = req.body.longitude
   const term = req.body.term
-  const sql = `
-  select *
-  from "restaurants"
-  `
-  db.query(sql)
+  // const sql = `
+  // select *
+  // from "restaurants"
+  // `
+  fetch(`https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=${term}`,
+    {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer TljklZD_vCJIAGuMk_wgWfXyabofiHuFIO2LE1DKCATtNuYKSHnj26z8i8Q448jAOoLNAZvT2X0ocNI7ReTfM9bIQpAGf4F7HyGfdwDGK3lBYGEXcuScqMfYu_lzXnYx'
+      }
+    })
+    // .then(response => response.json())
+    .then((json) => { console.log(json) })
+    .catch(error => console.error(error))
+
+  // db.query(sql)
     .then(result => {
       console.log(result)
-      const users = result.rows;
+      const restaurants = result
       if (!result) {
         res.status(404).json({ error: 'Cannot be found' })
       }
-      res.status(200).json(users)
+      res.status(200).json(restaurants)
     })
     .catch(err => {
       console.error(err)
       res.status(500).json({ error: 'An unexpected error occured' })
     })
 })
-
-// app.get('api/search', (req)=> {
-//   console.log(req.body)
-// })
-
-
-fetch(`https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=${term}`,
-  { method: 'GET',
-    headers: {
-      'Authorization': 'Bearer TljklZD_vCJIAGuMk_wgWfXyabofiHuFIO2LE1DKCATtNuYKSHnj26z8i8Q448jAOoLNAZvT2X0ocNI7ReTfM9bIQpAGf4F7HyGfdwDGK3lBYGEXcuScqMfYu_lzXnYx'
-  }})
-  .then(response => response.json())
-  .then((json) => {console.log(json)})
-  .catch(error => console.error(error))
-
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
