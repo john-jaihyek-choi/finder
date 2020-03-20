@@ -2,7 +2,8 @@ import React from 'react';
 import IntroPages from './introPages';
 import Splash from './splash';
 import CardStack from './cardStack';
-import GuestLogIn from './guestLogIn'
+import GuestLogIn from './guestLogIn';
+import LikedRestaurants from './likedRestaurants'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -30,7 +31,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <CardStack />;
+    return <LikedRestaurants />;
+    <CardStack />;
     if(this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }

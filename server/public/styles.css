@@ -31,7 +31,13 @@ button, .button-outline, input {
 
 .green {
   color: #4CCC93;
+}
 
-h1 {
+h1, h3 {
   font-family: 'Roboto', sans-serif;
+}
+
+.tab {
+  padding: 10px;
+  box-shadow: 2px 4px 2px #888888;
 }
