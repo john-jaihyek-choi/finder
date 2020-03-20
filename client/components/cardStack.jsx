@@ -20,8 +20,8 @@ export default class CardStack extends React.Component {
 
   handleClick(e) {
     if (e.target.id === 'like') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length });
-    // if (e.target.id === 'redo')
     if (e.target.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length });
+    if (e.target.id === 'redo') return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length });
   }
 
   render() {
