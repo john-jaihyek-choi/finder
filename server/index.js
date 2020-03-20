@@ -1,5 +1,6 @@
 require('dotenv/config');
 const express = require('express');
+const fetch = require('node-fetch');
 
 const db = require('./database');
 const ClientError = require('./client-error');
@@ -112,6 +113,36 @@ app.get('/api/users/:userId', (req, res, next) =>{
       res.status(500).json({error: 'An unexpected error occured'})
     })
 })
+
+app.get('/api/restaurant', (req,res,next) => {
+  const sql =`
+  select *
+  from "restaurants"
+  `
+  db.query(sql)
+    .then(result => {
+    console.log(result)
+    const users = result.rows;
+    if(!result){
+      res.status(404).json({ error: 'Cannot be found'})
+    }
+    res.status(200).json(users)
+    })
+    .catch(err => {
+      console.error(err)
+      res.status(500).json({ error: 'An unexpected error occured' })
+    })
+})
+
+const init = {
+  method: 'GET',
+  headers: {
+    'Authorization': 'Bearer TljklZD_vCJIAGuMk_wgWfXyabofiHuFIO2LE1DKCATtNuYKSHnj26z8i8Q448jAOoLNAZvT2X0ocNI7ReTfM9bIQpAGf4F7HyGfdwDGK3lBYGEXcuScqMfYu_lzXnYx'
+  }
+fetch(`https://api.yelp.com/v3/businesses/search?location=${location}`, init)
+  .then(response => response.json())
+  .then(data => doSomeStuff(data))
+  .catch(error => console.error(error));
 
 
 app.use('/api', (req, res, next) => {
