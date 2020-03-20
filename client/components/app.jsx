@@ -43,12 +43,13 @@ export default class App extends React.Component {
 
   render() {
     console.log(this.state.likedRestaurants)
-    return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants}/>;
+
     if(this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
     if(this.state.view === "splash") {
       return <Splash setView={this.setView} />;
     }
+    if (this.state.view === "cardstack") return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} />;
   }
 }
