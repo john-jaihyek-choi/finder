@@ -114,10 +114,12 @@ app.get('/api/users/:userId', (req, res, next) => {
     })
 })
 
-app.get('/api/restaurant', (req, res, next) => {
-  const {keyword, latitude, longitude} = req.body
+app.get('/api/restaurant', (req, res) => {
   console.log(req.body)
-  console.log('hi')
+  console.log('hey work already')
+  const lat = req.body.latitude
+  const long = req.body.longtitude
+  const term = req.body.term
   const sql = `
   select *
   from "restaurants"
@@ -137,16 +139,19 @@ app.get('/api/restaurant', (req, res, next) => {
     })
 })
 
-  // `https://api.yelp.com/v3/businesses/search?location=${location}`
+// app.get('api/search', (req)=> {
+//   console.log(req.body)
+// })
 
-// fetch(`https://api.yelp.com/v3/businesses/search?coordinates=${coordinates}&categories=${categories}`,
-//   { method: 'GET',
-//     headers: {
-//       'Authorization': 'Bearer TljklZD_vCJIAGuMk_wgWfXyabofiHuFIO2LE1DKCATtNuYKSHnj26z8i8Q448jAOoLNAZvT2X0ocNI7ReTfM9bIQpAGf4F7HyGfdwDGK3lBYGEXcuScqMfYu_lzXnYx'
-//   }})
-//   .then(response => response.json())
-//   .then(data => doSomeStuff(data))
-//   .catch(error => console.error(error));
+
+fetch(`https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=${term}`,
+  { method: 'GET',
+    headers: {
+      'Authorization': 'Bearer TljklZD_vCJIAGuMk_wgWfXyabofiHuFIO2LE1DKCATtNuYKSHnj26z8i8Q448jAOoLNAZvT2X0ocNI7ReTfM9bIQpAGf4F7HyGfdwDGK3lBYGEXcuScqMfYu_lzXnYx'
+  }})
+  .then(response => response.json())
+  .then((json) => {console.log(json)})
+  .catch(error => console.error(error))
 
 
 app.use('/api', (req, res, next) => {
