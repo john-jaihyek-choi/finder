@@ -62,33 +62,38 @@ app.get('/api/likedRestaurants', (req, res, next) => {
     from "likedRestaurants"
     where "userId" = $1
   `
-  const currentUserId = [req.session.userInfo.userId]
 
-  
+  const currentUserId = [req.session.userInfo.userId] //on each login ("continue as a guest" for now), req.session should store the session info.
 
   db.query(likedRestaurants, currentUserId)
     .then(yelpId => {
       const restaurantsValue = []
+
+      if(yelpId.rows.length === 0) {
+        return res.status(200).json(restaurantsValue)
+      }
+      
       yelpId.rows.map( liked => {
         restaurantsValue.push(liked.yelpId)
       })
-      
+
       const likedRestaurantsArr = []
 
       restaurantsValue.map((yelpId, index) => {
         const restaurants = `
-        select *
-        from "restaurants"
-        where "yelpId"= $1
-      `
-        console.log("running?")
-      db.query(restaurants, [yelpId])
-        .then(restaurant => {
-          likedRestaurantsArr.push(restaurant.rows[0])
-          if(index === restaurantsValue.length - 1) {
-            return res.status(200).json(likedRestaurantsArr)
-          }
-        })
+          select *
+          from "restaurants"
+          where "yelpId"= $1
+        `
+        
+        db.query(restaurants, [yelpId])
+          .then(restaurant => {
+            likedRestaurantsArr.push(restaurant.rows[0])
+            if(index === restaurantsValue.length - 1) {
+              req.session.userInfo.likedRestaurants = likedRestaurantsArr
+              return res.status(200).json(likedRestaurantsArr)
+            }
+          })
       })
     })
 })

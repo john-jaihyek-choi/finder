@@ -22,8 +22,7 @@ export default class App extends React.Component {
   registerUser(userName) {
     fetch('/api/users', {
       method: 'POST',
-      headers: { 'Content-Type' : 'application/json' },
-      body: JSON.stringify(userName)
+      headers: { 'Content-Type' : 'application/json' }
     })
       .then(result => result.json())
       .then(newUser => console.log(newUser));
