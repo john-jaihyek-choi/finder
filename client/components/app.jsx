@@ -2,7 +2,8 @@ import React from 'react';
 import IntroPages from './introPages';
 import Splash from './splash';
 import CardStack from './cardStack';
-import GuestLogIn from './guestLogIn'
+import GuestLogIn from './guestLogIn';
+import LikedRestaurants from './likedRestaurants'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -31,19 +32,12 @@ export default class App extends React.Component {
       .then(newUser => console.log(newUser));
   }
 
-  getLikedRestaurants () {
-    fetch('/api/likedRestaurants')
-      .then(result => result.json())
-      .then(likedRestaurantsArr => {
-        this.setState({
-          likedRestaurants: likedRestaurantsArr
-        })
-      })
-  }
+  render() { 
+    return <LikedRestaurants />;
+    <CardStack />;
 
   render() {
     console.log(this.state.likedRestaurants)
-
     if(this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
