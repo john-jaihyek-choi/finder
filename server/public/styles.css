@@ -38,6 +38,14 @@ h1, h3 {
 }
 
 .tab {
-  padding: 10px;
+  padding: 18px;
   box-shadow: 2px 4px 2px #888888;
+}
+
+.cardShadow {
+  box-shadow: 2px 2px 8px #888888;
+}
+
+.navTop {
+  height: 16%;
 }
