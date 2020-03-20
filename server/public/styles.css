@@ -14,3 +14,21 @@ button, .button-outline, input {
   border: 2px solid white;
   color: white;
 }
+
+.stack-button {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+
+.yellow {
+  color: #FFCE65;
+}
+
+.pink {
+  color: #EB606A;
+}
+
+.green {
+  color: #4CCC93;
+}
