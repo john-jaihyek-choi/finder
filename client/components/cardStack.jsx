@@ -34,6 +34,7 @@ export default class CardStack extends React.Component {
     if (e.currentTarget.id === 'like' && this.state.restaurants.length) return this.likeRestaurant(this.state.restaurants[this.state.index].yelpId, this.state.index);
     if (e.currentTarget.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true });
     if (e.currentTarget.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false });
+    if (e.currentTarget.id === 'details') return this.setState({ showDetails: true });
   }
 
   toLikedRestaurant (e) {
