@@ -66,6 +66,8 @@ export default class CardStack extends React.Component {
         <div className='w-100 h-100'>
           <img
             className='rounded'
+            id='details'
+            onClick={this.handleClick}
             src={this.state.restaurants[this.state.index].storeImageUrl}
             alt={this.state.restaurants[this.state.index].restaurantName}
             style={{ objectFit: 'cover', height: '250px', width: '100%' }} />
