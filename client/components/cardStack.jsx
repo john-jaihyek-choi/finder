@@ -104,7 +104,7 @@ export default class CardStack extends React.Component {
           {this.renderCard()}
         </div>
         <div className='w-100 h-100 mb-3'>
-          <div className='h-100 d-flex align-items-center justify-content-around'>
+          <div className='h-100 pb-4 d-flex align-items-end justify-content-around'>
             <button type='button' id='pass' className='stack-button pink btn button-outline shadow' onClick={this.handleClick}>
               <i className='fas fa-times fa-lg'></i>
             </button>
