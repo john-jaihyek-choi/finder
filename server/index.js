@@ -66,7 +66,7 @@ app.get('/api/likedRestaurants', (req, res, next) => {
     join "likedRestaurants" as "lr" using ("yelpId")
     where "lr"."userId" = $1
   `
-
+  
   const currentUserId = [req.session.userInfo.userId]
 
   db.query(likedRestaurants, currentUserId)
@@ -131,6 +131,20 @@ app.get('/api/users/:userId', (req, res, next) => {
         res.status(200).json(user)
       }
     })
+    .catch(err => next(err))
+})
+
+app.get('/api/reviewedRestaurants', (req, res, next) => {
+  const reviewedRestaurants = `
+    select "r".* as "details"
+    from "restaurants" as "r"
+    join "reviewedRestaurants" as "rR" using ("yelpId")
+    where "rR"."userId" = $1
+  `
+  const currentUser = [1]
+
+  db.query(reviewedRestaurants, currentUser)
+    .then(result => res.json(result.rows))
     .catch(err => next(err))
 })
 
