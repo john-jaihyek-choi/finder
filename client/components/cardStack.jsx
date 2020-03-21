@@ -20,14 +20,14 @@ export default class CardStack extends React.Component {
     fetch('/api/likedRestaurants/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(yelpId)
+      body: JSON.stringify({ yelpId })
     })
       .then(res => res.json())
       .catch(err => console.error(err));
 
     const newArr = Array.from(this.state.restaurants);
     newArr.splice(index, 1);
-    return this.setState({ restaurants: newArr, index: this.state.index % newArr.length,  canRewind: false });
+    return this.setState({ restaurants: newArr, index: this.state.index % newArr.length, canRewind: false });
   }
 
   handleClick(e) {
@@ -43,7 +43,6 @@ export default class CardStack extends React.Component {
 
   renderCard() {
     if (!this.state.restaurants.length) return <h1 className='text-pink text-center font-weight-bold'>No matches found</h1>;
-    if (!this.state.restaurants[this.state.index]) return;
 
     const price = [];
     for (let i = 0; i < this.state.restaurants[this.state.index].price.length; i++) price.push(<i className='fas fa-dollar-sign' key={'price' + i}></i>);
@@ -73,7 +72,6 @@ export default class CardStack extends React.Component {
       </React.Fragment>
     );
   }
-
 
   render() {
     return (
