@@ -1,6 +1,6 @@
 require('dotenv/config');
 const express = require('express');
-const fetch = require('node-fetch');
+const {searchAllRestaurants} = require('./yelp')
 
 const db = require('./database');
 const ClientError = require('./client-error');
@@ -28,6 +28,7 @@ app.post('/api/users', (req, res, next) => {
       req.session.userInfo = guestUserInfo
       return res.status(201).json(guestUserInfo)
     })
+    .catch(err => next(err))
 })
 
 app.post('/api/users', (req, res, next) => {
@@ -58,45 +59,19 @@ app.post('/api/users', (req, res, next) => {
 })
 
 app.get('/api/likedRestaurants', (req, res, next) => {
+  if(!req.session.userInfo) return res.json([])
   const likedRestaurants = `
-    select *
-    from "likedRestaurants"
-    where "userId" = $1
+    select "r".*
+    from "restaurants" as "r"
+    join "likedRestaurants" as "lr" using ("yelpId")
+    where "lr"."userId" = $1
   `
 
   const currentUserId = [req.session.userInfo.userId] //on each login ("continue as a guest" for now), req.session should store the session info.
 
   db.query(likedRestaurants, currentUserId)
-    .then(yelpId => {
-      const restaurantsValue = []
-
-      if (yelpId.rows.length === 0) {
-        return res.status(200).json(restaurantsValue)
-      }
-
-      yelpId.rows.map(liked => {
-        restaurantsValue.push(liked.yelpId)
-      })
-
-      const likedRestaurantsArr = []
-
-      restaurantsValue.map((yelpId, index) => {
-        const restaurants = `
-          select *
-          from "restaurants"
-          where "yelpId"= $1
-        `
-
-        db.query(restaurants, [yelpId])
-          .then(restaurant => {
-            likedRestaurantsArr.push(restaurant.rows[0])
-            if (index === restaurantsValue.length - 1) {
-              req.session.userInfo.likedRestaurants = likedRestaurantsArr
-              return res.status(200).json(likedRestaurantsArr)
-            }
-          })
-      })
-    })
+    .then(result => res.json(result.rows))
+    .catch(err => next(err))
 });
 
 app.post('/api/likedRestaurants', (req, res, next) => {
@@ -131,14 +106,7 @@ app.get('/api/users', (req, res, next) => {
       }
       res.status(200).json(users)
     })
-    .catch(err => {
-      // the query failed for some reason
-      console.error(err);
-      res.status(500).json({
-        error: 'An unexpected error occurred.'
-      });
-    });
-  // ------------------------
+    .catch(err => next(err));
 })
 
 app.get('/api/users/:userId', (req, res, next) => {
@@ -163,37 +131,62 @@ app.get('/api/users/:userId', (req, res, next) => {
         res.status(200).json(user)
       }
     })
-    .catch(err => {
-      console.error(err)
-      res.status(500).json({ error: 'An unexpected error occured' })
-    })
+    .catch(err => next(err))
 })
 
 app.get('/api/search', (req, res, next) => {
   const latitude = req.body.latitude
   const longitude = req.body.longitude
   const term = req.body.term
-  fetch(`https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=${term}`,
-    {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer TljklZD_vCJIAGuMk_wgWfXyabofiHuFIO2LE1DKCATtNuYKSHnj26z8i8Q448jAOoLNAZvT2X0ocNI7ReTfM9bIQpAGf4F7HyGfdwDGK3lBYGEXcuScqMfYu_lzXnYx'
-      }
-    })
-    .then(response => response.json())
-    .then(result => {
-      console.log(result)
-    })
-    .catch(err => {
-      console.error(err)
-      res.status(500).json({ error: 'An unexpected error occured' })
-    })
+
+  searchAllRestaurants(latitude, longitude, term)
+  .then(allRestaurants => {
+    const insertPromises =[];
+    for(let i = 0; i < allRestaurants.length ; i++){
+
+      const restaurant = allRestaurants[i]
+      const yelpId = restaurant.id
+      const restaurantName = (restaurant.name || "")
+      const yelpUrl = restaurant.url
+      const storeImageUrl = restaurant.image_url
+      const distance = restaurant.distance
+      const photosUrl = []
+      const hours = []
+      const location = restaurant.location
+      const categories = restaurant.categories
+      const coordinates = restaurant.coordinates
+      const reviews = []
+      const price = (restaurant.price || "")
+
+      const sql=`
+      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price" )
+        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 )
+      on conflict("yelpId")
+      do nothing
+      `
+      const val = [yelpId, restaurantName, yelpUrl, storeImageUrl, distance, JSON.stringify(photosUrl), JSON.stringify(hours), JSON.stringify(location),
+        JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price]
+
+      const restaurantPromise = db.query(sql, val)
+      .then( () => {
+        return {yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price}
+      })
+      insertPromises.push(restaurantPromise)
+    }
+
+    return Promise.all(insertPromises)
+  })
+  .then(restaurants => res.status(200).json(restaurants))
+  .catch( err => next(err))
 })
+
+
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
 
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   if (err instanceof ClientError) {
     res.status(err.status).json({ error: err.message });
