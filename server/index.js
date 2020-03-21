@@ -101,8 +101,8 @@ app.get('/api/likedRestaurants', (req, res, next) => {
 
 app.post('/api/likedRestaurants', (req, res, next) => {
   const { restaurant } = req.body;
-  if (!req.session.userInfo) return res.status(400).json({ error: 'missing userInfo' });
-  if (!restaurant) return res.status(400).json({ error: 'missing restaurant' });
+  // if (!req.session.userInfo) return res.status(400).json({ error: 'missing userInfo' });
+  // if (!restaurant) return res.status(400).json({ error: 'missing restaurant' });
 
   const text = `
     insert into "likedRestaurants" ("userId", "yelpId")
