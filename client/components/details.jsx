@@ -7,9 +7,10 @@ export default function Details(props) {
       <div className='w-100 h-100'>
         <img
           className='rounded'
+          onClick={() => props.toCardStack()}
           src={props.restaurant.storeImageUrl}
           alt={props.restaurant.restaurantName}
-          style={{ objectFit: 'cover', height: '250px', width: '100%' }} />
+          style={{ objectFit: 'cover', objectPosition: 'center bottom', height: '150px', width: '100%' }} />
       </div>
         <div className='w-100 h-100 text-center text-pink d-flex align-items-center justify-content-center'>
           <div className='w-50'>{props.rating}</div> |
