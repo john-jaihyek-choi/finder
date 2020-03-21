@@ -7,6 +7,7 @@ export default class CardStack extends React.Component {
     this.state = { restaurants: restaurantData, index: 0, canRewind: false, showDetails: false };
     this.handleClick = this.handleClick.bind(this);
     this.toLikedRestaurant = this.toLikedRestaurant.bind(this);
+    this.toCardStack = this.toCardStack.bind(this);
   }
 
   getRestaurants() {
@@ -42,6 +43,10 @@ export default class CardStack extends React.Component {
     this.props.setView('likedRestaurants');
   }
 
+  toCardStack() {
+    this.setState({ showDetails: false });
+  }
+
   renderCard() {
     if (!this.state.restaurants.length) {
       return (
@@ -58,7 +63,7 @@ export default class CardStack extends React.Component {
     for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className='fas fa-star' key={'rating' + i}></i>);
     if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i className='fas fa-star-half' key={'rating' + rating.length}></i>);
 
-    if (this.state.showDetails) return <Details price={price} rating={rating} restaurant={this.state.restaurants[this.state.index]} />;
+    if (this.state.showDetails) return <Details price={price} rating={rating} restaurant={this.state.restaurants[this.state.index]} toCardStack={this.toCardStack} />;
 
     return (
       <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
