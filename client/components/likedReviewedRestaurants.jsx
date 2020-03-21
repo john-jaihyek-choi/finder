@@ -32,8 +32,8 @@ export default class LikedReviewedRestaurants extends React.Component {
                             <br/>
                             <h5 className="text-secondary align-bottom">There are no liked restaurants</h5>
                         </div>
-                    :   this.props.likedRestaurantsArr.map( restaurant =>
-                            <LikedReviewedCards key={this.props.likedRestaurantsArr.length === 0 ? "noRestaurantArr" : restaurant.yelpId} photos={restaurant.photosUrl[0]} name={restaurant.restaurantName}/>
+                    :   this.props.likedRestaurantsArr.map( (restaurant, index) =>
+                            <LikedReviewedCards key={this.props.likedRestaurantsArr.length === 0 ? "noRestaurantArr" : restaurant.yelpId} restaurant={restaurant}/>
                         )
                 }
                 </div>
