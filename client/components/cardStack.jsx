@@ -58,6 +58,8 @@ export default class CardStack extends React.Component {
     for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className='fas fa-star' key={'rating' + i}></i>);
     if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i className='fas fa-star-half' key={'rating' + rating.length}></i>);
 
+    if (this.state.showDetails) return <Details price={price} rating={rating} restaurant={this.state.restaurants[this.state.index]} />;
+
     return (
       <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
         <div className='w-100 h-100 text-center text-pink d-flex align-items-center justify-content-center'>
