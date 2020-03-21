@@ -58,7 +58,7 @@ export default class App extends React.Component {
       return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} />;
     }
     if (this.state.view === "likedRestaurants") {
-      return <LikedReviewedRestaurants getLikedRestaurants={this.getLikedRestaurants} likedRestaurantsArr={this.state.likedRestaurants}/>;
+      return <LikedReviewedRestaurants setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} likedRestaurantsArr={this.state.likedRestaurants} />;
     }
     if(this.state.view === "search") {
       return <CurrentSearch />;
