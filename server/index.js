@@ -141,7 +141,7 @@ app.get('/api/reviewedRestaurants', (req, res, next) => {
     join "reviewedRestaurants" as "rR" using ("yelpId")
     where "rR"."userId" = $1
   `
-  const currentUser = [1]
+  const currentUser = [req.session.userInfo.userId]
 
   db.query(reviewedRestaurants, currentUser)
     .then(result => res.json(result.rows))
