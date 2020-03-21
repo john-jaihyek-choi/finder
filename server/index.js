@@ -100,9 +100,9 @@ app.get('/api/likedRestaurants', (req, res, next) => {
 });
 
 app.post('/api/likedRestaurants', (req, res, next) => {
-  const { restaurant } = req.body;
-  // if (!req.session.userInfo) return res.status(400).json({ error: 'missing userInfo' });
-  // if (!restaurant) return res.status(400).json({ error: 'missing restaurant' });
+  const { yelpId } = req.body;
+  if (!req.session.userInfo) return res.status(400).json({ error: 'missing userInfo' });
+  if (!yelpId) return res.status(400).json({ error: 'missing yelpId' });
 
   const text = `
     insert into "likedRestaurants" ("userId", "yelpId")
@@ -111,7 +111,7 @@ app.post('/api/likedRestaurants', (req, res, next) => {
     do nothing
     returning   *;
   `;
-  const values = [req.session.userInfo.userId, restaurant.yelpId];
+  const values = [req.session.userInfo.userId, yelpId];
 
   db.query(text, values)
     .then(data => res.status(201).json(data.rows[0]))
