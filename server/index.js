@@ -67,7 +67,7 @@ app.get('/api/likedRestaurants', (req, res, next) => {
     where "lr"."userId" = $1
   `
 
-  const currentUserId = [req.session.userInfo.userId] //on each login ("continue as a guest" for now), req.session should store the session info.
+  const currentUserId = [req.session.userInfo.userId]
 
   db.query(likedRestaurants, currentUserId)
     .then(result => res.json(result.rows))
