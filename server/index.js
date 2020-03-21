@@ -20,9 +20,9 @@ app.post('/api/users', (req, res, next) => {
     values ($1)
     returning *
   `
-  const guesUsersValue = [10]
+  const guestUsersValue = [10]
 
-  db.query(guestUser, guesUsersValue)
+  db.query(guestUser, guestUsersValue)
     .then(result => {
       const [guestUserInfo] = result.rows
       req.session.userInfo = guestUserInfo
