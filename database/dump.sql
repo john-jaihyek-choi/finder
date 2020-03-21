@@ -16,8 +16,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-ALTER TABLE ONLY public."reviewedRestaurants" DROP CONSTRAINT "reviewedRestaurants_fk1";
-ALTER TABLE ONLY public."reviewedRestaurants" DROP CONSTRAINT "reviewedRestaurants_fk0";
 ALTER TABLE ONLY public."likedRestaurants" DROP CONSTRAINT "likedRestaurants_fk1";
 ALTER TABLE ONLY public."likedRestaurants" DROP CONSTRAINT "likedRestaurants_fk0";
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_pk;
@@ -153,8 +151,8 @@ CREATE TABLE public."reviewedRestaurants" (
     "reviewedRestaurantId" integer NOT NULL,
     "userId" integer NOT NULL,
     "yelpId" text NOT NULL,
-    "thumbsRate" boolean NOT NULL,
-    note text NOT NULL,
+    "thumbsRate" boolean,
+    note text,
     "timeCreated" timestamp with time zone NOT NULL
 );
 
@@ -300,6 +298,8 @@ COPY public.restaurants ("restaurantId", "yelpId", "restaurantName", "yelpUrl", 
 --
 
 COPY public."reviewedRestaurants" ("reviewedRestaurantId", "userId", "yelpId", "thumbsRate", note, "timeCreated") FROM stdin;
+1	2	V8KXkj4sDhRlS5G6z8-79g	\N	\N	2020-03-21 12:00:43.258112+00
+2	1	V8KXkj4sDhRlS5G6z8-79g	\N	\N	2020-03-21 12:01:01.973009+00
 \.
 
 
@@ -347,7 +347,7 @@ SELECT pg_catalog.setval('public."restaurants_restaurantId_seq"', 3, true);
 -- Name: reviewedRestaurants_reviewedRestaurantId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."reviewedRestaurants_reviewedRestaurantId_seq"', 1, false);
+SELECT pg_catalog.setval('public."reviewedRestaurants_reviewedRestaurantId_seq"', 2, true);
 
 
 --
@@ -426,22 +426,6 @@ ALTER TABLE ONLY public."likedRestaurants"
 
 ALTER TABLE ONLY public."likedRestaurants"
     ADD CONSTRAINT "likedRestaurants_fk1" FOREIGN KEY ("yelpId") REFERENCES public.restaurants("yelpId");
-
-
---
--- Name: reviewedRestaurants reviewedRestaurants_fk0; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public."reviewedRestaurants"
-    ADD CONSTRAINT "reviewedRestaurants_fk0" FOREIGN KEY ("userId") REFERENCES public.users("userId");
-
-
---
--- Name: reviewedRestaurants reviewedRestaurants_fk1; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public."reviewedRestaurants"
-    ADD CONSTRAINT "reviewedRestaurants_fk1" FOREIGN KEY ("yelpId") REFERENCES public.restaurants("yelpId");
 
 
 --
