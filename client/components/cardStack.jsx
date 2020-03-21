@@ -4,7 +4,7 @@ import restaurantData from '../../database/restaurants.json';
 export default class CardStack extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { restaurants: restaurantData, index: 0, canRewind: false };
+    this.state = { restaurants: restaurantData, index: 0, canRewind: false, showDetails: false };
     this.handleClick = this.handleClick.bind(this);
     this.toLikedRestaurant = this.toLikedRestaurant.bind(this);
   }
@@ -42,7 +42,13 @@ export default class CardStack extends React.Component {
   }
 
   renderCard() {
-    if (!this.state.restaurants.length) return <h1 className='text-pink text-center font-weight-bold'>No matches found</h1>;
+    if (!this.state.restaurants.length) {
+      return (
+        <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
+          <h1 className='text-pink text-center font-weight-bold'>No matches found</h1>
+        </div>
+      );
+    }
 
     const price = [];
     for (let i = 0; i < this.state.restaurants[this.state.index].price.length; i++) price.push(<i className='fas fa-dollar-sign' key={'price' + i}></i>);
@@ -52,7 +58,7 @@ export default class CardStack extends React.Component {
     if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i className='fas fa-star-half' key={'rating' + rating.length}></i>);
 
     return (
-      <React.Fragment>
+      <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
         <div className='w-100 h-100 text-center text-pink d-flex align-items-center justify-content-center'>
           <div className='w-50'>{rating}</div> |
           <div className='w-50'>{price}</div>
@@ -69,7 +75,7 @@ export default class CardStack extends React.Component {
           <div>{this.state.restaurants[this.state.index].location.city}, {this.state.restaurants[this.state.index].location.state}</div>
           <div><i className="fas fa-map-marker-alt mr-2"></i>{(this.state.restaurants[this.state.index].distance * 0.000621371).toFixed(1)} mi</div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 
@@ -84,9 +90,7 @@ export default class CardStack extends React.Component {
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
-          <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
-            {this.renderCard()}
-          </div>
+          {this.renderCard()}
         </div>
         <div className='w-100 h-100 mb-3'>
           <div className='h-100 d-flex align-items-center justify-content-around'>
