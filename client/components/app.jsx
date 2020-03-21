@@ -48,7 +48,6 @@ export default class App extends React.Component {
 
 
   render() { 
-    return <CurrentSearch />;
     if(this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
@@ -60,6 +59,9 @@ export default class App extends React.Component {
     }
     if (this.state.view === "likedRestaurants") {
       return <LikedReviewedRestaurants getLikedRestaurants={this.getLikedRestaurants} likedRestaurantsArr={this.state.likedRestaurants}/>;
+    }
+    if(this.state.view === "search") {
+      return <CurrentSearch />;
     }
   }
 }

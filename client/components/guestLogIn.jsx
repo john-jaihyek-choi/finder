@@ -22,7 +22,7 @@ render() {
       <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
         <button
           type='button'
-          className='w-75 py-3 btn btn-outline-light button-outline font-weight-bold'
+          className='w-75 btn btn-outline-light button-outline font-weight-bold'
           onClick={this.guestClick}>
           CONTINUE AS GUEST
         </button>
