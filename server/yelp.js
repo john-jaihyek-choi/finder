@@ -27,7 +27,7 @@ const getReviews = function (yelpId){
     )
 }
 
-const searchAllRestaurants = function (lat , long, term){
+function searchAllRestaurants  (lat , long, term){
 
   return fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=${term}`, {
     headers: {
