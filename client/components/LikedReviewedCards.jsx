@@ -34,7 +34,7 @@ export default class LikedReviewedCards extends React.Component {
 
                     <div className='d-flex flex-wrap mt-4 text-pink'>
                         <i className="fas fa-comment-dots fa-2x col-6"></i>
-                        <i className="fas fa-edit fa-2x col-6"></i>
+                        <i class="fas fa-trash-alt fa-2x col-6"></i>
                     </div>
                 </div>
             </div>
