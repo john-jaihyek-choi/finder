@@ -43,13 +43,13 @@ export default class CardStack extends React.Component {
 
   renderCard() {
     if (!this.state.restaurants.length) return <h1 className='text-pink text-center font-weight-bold'>No matches found</h1>;
-
+  
     const price = [];
     for (let i = 0; i < this.state.restaurants[this.state.index].price.length; i++) price.push(<i className='fas fa-dollar-sign' key={'price' + i}></i>);
 
     const rating = [];
     for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className='fas fa-star' key={'rating' + i}></i>);
-    if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i className='fas fa-star-half' key={'rating' + rating.length}></i>);
+    if (!Number.isInteger(this.state.restaurants[this.state.index].rating) && this.state.restaurants[this.state.index].rating) rating.push(<i className='fas fa-star-half' key={'rating' + rating.length}></i>);
 
     return (
       <React.Fragment>
