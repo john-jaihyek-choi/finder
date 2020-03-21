@@ -16,22 +16,22 @@ export default class CardStack extends React.Component {
       .catch(err => console.error(err));
   }
 
-  likeRestaurant(restaurant) {
+  likeRestaurant(yelpId, index) {
     fetch('/api/likedRestaurants/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ restaurant })
+      body: JSON.stringify(yelpId)
     })
       .then(res => res.json())
       .catch(err => console.error(err));
+
     const newArr = Array.from(this.state.restaurants);
-    newArr.splice(newArr.indexOf(restaurant), 1);
-    return this.setState({ restaurants: newArr, canRewind: false });
+    newArr.splice(index, 1);
+    return this.setState({ restaurants: newArr, index: this.state.index % newArr.length,  canRewind: false });
   }
 
-
   handleClick(e) {
-    if (e.currentTarget.id === 'like' && this.state.restaurants.length) return this.likeRestaurant(this.state.restaurants[this.state.index]);
+    if (e.currentTarget.id === 'like' && this.state.restaurants.length) return this.likeRestaurant(this.state.restaurants[this.state.index].yelpId, this.state.index);
     if (e.currentTarget.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true });
     if (e.currentTarget.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false });
   }
@@ -41,10 +41,9 @@ export default class CardStack extends React.Component {
     this.props.setView('likedRestaurants');
   }
 
-
   renderCard() {
     if (!this.state.restaurants.length) return <h1 className='text-pink text-center font-weight-bold'>No matches found</h1>;
-    if (!this.state.restaurants[this.state.index]) return this.setState({ index: 0 });
+    if (!this.state.restaurants[this.state.index]) return;
 
     const price = [];
     for (let i = 0; i < this.state.restaurants[this.state.index].price.length; i++) price.push(<i className='fas fa-dollar-sign' key={'price' + i}></i>);
