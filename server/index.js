@@ -1,5 +1,6 @@
 require('dotenv/config');
 const express = require('express');
+const fetch = require('node-fetch');
 
 const db = require('./database');
 const ClientError = require('./client-error');
@@ -30,7 +31,7 @@ app.post('/api/users', (req, res, next) => {
 })
 
 app.post('/api/users', (req, res, next) => {
-  const user =  `
+  const user = `
   insert into "users" ("userName", "distanceRadius")
   values ($1, $2)
   on conflict ("userName")
@@ -46,14 +47,14 @@ app.post('/api/users', (req, res, next) => {
 
   const userValue = [userName, 0]
   db.query(user, userValue)
-  .then(user => {
-    if (user.rows.length === 0) {
-      return res.status(400).json({ err: 'User already exists' })
-    }
-    const [addedUser] = user.rows
-    return res.status(201).json(addedUser)
-  })
-  .catch(err => next(err));
+    .then(user => {
+      if (user.rows.length === 0) {
+        return res.status(400).json({ err: 'User already exists' })
+      }
+      const [addedUser] = user.rows
+      return res.status(201).json(addedUser)
+    })
+    .catch(err => next(err));
 })
 
 app.get('/api/likedRestaurants', (req, res, next) => {
@@ -72,7 +73,7 @@ app.get('/api/likedRestaurants', (req, res, next) => {
       if(yelpId.rows.length === 0) {
         return res.status(200).json(restaurantsValue)
       }
-      
+
       yelpId.rows.map( liked => {
         restaurantsValue.push(liked.yelpId)
       })
@@ -85,7 +86,7 @@ app.get('/api/likedRestaurants', (req, res, next) => {
           from "restaurants"
           where "yelpId"= $1
         `
-        
+
         db.query(restaurants, [yelpId])
           .then(restaurant => {
             likedRestaurantsArr.push(restaurant.rows[0])
@@ -96,7 +97,26 @@ app.get('/api/likedRestaurants', (req, res, next) => {
           })
       })
     })
-})
+});
+
+app.post('/api/likedRestaurants', (req, res, next) => {
+  const { restaurant } = req.body;
+  // if (!req.session.userInfo) return res.status(400).json({ error: 'missing userInfo' });
+  // if (!restaurant) return res.status(400).json({ error: 'missing restaurant' });
+
+  const text = `
+    insert into "likedRestaurants" ("userId", "yelpId")
+    values      ($1, $2)
+    on conflict ("userId", "yelpId")
+    do nothing
+    returning   *;
+  `;
+  const values = [req.session.userInfo.userId, restaurant.yelpId];
+
+  db.query(text, values)
+    .then(data => res.status(201).json(data.rows[0]))
+    .catch(err => next(err));
+});
 
 app.get('/api/users', (req, res, next) => {
   const sql = `
@@ -121,10 +141,10 @@ app.get('/api/users', (req, res, next) => {
   // ------------------------
 })
 
-app.get('/api/users/:userId', (req, res, next) =>{
-  const {userId} = req.params;
-  if(!parseInt(userId,10)){
-    return res.status(400).json({ error: '"userId" must be a positive integer'})
+app.get('/api/users/:userId', (req, res, next) => {
+  const { userId } = req.params;
+  if (!parseInt(userId, 10)) {
+    return res.status(400).json({ error: '"userId" must be a positive integer' })
   }
   const sql = `
   select *
@@ -136,19 +156,47 @@ app.get('/api/users/:userId', (req, res, next) =>{
     .then(result => {
       console.log(result)
       const user = result.rows[0]
-      if(!user){
-        res.status(404).json({ error: `Cannot find user with "userId" ${userId}`})
+      if (!user) {
+        res.status(404).json({ error: `Cannot find user with "userId" ${userId}` })
       }
-      else{
+      else {
         res.status(200).json(user)
       }
     })
     .catch(err => {
       console.error(err)
-      res.status(500).json({error: 'An unexpected error occured'})
+      res.status(500).json({ error: 'An unexpected error occured' })
     })
 })
 
+app.get('/api/search', (req, res) => {
+  console.log(req.body)
+  console.log('hey work already')
+  const latitude = req.body.latitude
+  const longitude = req.body.longitude
+  const term = req.body.term
+
+  fetch(`https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=${term}`,
+    {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer TljklZD_vCJIAGuMk_wgWfXyabofiHuFIO2LE1DKCATtNuYKSHnj26z8i8Q448jAOoLNAZvT2X0ocNI7ReTfM9bIQpAGf4F7HyGfdwDGK3lBYGEXcuScqMfYu_lzXnYx'
+      }
+    })
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+      const restaurants = result
+      if (!result) {
+        res.status(404).json({ error: 'Cannot be found' })
+      }
+      res.status(200).json(restaurants)
+    })
+    .catch(err => {
+      console.error(err)
+      res.status(500).json({ error: 'An unexpected error occured' })
+    })
+})
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));

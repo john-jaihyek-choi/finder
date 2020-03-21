@@ -16,20 +16,24 @@
 //       .catch(err => console.error(err));
 //   }
 
-//   likeRestaurant(restaurant) {
-//     fetch('/api/likedRestaurants/', {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify(restaurant)
-//     })
-//       .then(res => res.json())
-//       .then(data => {
-//         const newArr = Array.from(this.state.restaurants);
-//         newArr.splice(newArr.indexOf(restaurant), 1);
-//         return this.setState({ restaurants: newArr, canRewind: false });
-//       })
-//       .catch(err => console.error(err));
-//   }
+
+  likeRestaurant(restaurant) {
+    fetch('/api/likedRestaurants/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+
+      body: JSON.stringify({restaurant})
+
+    })
+      .then(res => res.json())
+      .then(data => {
+        const newArr = Array.from(this.state.restaurants);
+        newArr.splice(newArr.indexOf(restaurant), 1);
+        return this.setState({ restaurants: newArr, canRewind: false });
+      })
+      .catch(err => console.error(err));
+  }
+
 
 //   handleClick(e) {
 //     if (e.currentTarget.id === 'like') return this.likeRestaurant(this.state.restaurants[this.state.index]);
@@ -37,10 +41,11 @@
 //     if (e.currentTarget.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false });
 //   }
 
-//   toLikedRestaurant (e) {
-//     this.props.getLikedRestaurants();
-//     this.props.setView('likedRestaurant');
-//   }
+  toLikedRestaurant (e) {
+    this.props.getLikedRestaurants();
+    this.props.setView('likedRestaurants');
+  }
+
 
 //   renderCard() {
 //     if (!this.state.restaurants.length) return <h1 className='text-pink text-center font-weight-bold'>No matches found</h1>;
@@ -75,34 +80,36 @@
 //     );
 //   }
 
-//   render() {
-//     return (
-//       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
-//         <div className='w-100 h-100 my-3'>
-//           <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
-//             <div className='d-flex align-items-center text-pink'><i className='fas fa-utensils fa-2x'></i></div>
-//             <div className='d-flex align-items-center text-pink' onClick={this.toLikedRestaurant}><i className='fas fa-heart fa-2x'></i></div>
-//           </div>
-//         </div>
-//         <div className='w-100 h-100 mb-3'>
-//           <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
-//             {this.renderCard()}
-//           </div>
-//         </div>
-//         <div className='w-100 h-100 mb-3'>
-//           <div className='h-100 d-flex align-items-center justify-content-around'>
-//             <button type='button' id='pass' className='stack-button pink btn button-outline shadow' onClick={this.handleClick}>
-//               <i className='fas fa-times fa-lg'></i>
-//             </button>
-//             <button type='button' id='rewind' className='stack-button yellow btn button-outline shadow' onClick={this.handleClick}>
-//               <i className='fas fa-undo fa-lg'></i>
-//             </button>
-//             <button type='button' id='like' className='stack-button green btn button-outline shadow' onClick={this.handleClick}>
-//               <i className='fas fa-heart fa-lg'></i>
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
+
+  render() {
+    return (
+      <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
+        <div className='w-100 h-100 my-3'>
+          <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
+            <div className='d-flex align-items-center text-white'><i className='fas fa-heart fa-2x'></i></div>
+            <div className='d-flex align-items-center text-pink'><i className='fas fa-utensils fa-2x'></i></div>
+            <div className='d-flex align-items-center text-secondary' onClick={this.toLikedRestaurant}><i className='fas fa-heart fa-2x'></i></div>
+          </div>
+        </div>
+        <div className='w-100 h-100 mb-3'>
+          <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
+            {this.renderCard()}
+          </div>
+        </div>
+        <div className='w-100 h-100 mb-3'>
+          <div className='h-100 d-flex align-items-center justify-content-around'>
+            <button type='button' id='pass' className='stack-button pink btn button-outline shadow' onClick={this.handleClick}>
+              <i className='fas fa-times fa-lg'></i>
+            </button>
+            <button type='button' id='rewind' className='stack-button yellow btn button-outline shadow' onClick={this.handleClick}>
+              <i className='fas fa-undo fa-lg'></i>
+            </button>
+            <button type='button' id='like' className='stack-button green btn button-outline shadow' onClick={this.handleClick}>
+              <i className='fas fa-heart fa-lg'></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
