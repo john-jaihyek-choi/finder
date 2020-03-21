@@ -16,27 +16,22 @@ export default class CardStack extends React.Component {
       .catch(err => console.error(err));
   }
 
-
   likeRestaurant(restaurant) {
     fetch('/api/likedRestaurants/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-
-      body: JSON.stringify({restaurant})
-
+      body: JSON.stringify({ restaurant })
     })
       .then(res => res.json())
-      .then(data => {
-        const newArr = Array.from(this.state.restaurants);
-        newArr.splice(newArr.indexOf(restaurant), 1);
-        return this.setState({ restaurants: newArr, canRewind: false });
-      })
       .catch(err => console.error(err));
+    const newArr = Array.from(this.state.restaurants);
+    newArr.splice(newArr.indexOf(restaurant), 1);
+    return this.setState({ restaurants: newArr, canRewind: false });
   }
 
 
   handleClick(e) {
-    if (e.currentTarget.id === 'like') return this.likeRestaurant(this.state.restaurants[this.state.index]);
+    if (e.currentTarget.id === 'like' && this.state.restaurants.length) return this.likeRestaurant(this.state.restaurants[this.state.index]);
     if (e.currentTarget.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true });
     if (e.currentTarget.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false });
   }
