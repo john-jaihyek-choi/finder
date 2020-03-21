@@ -20,9 +20,9 @@ app.post('/api/users', (req, res, next) => {
     values ($1)
     returning *
   `
-  const guesUsersValue = [10]
+  const guestUsersValue = [10]
 
-  db.query(guestUser, guesUsersValue)
+  db.query(guestUser, guestUsersValue)
     .then(result => {
       const [guestUserInfo] = result.rows
       req.session.userInfo = guestUserInfo
@@ -67,7 +67,7 @@ app.get('/api/likedRestaurants', (req, res, next) => {
     where "lr"."userId" = $1
   `
 
-  const currentUserId = [req.session.userInfo.userId] //on each login ("continue as a guest" for now), req.session should store the session info.
+  const currentUserId = [req.session.userInfo.userId]
 
   db.query(likedRestaurants, currentUserId)
     .then(result => res.json(result.rows))

@@ -11,8 +11,9 @@ export default class LikedReviewedCards extends React.Component {
         const rating = [];
         for (let i = 0; i < Math.floor(this.props.restaurant.rating); i++){
             rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
-        } 
-        if (!Number.isInteger(this.props.restaurant.rating)) {
+        }
+
+        if (!Number.isInteger(this.props.restaurant.rating) && this.props.restaurant.rating) {
             rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
         }
         
@@ -34,7 +35,7 @@ export default class LikedReviewedCards extends React.Component {
 
                     <div className='d-flex flex-wrap mt-4 text-pink'>
                         <i className="fas fa-comment-dots fa-2x col-6"></i>
-                        <i class="fas fa-trash-alt fa-2x col-6"></i>
+                        <i className="fas fa-trash-alt fa-2x col-6"></i>
                     </div>
                 </div>
             </div>

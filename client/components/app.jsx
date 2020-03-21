@@ -25,15 +25,13 @@ export default class App extends React.Component {
     });
   }
 
-  registerUser(userName) {
+  registerUser() {
     fetch('/api/users', {
       method: 'POST',
       headers: { 'Content-Type' : 'application/json' }
     })
       .then(result => result.json())
-      .then(newUser => {
-        console.log(newUser);
-      });
+      .catch(err => console.error(err))
   }
 
   getLikedRestaurants() {
@@ -57,8 +55,14 @@ export default class App extends React.Component {
     if (this.state.view === "cardstack") {
       return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} />;
     }
-    if (this.state.view === "likedRestaurants") {
-      return <LikedReviewedRestaurants setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} likedRestaurantsArr={this.state.likedRestaurants} />;
+    if (this.state.view === "likedRestaurants" || this.state.view === "reviewed") {
+      return (
+        <LikedReviewedRestaurants 
+          setView={this.setView} 
+          getLikedRestaurants={this.getLikedRestaurants} 
+          likedRestaurantsArr={this.state.likedRestaurants}
+          viewState={this.state.view}/>
+      )
     }
     if(this.state.view === "search") {
       return <CurrentSearch />;
