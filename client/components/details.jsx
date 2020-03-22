@@ -1,5 +1,4 @@
 import React from 'react';
-import apiKeys from '../../database/apiKeys.json';
 
 export default class Details extends React.Component {
   constructor(props) {
@@ -14,9 +13,15 @@ export default class Details extends React.Component {
 
   componentDidUpdate() {
     if (this.state.mapIsReady) {
-      this.map = new window.google.maps.Map(document.getElementById('map'), {
-        center: { lat: 37.80587, lng: -122.42058 },
-        zoom: 21,
+      const map = new window.google.maps.Map(document.getElementById('map'), {
+        center: { lat: this.props.restaurant.coordinates.latitude, lng: this.props.restaurant.coordinates.longitude },
+        zoom: 18,
+      });
+
+      const marker = new google.maps.Marker({
+        position: { lat: this.props.restaurant.coordinates.latitude, lng: this.props.restaurant.coordinates.longitude },
+        map: map,
+        title: 'Restaurant'
       });
     }
   }
