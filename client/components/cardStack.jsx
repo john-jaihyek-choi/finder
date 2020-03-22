@@ -1,12 +1,14 @@
 import React from 'react';
+import Details from './details';
 import restaurantData from '../../database/restaurants.json';
 
 export default class CardStack extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { restaurants: restaurantData, index: 0, canRewind: false };
+    this.state = { restaurants: restaurantData, index: 0, canRewind: false, showDetails: false };
     this.handleClick = this.handleClick.bind(this);
     this.toLikedRestaurant = this.toLikedRestaurant.bind(this);
+    this.toCardStack = this.toCardStack.bind(this);
   }
 
   getRestaurants() {
@@ -34,6 +36,7 @@ export default class CardStack extends React.Component {
     if (e.currentTarget.id === 'like' && this.state.restaurants.length) return this.likeRestaurant(this.state.restaurants[this.state.index].yelpId, this.state.index);
     if (e.currentTarget.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true });
     if (e.currentTarget.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false });
+    if (e.currentTarget.id === 'details') return this.setState({ showDetails: true });
   }
 
   toLikedRestaurant (e) {
@@ -41,18 +44,33 @@ export default class CardStack extends React.Component {
     this.props.setView('likedRestaurants');
   }
 
+  toCardStack() {
+    this.setState({ showDetails: false });
+  }
+
   renderCard() {
-    if (!this.state.restaurants.length) return <h1 className='text-pink text-center font-weight-bold'>No matches found</h1>;
-  
+
+    if (!this.state.restaurants.length) {
+      return (
+        <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
+          <h1 className='text-pink text-center font-weight-bold'>No matches found</h1>
+        </div>
+      );
+    }
+
+
     const price = [];
-    for (let i = 0; i < this.state.restaurants[this.state.index].price.length; i++) price.push(<i className='fas fa-dollar-sign' key={'price' + i}></i>);
+    for (let i = 0; i < this.state.restaurants[this.state.index].price.length; i++) price.push(<i className='fas fa-dollar-sign fa-sm mr-1' key={'price' + i}></i>);
 
     const rating = [];
-    for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className='fas fa-star' key={'rating' + i}></i>);
-    if (!Number.isInteger(this.state.restaurants[this.state.index].rating) && this.state.restaurants[this.state.index].rating) rating.push(<i className='fas fa-star-half' key={'rating' + rating.length}></i>);
+
+    for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
+    if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
+
+    if (this.state.showDetails) return <Details price={price} rating={rating} restaurant={this.state.restaurants[this.state.index]} toCardStack={this.toCardStack} />;
 
     return (
-      <React.Fragment>
+      <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
         <div className='w-100 h-100 text-center text-pink d-flex align-items-center justify-content-center'>
           <div className='w-50'>{rating}</div> |
           <div className='w-50'>{price}</div>
@@ -60,6 +78,8 @@ export default class CardStack extends React.Component {
         <div className='w-100 h-100'>
           <img
             className='rounded'
+            id='details'
+            onClick={this.handleClick}
             src={this.state.restaurants[this.state.index].storeImageUrl}
             alt={this.state.restaurants[this.state.index].restaurantName}
             style={{ objectFit: 'cover', height: '250px', width: '100%' }} />
@@ -69,7 +89,7 @@ export default class CardStack extends React.Component {
           <div>{this.state.restaurants[this.state.index].location.city}, {this.state.restaurants[this.state.index].location.state}</div>
           <div><i className="fas fa-map-marker-alt mr-2"></i>{(this.state.restaurants[this.state.index].distance * 0.000621371).toFixed(1)} mi</div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 
@@ -84,12 +104,10 @@ export default class CardStack extends React.Component {
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
-          <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
-            {this.renderCard()}
-          </div>
+          {this.renderCard()}
         </div>
         <div className='w-100 h-100 mb-3'>
-          <div className='h-100 d-flex align-items-center justify-content-around'>
+          <div className='h-100 pb-4 d-flex align-items-end justify-content-around'>
             <button type='button' id='pass' className='stack-button pink btn button-outline shadow' onClick={this.handleClick}>
               <i className='fas fa-times fa-lg'></i>
             </button>

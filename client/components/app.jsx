@@ -41,7 +41,7 @@ export default class App extends React.Component {
       .then(likedRestaurantsArr => {
         return this.setState({
           likedRestaurants: likedRestaurantsArr
-        })  
+        })
       })
   }
 
@@ -56,11 +56,11 @@ export default class App extends React.Component {
   }
 
 
-  render() { 
-    if(this.state.view === "login") {
+  render() {
+    if (this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
-    if(this.state.view === "splash") {
+    if (this.state.view === "splash") {
       return <Splash setView={this.setView} />;
     }
     if (this.state.view === "cardstack") {
@@ -77,7 +77,7 @@ export default class App extends React.Component {
           viewState={this.state.view}/>
       )
     }
-    if(this.state.view === "search") {
+    if (this.state.view === "search") {
       return <CurrentSearch />;
     }
   }

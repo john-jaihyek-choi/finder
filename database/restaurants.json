@@ -152,8 +152,8 @@
         "open": [
           {
             "is_overnight": false,
-            "start": "1730",
-            "end": "2200",
+            "start": "0830",
+            "end": "1600",
             "day": 0
           },
           {
@@ -164,8 +164,8 @@
           },
           {
             "is_overnight": false,
-            "start": "1730",
-            "end": "2200",
+            "start": "0030",
+            "end": "1200",
             "day": 2
           },
           {
@@ -185,12 +185,6 @@
             "start": "1730",
             "end": "2200",
             "day": 5
-          },
-          {
-            "is_overnight": false,
-            "start": "1730",
-            "end": "2200",
-            "day": 6
           }
         ],
         "hours_type": "REGULAR",
@@ -226,8 +220,8 @@
       }
     ],
     "coordinates": {
-      "latitude": 37.80587,
-      "longitude": -122.42058
+      "latitude": 33.650561,
+      "longitude": -117.74425
     },
     "reviews": [
       {
