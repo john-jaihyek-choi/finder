@@ -53,11 +53,12 @@ export default class Details extends React.Component {
     const rating = [];
     for (let i = 0; i < Math.floor(this.props.restaurant.reviews[this.state.infoIndex].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
     if (!Number.isInteger(this.props.restaurant.reviews[this.state.infoIndex].rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
+
     return (
       <div className='col-11 d-flex flex-column align-items-center justify-content-center'>
-        <div >{this.props.restaurant.reviews[this.state.infoIndex].text}</div>
-        <div>{`- ${this.props.restaurant.reviews[this.state.infoIndex].user.name}`}</div>
-        <div>{rating}</div>
+        <div className='mb-2'>{this.props.restaurant.reviews[this.state.infoIndex].text}</div>
+        <div className='mb-2'>{`- ${this.props.restaurant.reviews[this.state.infoIndex].user.name}`}</div>
+        <div className='mb-2'>{rating}</div>
       </div>
     );
   }
@@ -73,7 +74,7 @@ export default class Details extends React.Component {
             alt={this.props.restaurant.restaurantName}
             style={{ objectFit: 'cover', objectPosition: 'center bottom', height: '200px', width: '100%' }} />
         </div>
-        <div className='w-100 h-25 d-flex flex-column details-text' onClick={() => this.setState({ photoIndex: (this.state.photoIndex + 1) % this.props.restaurant.photosUrl.length})}>
+        <div className='w-100 h-25 mt-2 d-flex flex-column details-text' onClick={() => this.setState({ photoIndex: (this.state.photoIndex + 1) % this.props.restaurant.photosUrl.length})}>
           <div className='w-100 h-100 text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center'>
             <div className=''>{this.props.restaurant.restaurantName}</div>
             <div className=''>{this.props.restaurant.location.city}, {this.props.restaurant.location.state}</div>
