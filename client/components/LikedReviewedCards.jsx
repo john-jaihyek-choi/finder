@@ -43,8 +43,12 @@ export default class LikedReviewedCards extends React.Component {
                     </div>
 
                     <div className='d-flex flex-wrap mt-4 pt-2 text-pink'>
-                        <i className="fas fa-comment-dots fa-2x col-6"></i>
-                        <i className="fas fa-trash-alt fa-2x col-6"></i>
+                        {this.props.viewState === "likedRestaurants"
+                            ? <><i className="fas fa-comment-dots fa-2x col-6"></i>
+                                <i className="fas fa-trash-alt fa-2x col-6"></i></>
+                            : <><i class="fas fa-info-circle fa-2x col-6"></i>
+                                <i class="fas fa-edit fa-2x col-6"></i></>
+                        }
                     </div>
                 </div>
             </div>
