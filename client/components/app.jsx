@@ -11,12 +11,13 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       view: "login",
-      userId: null,
-      likedRestaurants: []
+      likedRestaurants: [],
+      reviewedRestaurants: []
     }
     this.setView = this.setView.bind(this);
     this.registerUser = this.registerUser.bind(this);
     this.getLikedRestaurants = this.getLikedRestaurants.bind(this);
+    this.getReviewedRestaurants = this.getReviewedRestaurants.bind(this);
   }
 
   setView(viewMode) {
@@ -44,6 +45,16 @@ export default class App extends React.Component {
       })
   }
 
+  getReviewedRestaurants() {
+    fetch('/api/reviewedRestaurants')
+      .then(result => result.json())
+      .then(reviewedRestaurants => {
+        return this.setState({
+          reviewedRestaurants: reviewedRestaurants
+        })
+      })
+  }
+
 
   render() { 
     if(this.state.view === "login") {
@@ -60,7 +71,9 @@ export default class App extends React.Component {
         <LikedReviewedRestaurants 
           setView={this.setView} 
           getLikedRestaurants={this.getLikedRestaurants} 
+          getReviewedRestaurants={this.getReviewedRestaurants}
           likedRestaurantsArr={this.state.likedRestaurants}
+          reviewedRestaurantsArr={this.state.reviewedRestaurants}
           viewState={this.state.view}/>
       )
     }
