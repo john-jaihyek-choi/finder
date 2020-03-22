@@ -1,11 +1,11 @@
 const fetch = require('node-fetch');
-const apiKey = require('../database/apiKeys.json')
+const apiKey = process.env.YELP_API_KEY;
 
 const getRestaurantDetails = function (yelpId){
 
   return fetch(`https://api.yelp.com/v3/businesses/${yelpId}`, {
     headers: {
-      'Authorization': apiKey.yelpAPI
+      'Authorization': apiKey
     }
   })
   .then(response => response.json())
@@ -21,7 +21,7 @@ const getRestaurantDetails = function (yelpId){
 const getReviews = function (yelpId){
   return fetch(`https://api.yelp.com/v3/businesses/${yelpId}/reviews`,{
     headers: {
-      'Authorization': apiKey.yelpAPI
+      'Authorization': apiKey
     }
   } )
   .then(response => response.json())
@@ -33,7 +33,7 @@ function searchAllRestaurants  (lat , long, term){
 
   return fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=${term}`, {
     headers: {
-      'Authorization': apiKey.yelpAPI
+      'Authorization': apiKey
     }
   })
     .then(response => response.json())
