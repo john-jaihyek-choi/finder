@@ -3,8 +3,7 @@ import React from 'react';
 export default class Details extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { mapIsReady: false, index: 3 };
-    this.cycleLength = 4;
+    this.state = { mapIsReady: false, infoIndex: 3, photoIndex: 0 };
   }
 
   componentDidMount() {
@@ -25,7 +24,7 @@ export default class Details extends React.Component {
       });
     }
 
-    if (prevProps.restaurant !== this.props.restaurant) this.setState({ index: 3 });
+    if (prevProps.restaurant !== this.props.restaurant) this.setState({ infoIndex: 3, photoIndex: 0 });
   }
 
   calculateTime(time) {
@@ -49,15 +48,15 @@ export default class Details extends React.Component {
     });
   }
 
-  renderCycle() {
-    if (this.state.index === 3) return this.renderHours();
+  cycleInfo() {
+    if (this.state.infoIndex === 3) return this.renderHours();
     const rating = [];
-    for (let i = 0; i < Math.floor(this.props.restaurant.reviews[this.state.index].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
-    if (!Number.isInteger(this.props.restaurant.reviews[this.state.index].rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
+    for (let i = 0; i < Math.floor(this.props.restaurant.reviews[this.state.infoIndex].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
+    if (!Number.isInteger(this.props.restaurant.reviews[this.state.infoIndex].rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
     return (
       <div className='col-11 d-flex flex-column align-items-center justify-content-center'>
-        <div >{this.props.restaurant.reviews[this.state.index].text}</div>
-        <div>{`- ${this.props.restaurant.reviews[this.state.index].user.name}`}</div>
+        <div >{this.props.restaurant.reviews[this.state.infoIndex].text}</div>
+        <div>{`- ${this.props.restaurant.reviews[this.state.infoIndex].user.name}`}</div>
         <div>{rating}</div>
       </div>
     );
@@ -70,12 +69,11 @@ export default class Details extends React.Component {
           <img
             className='rounded'
             onClick={() => this.props.toCardStack()}
-            src={this.props.restaurant.storeImageUrl}
+            src={this.props.restaurant.photosUrl[this.state.photoIndex]}
             alt={this.props.restaurant.restaurantName}
             style={{ objectFit: 'cover', objectPosition: 'center bottom', height: '200px', width: '100%' }} />
         </div>
-
-        <div className='w-100 h-25 d-flex flex-column details-text'>
+        <div className='w-100 h-25 d-flex flex-column details-text' onClick={() => this.setState({ photoIndex: (this.state.photoIndex + 1) % this.props.restaurant.photosUrl.length})}>
           <div className='w-100 h-100 text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center'>
             <div className=''>{this.props.restaurant.restaurantName}</div>
             <div className=''>{this.props.restaurant.location.city}, {this.props.restaurant.location.state}</div>
@@ -88,8 +86,8 @@ export default class Details extends React.Component {
         </div>
         <div
           className='w-100 h-75 row mb-2 text-center text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center details-text'
-          onClick={() => this.setState({ index: (this.state.index + 1) % this.cycleLength })}>
-          {this.renderCycle()}
+          onClick={() => this.setState({ infoIndex: (this.state.infoIndex + 1) % (this.props.restaurant.reviews.length + 1) })}>
+          {this.cycleInfo()}
         </div>
         <div className='w-100 h-75' id="map"></div>
       </div>
