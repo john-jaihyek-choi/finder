@@ -6,15 +6,15 @@ export default class CurrentSearch extends React.Component {
     this.state = { food: '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.setView = this.setView.bind(this);
+    // this.setView = this.setView.bind(this);
     this.currentQuery = '';
   }
 
-  setView(viewMode) {
-    this.setState({
-      view: viewMode
-    });
-  }
+  // setView(viewMode) {
+  //   this.setState({
+  //     view: viewMode
+  //   });
+  // }
 
   handleChange(event) {
     this.setState({ food: event.target.value })
@@ -24,7 +24,7 @@ export default class CurrentSearch extends React.Component {
     event.preventDefault();
     this.currentQuery = this.state.food;
     this.setState({ food:''});
-    this.setView({ view: 'cardstack' });
+    this.props.setView('cardstack');
 }
 
   render() {

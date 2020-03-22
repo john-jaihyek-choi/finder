@@ -2,9 +2,9 @@ import React from 'react';
 import IntroPages from './introPages';
 import Splash from './splash';
 import CardStack from './cardStack';
-import GuestLogIn from './guestLogIn'
-import CurrentSearch from './currentSearch'
-import LikedReviewedRestaurants from './likedReviewedRestaurants'
+import GuestLogIn from './guestLogIn';
+import CurrentSearch from './currentSearch';
+import LikedReviewedRestaurants from './likedReviewedRestaurants';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -68,9 +68,9 @@ export default class App extends React.Component {
     }
     if (this.state.view === "likedRestaurants" || this.state.view === "reviewed") {
       return (
-        <LikedReviewedRestaurants 
-          setView={this.setView} 
-          getLikedRestaurants={this.getLikedRestaurants} 
+        <LikedReviewedRestaurants
+          setView={this.setView}
+          getLikedRestaurants={this.getLikedRestaurants}
           getReviewedRestaurants={this.getReviewedRestaurants}
           likedRestaurantsArr={this.state.likedRestaurants}
           reviewedRestaurantsArr={this.state.reviewedRestaurants}
@@ -78,7 +78,7 @@ export default class App extends React.Component {
       )
     }
     if (this.state.view === "search") {
-      return <CurrentSearch />;
+      return <CurrentSearch setView={this.setView} />;
     }
   }
 }

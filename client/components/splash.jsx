@@ -12,7 +12,7 @@ export default function Splash(props) {
         <button
           type='button'
           className='w-75 btn btn-outline-light button-outline font-weight-bold'
-          onClick={() => props.setView('cardstack')}>
+          onClick={() => props.setView('search')}>
           LET'S EAT
         </button>
       </div>
