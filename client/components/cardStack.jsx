@@ -5,7 +5,7 @@ import restaurantData from '../../database/restaurants.json';
 export default class CardStack extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { restaurants: restaurantData, index: 0, canRewind: false, showDetails: false };
+    this.state = { restaurants: restaurantData, details: null, index: 0, canRewind: false, showDetails: false };
     this.handleClick = this.handleClick.bind(this);
     this.toLikedRestaurant = this.toLikedRestaurant.bind(this);
     this.toCardStack = this.toCardStack.bind(this);
@@ -15,6 +15,13 @@ export default class CardStack extends React.Component {
     fetch('/api/restaurants/')
       .then(res => res.json())
       .then(data => this.setState({ restaurants: data }))
+      .catch(err => console.error(err));
+  }
+
+  getRestaurantDetails(yelpId) {
+    fetch(`/api/restaurants/${yelpId}`)
+      .then(res => res.json())
+      .then(data => this.setState({ details: data }))
       .catch(err => console.error(err));
   }
 
@@ -49,7 +56,6 @@ export default class CardStack extends React.Component {
   }
 
   renderCard() {
-
     if (!this.state.restaurants.length) {
       return (
         <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
@@ -58,12 +64,10 @@ export default class CardStack extends React.Component {
       );
     }
 
-
     const price = [];
     for (let i = 0; i < this.state.restaurants[this.state.index].price.length; i++) price.push(<i className='fas fa-dollar-sign fa-sm mr-1' key={'price' + i}></i>);
 
     const rating = [];
-
     for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
     if (!Number.isInteger(this.state.restaurants[this.state.index].rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
 
