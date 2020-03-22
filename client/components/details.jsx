@@ -13,7 +13,7 @@ export default class Details extends React.Component {
 
   componentDidUpdate() {
     if (this.state.mapIsReady) {
-      const map = new window.google.maps.Map(document.getElementById('map'), {
+      const map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: this.props.restaurant.coordinates.latitude, lng: this.props.restaurant.coordinates.longitude },
         zoom: 18,
       });
