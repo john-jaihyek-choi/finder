@@ -68,9 +68,9 @@ export default class App extends React.Component {
     }
     if (this.state.view === "likedRestaurants" || this.state.view === "reviewed") {
       return (
-        <LikedReviewedRestaurants 
-          setView={this.setView} 
-          getLikedRestaurants={this.getLikedRestaurants} 
+        <LikedReviewedRestaurants
+          setView={this.setView}
+          getLikedRestaurants={this.getLikedRestaurants}
           getReviewedRestaurants={this.getReviewedRestaurants}
           likedRestaurantsArr={this.state.likedRestaurants}
           reviewedRestaurantsArr={this.state.reviewedRestaurants}
@@ -78,7 +78,7 @@ export default class App extends React.Component {
       )
     }
     if (this.state.view === "search") {
-      return <CurrentSearch />;
+      return <CurrentSearch setView={this.setView} />;
     }
   }
 }

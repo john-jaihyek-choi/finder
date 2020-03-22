@@ -17,6 +17,7 @@ export default class CurrentSearch extends React.Component {
     event.preventDefault();
     this.currentQuery = this.state.food;
     this.setState({ food:''});
+    this.props.setView('cardstack');
 }
 
   render() {
@@ -46,6 +47,13 @@ export default class CurrentSearch extends React.Component {
           <div className="d-flex justify-content-center mt-5">
             <h5>Or try one of our suggestions below:</h5>
           </div>
+          <ul className="foodCategory pink">
+            <li onClick={this.handleClick}>Burgers</li>
+            <li onClick={this.handleClick}>Italian</li>
+            <li onClick={this.handleClick}>Sushi</li>
+            <li onClick={this.handleClick}>Chinese</li>
+            <li onClick={this.handleClick}>Thai</li>
+          </ul>
         </div>
       </div>
     );
