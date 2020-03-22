@@ -4,7 +4,6 @@ export default class Details extends React.Component {
   constructor(props) {
     super(props);
     this.state = { mapIsReady: false, index: 3 };
-    this.map = null;
     this.cycleLength = 4;
   }
 
@@ -12,7 +11,7 @@ export default class Details extends React.Component {
     this.setState({ mapIsReady: true });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     if (this.state.mapIsReady) {
       const map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: this.props.restaurant.coordinates.latitude, lng: this.props.restaurant.coordinates.longitude },
@@ -25,6 +24,8 @@ export default class Details extends React.Component {
         title: 'Restaurant'
       });
     }
+
+    if (prevProps.restaurant !== this.props.restaurant) this.setState({ index: 3 });
   }
 
   calculateTime(time) {
