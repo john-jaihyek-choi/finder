@@ -16,8 +16,8 @@ export default class LikedReviewedCards extends React.Component {
         if (!Number.isInteger(this.props.restaurant.rating) && this.props.restaurant.rating) {
             rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
         }
-        
-        return (             
+
+        return (      
             <div className='w-100 my-1 d-flex flex-wrap align-items-center justify-content-center card rounded cardShadow' style={{ height: '200px' }}>
                 <div className='d-flex align-items-center text-secondary col-7 p-1'>
                     <img className="restaurantPhoto" src={this.props.restaurant.photosUrl[0]}/>
@@ -28,12 +28,21 @@ export default class LikedReviewedCards extends React.Component {
                     <h6>{this.props.restaurant.restaurantName}</h6>
                     </div>
 
-                    <div className='d-flex flex-wrap mt-4 mb-2 text-pink'>
-                        <div className='w-50 col-6'>{rating}</div> |
-                        <div className='w-50 col-5'>{price}</div>
+                    <div className='d-flex flex-wrap mt-2 mb-4 text-pink'>
+                        <div className="w-50 col-6">
+                            {this.props.viewState === "likedRestaurants" 
+                                ? rating 
+                                : <i class="far fa-thumbs-up fa-2x"></i>}
+                        </div> 
+                        {this.props.viewState === "likedRestaurants" ? "|" : ""}
+                        <div className={`w-50 ${this.props.viewState === "likedRestaurants" ? "col-5" : "col-6"}`}>
+                            {this.props.viewState === "likedRestaurants" 
+                                ? price 
+                                : <i class="far fa-thumbs-down fa-2x"></i>}
+                        </div>
                     </div>
 
-                    <div className='d-flex flex-wrap mt-4 text-pink'>
+                    <div className='d-flex flex-wrap mt-4 pt-2 text-pink'>
                         <i className="fas fa-comment-dots fa-2x col-6"></i>
                         <i className="fas fa-trash-alt fa-2x col-6"></i>
                     </div>

@@ -55,7 +55,8 @@ export default class LikedReviewedRestaurants extends React.Component {
                                 key={restaurantsArr.length === 0
                                     ? "noRestaurantArr"
                                     : restaurant.yelpId}
-                                restaurant={restaurant}/>
+                                restaurant={restaurant}
+                                viewState={this.props.viewState}/>
                         )
                 }
                 </div>
