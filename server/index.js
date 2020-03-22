@@ -93,6 +93,17 @@ app.post('/api/likedRestaurants', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/likedRestaurants', (req, res, next) => {
+  const likedRestaurant = `
+    delete from "likedRestaurants"
+    where "userId"=$1 AND "yelpId"=$2
+    returning *
+  `
+  const values = [68, WavvLdfdP6g8aZTtbBQHTw]
+  db.query(likedRestaurant, values)
+    .then(result => console.log(result));
+})
+
 app.get('/api/users', (req, res, next) => {
   const sql = `
   select *
