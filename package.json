@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm-run-all --silent --parallel dev:*",
     "dev:client": "webpack-dev-server",
-    "dev:server": "nodemon server/index.js",
+    "dev:server": "nodemon dotenv/config server/index.js",
     "db:import": "source .env; psql $DATABASE_URL < database/dump.sql",
     "db:export": "source .env; pg_dump -c -O $DATABASE_URL > database/dump.sql",
     "build": "webpack --mode=production",
