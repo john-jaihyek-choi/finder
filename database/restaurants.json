@@ -143,17 +143,17 @@
     "storeImageUrl": "https://s3-media1.fl.yelpcdn.com/bphoto/HF8XDaVO0HOQ-QSKXBUjaw/o.jpg",
     "distance": 2000.23,
     "photosUrl": [
-      "https://s3-media2.fl.yelpcdn.com/bphoto/CPc91bGzKBe95aM5edjhhQ/o.jpg",
-      "https://s3-media4.fl.yelpcdn.com/bphoto/FmXn6cYO1Mm03UNO5cbOqw/o.jpg",
-      "https://s3-media4.fl.yelpcdn.com/bphoto/HZVDyYaghwPl2kVbvHuHjA/o.jpg"
+      "https://s3-media1.fl.yelpcdn.com/bphoto/HF8XDaVO0HOQ-QSKXBUjaw/o.jpg",
+      "https://s3-media4.fl.yelpcdn.com/bphoto/ojlRY_fdF4wHNSEp1pjH6w/o.jpg",
+      "https://s3-media3.fl.yelpcdn.com/bphoto/80l_WUceSeOuqKNhjt-w-w/o.jpg"
     ],
     "hours": [
       {
         "open": [
           {
             "is_overnight": false,
-            "start": "1730",
-            "end": "2200",
+            "start": "0830",
+            "end": "1600",
             "day": 0
           },
           {
@@ -164,8 +164,8 @@
           },
           {
             "is_overnight": false,
-            "start": "1730",
-            "end": "2200",
+            "start": "0030",
+            "end": "1200",
             "day": 2
           },
           {
@@ -185,12 +185,6 @@
             "start": "1730",
             "end": "2200",
             "day": 5
-          },
-          {
-            "is_overnight": false,
-            "start": "1730",
-            "end": "2200",
-            "day": 6
           }
         ],
         "hours_type": "REGULAR",
@@ -226,8 +220,8 @@
       }
     ],
     "coordinates": {
-      "latitude": 37.80587,
-      "longitude": -122.42058
+      "latitude": 33.650561,
+      "longitude": -117.74425
     },
     "reviews": [
       {
@@ -280,9 +274,9 @@
     "storeImageUrl": "https://s3-media2.fl.yelpcdn.com/bphoto/j8TswkrypuPeKDrWb7SEEg/o.jpg",
     "distance": 2700.23,
     "photosUrl": [
-      "https://s3-media2.fl.yelpcdn.com/bphoto/CPc91bGzKBe95aM5edjhhQ/o.jpg",
-      "https://s3-media4.fl.yelpcdn.com/bphoto/FmXn6cYO1Mm03UNO5cbOqw/o.jpg",
-      "https://s3-media4.fl.yelpcdn.com/bphoto/HZVDyYaghwPl2kVbvHuHjA/o.jpg"
+      "https://s3-media2.fl.yelpcdn.com/bphoto/j8TswkrypuPeKDrWb7SEEg/o.jpg",
+      "https://s3-media1.fl.yelpcdn.com/bphoto/CrygR8VwpgiO0LbBtA7oCw/o.jpg",
+      "https://s3-media1.fl.yelpcdn.com/bphoto/j1GhUVHaFSeHsqbFdhuCLQ/o.jpg"
     ],
     "hours": [
       {
@@ -374,9 +368,9 @@
           "id": "W8UK02IDdRS2GL_66fuq6w",
           "profile_url": "https://www.yelp.com/user_details?userid=W8UK02IDdRS2GL_66fuq6w",
           "image_url": "https://s3-media3.fl.yelpcdn.com/photo/iwoAD12zkONZxJ94ChAaMg/o.jpg",
-          "name": "Ella A."
+          "name": "Melissa O."
         },
-        "text": "Went back again to this place since the last time i visited the bay area 5 months ago, and nothing has changed. Still the sketchy Mission, Still the cashier...",
+        "text": "Just another place I miss now that I don't live in SoCal anymore. Sigh. I would give Fukada a giant thumbs up, any day, no question, for the lunch specials...",
         "time_created": "2016-08-29 00:41:13",
         "url": "https://www.yelp.com/biz/la-palma-mexicatessen-san-francisco?hrid=hp8hAJ-AnlpqxCCu7kyCWA&adjust_creative=0sidDfoTIHle5vvHEBvF0w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_reviews&utm_source=0sidDfoTIHle5vvHEBvF0w"
       },
@@ -387,9 +381,9 @@
           "id": "rk-MwIUejOj6LWFkBwZ98Q",
           "profile_url": "https://www.yelp.com/user_details?userid=rk-MwIUejOj6LWFkBwZ98Q",
           "image_url": null,
-          "name": "Yanni L."
+          "name": "Bruce F."
         },
-        "text": "The \"restaurant\" is inside a small deli so there is no sit down area. Just grab and go.\n\nInside, they sell individually packaged ingredients so that you can...",
+        "text": "This is one of the few places where I can absolutely say I want to come back and try their entire menu..however, that spicy tuna don is amazing, it's hard...",
         "time_created": "2016-09-28 08:55:29",
         "url": "https://www.yelp.com/biz/la-palma-mexicatessen-san-francisco?hrid=fj87uymFDJbq0Cy5hXTHIA&adjust_creative=0sidDfoTIHle5vvHEBvF0w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_reviews&utm_source=0sidDfoTIHle5vvHEBvF0w"
       },
@@ -400,9 +394,9 @@
           "id": "rpOyqD_893cqmDAtJLbdog",
           "profile_url": "https://www.yelp.com/user_details?userid=rpOyqD_893cqmDAtJLbdog",
           "image_url": null,
-          "name": "Suavecito M."
+          "name": "Shirley W."
         },
-        "text": "Dear Mission District,\n\nI miss you and your many delicious late night food establishments and vibrant atmosphere.  I miss the way you sound and smell on a...",
+        "text": "We came in about 10mins after it opened on Sunday afternoon, and the restaurant was already filled with people! We didn't wait terribly long, but we just...",
         "time_created": "2016-08-10 07:56:44",
         "url": "https://www.yelp.com/biz/la-palma-mexicatessen-san-francisco?hrid=m_tnQox9jqWeIrU87sN-IQ&adjust_creative=0sidDfoTIHle5vvHEBvF0w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_reviews&utm_source=0sidDfoTIHle5vvHEBvF0w"
       }

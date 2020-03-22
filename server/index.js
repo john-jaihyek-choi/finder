@@ -1,4 +1,4 @@
-require('dotenv/config');
+require('dotenv').config();
 const express = require('express');
 const {searchAllRestaurants} = require('./yelp')
 
@@ -66,7 +66,7 @@ app.get('/api/likedRestaurants', (req, res, next) => {
     join "likedRestaurants" as "lr" using ("yelpId")
     where "lr"."userId" = $1
   `
-  
+
   const currentUserId = [req.session.userInfo.userId]
 
   db.query(likedRestaurants, currentUserId)
@@ -193,8 +193,6 @@ app.get('/api/search', (req, res, next) => {
   .then(restaurants => res.status(200).json(restaurants))
   .catch( err => next(err))
 })
-
-
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
