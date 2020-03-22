@@ -49,7 +49,7 @@ export default class Details extends React.Component {
 
   render() {
     return (
-      <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '650px' }}>
+      <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '600px' }}>
         <div className='w-100 h-50'>
           <img
             className='rounded'
@@ -58,16 +58,21 @@ export default class Details extends React.Component {
             alt={this.props.restaurant.restaurantName}
             style={{ objectFit: 'cover', objectPosition: 'center bottom', height: '200px', width: '100%' }} />
         </div>
+
+        <div className='w-100 h-25 d-flex flex-column details-text'>
+          <div className='w-100 h-100 text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center'>
+            <div className=''>{this.props.restaurant.restaurantName}</div>
+            <div className=''>{this.props.restaurant.location.city}, {this.props.restaurant.location.state}</div>
+          </div>
           <div className='w-100 h-25 text-center text-pink font-weight-bold d-flex align-items-center justify-content-center'>
-          <div className='w-100'>{this.props.rating}</div> |
-          <div className='w-100'>{this.props.price}</div> |
-          <div className='w-100'><i className="fas fa-map-marker-alt mr-2"></i>{(this.props.restaurant.distance * 0.000621371).toFixed(1)} mi</div>
+            <div className='w-100'>{this.props.rating}</div> |
+            <div className='w-100'>{this.props.price}</div> |
+            <div className='w-100'><i className="fas fa-map-marker-alt mr-2"></i>{(this.props.restaurant.distance * 0.000621371).toFixed(1)} mi</div>
+          </div>
         </div>
-        <div className='w-100 h-25 text-center text-pink font-weight-bold d-flex align-items-center justify-content-center'>
-          <div className='w-100'>{this.props.restaurant.restaurantName}</div> |
-          <div className='w-100'>{this.props.restaurant.location.city}, {this.props.restaurant.location.state}</div>
-        </div>
+
         <div className='w-100 h-75 mb-2 text-center text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center details-text'>
+          <h6>Hours</h6>
           {this.renderHours()}
         </div>
         <div className='w-100 h-75' id="map"></div>
