@@ -3,8 +3,9 @@ import React from 'react';
 export default class Details extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { mapIsReady: false };
+    this.state = { mapIsReady: false, index: 3 };
     this.map = null;
+    this.cycleLength = 4;
   }
 
   componentDidMount() {
@@ -47,6 +48,20 @@ export default class Details extends React.Component {
     });
   }
 
+  renderCycle() {
+    if (this.state.index === 3) return this.renderHours();
+    const rating = [];
+    for (let i = 0; i < Math.floor(this.props.restaurant.reviews[this.state.index].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
+    if (!Number.isInteger(this.props.restaurant.reviews[this.state.index].rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
+    return (
+      <div className='col-11 d-flex flex-column align-items-center justify-content-center'>
+        <div >{this.props.restaurant.reviews[this.state.index].text}</div>
+        <div>{`- ${this.props.restaurant.reviews[this.state.index].user.name}`}</div>
+        <div>{rating}</div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '600px' }}>
@@ -70,10 +85,10 @@ export default class Details extends React.Component {
             <div className='w-100'><i className="fas fa-map-marker-alt mr-2"></i>{(this.props.restaurant.distance * 0.000621371).toFixed(1)} mi</div>
           </div>
         </div>
-
-        <div className='w-100 h-75 mb-2 text-center text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center details-text'>
-          <h6>Hours</h6>
-          {this.renderHours()}
+        <div
+          className='w-100 h-75 row mb-2 text-center text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center details-text'
+          onClick={() => this.setState({ index: (this.state.index + 1) % this.cycleLength })}>
+          {this.renderCycle()}
         </div>
         <div className='w-100 h-75' id="map"></div>
       </div>
