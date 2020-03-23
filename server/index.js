@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const {searchAllRestaurants} = require('./yelp')
+const {getReviews} = require('./yelp')
+const {getRestaurantDetails} = require('./yelp')
 
 const db = require('./database');
 const ClientError = require('./client-error');
@@ -122,7 +124,6 @@ app.get('/api/users/:userId', (req, res, next) => {
   const params = [userId];
   db.query(sql, params)
     .then(result => {
-      console.log(result)
       const user = result.rows[0]
       if (!user) {
         res.status(404).json({ error: `Cannot find user with "userId" ${userId}` })
@@ -193,6 +194,46 @@ app.get('/api/search', (req, res, next) => {
   .then(restaurants => res.status(200).json(restaurants))
   .catch( err => next(err))
 })
+
+app.get('/api/view', (req, res, next) => {
+  const yelpId = req.body.yelpId;
+
+  getRestaurantDetails(yelpId)
+    .then(newObj => {
+      const yelpId = newObj.id
+      const photosUrl = JSON.stringify(newObj.photos)
+      const hours = JSON.stringify(newObj.hours || [])
+      const reviews = JSON.stringify(newObj.reviews)
+
+      const sql = `
+      update "restaurants"
+      set
+      "photosUrl" = $2,
+      "hours" = $3,
+      "reviews" = $4
+      where "yelpId" = $1;
+      `
+      const restaurantRow = [yelpId, photosUrl, hours, reviews]
+
+      db.query(sql, restaurantRow)
+      .then( result => {
+        const sql =`
+        select *
+        from "restaurants"
+        where "yelpId" = $1;
+        `
+        const value = [yelpId]
+        return db.query(sql, value)
+          .then(wholeRow => {
+            const row = wholeRow.rows[0]
+            res.status(200).json(row)
+          })
+      })
+      .catch( err => next(err))
+    })
+});
+
+
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
