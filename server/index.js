@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const {searchAllRestaurants} = require('./yelp')
-const {getReviews} = require('./yelp')
 const {getRestaurantDetails} = require('./yelp')
 
 const db = require('./database');
