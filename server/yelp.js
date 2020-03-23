@@ -55,6 +55,4 @@ function searchByCategories ( lat, long, categories){
     })
 }
 
-
-
 module.exports = { getRestaurantDetails, searchAllRestaurants, searchByCategories};
