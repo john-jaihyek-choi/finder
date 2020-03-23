@@ -99,9 +99,14 @@ app.delete('/api/likedRestaurants', (req, res, next) => {
     where "userId"=$1 AND "yelpId"=$2
     returning *
   `
-  const values = [68, req.body.yelpId]
+  const values = [66, req.body.yelpId]
+
   db.query(likedRestaurant, values)
-    .then(result => console.log(result));
+    .then(result => {
+      const [deletedObj] = result.rows
+      return res.status(200).json(deletedObj)
+    })
+    .catch(err => next(err));
 })
 
 app.get('/api/users', (req, res, next) => {
