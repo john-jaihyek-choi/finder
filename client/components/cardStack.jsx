@@ -20,7 +20,7 @@ export default class CardStack extends React.Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        term: 'sushi',
+        term: 'pizza',
         latitude: '33.650561',
         longitude: '-117.74425'
       })
