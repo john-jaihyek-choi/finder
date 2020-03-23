@@ -11,18 +11,32 @@ export default class CardStack extends React.Component {
     this.toCardStack = this.toCardStack.bind(this);
   }
 
-  getRestaurants() {
-    fetch('/api/restaurants/')
+  getRestaurants(lat, long, term) {
+    fetch('/api/search/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        term: 'sushi',
+        latitude: '33.650561',
+        longitude: '-117.74425'
+      })
+    })
       .then(res => res.json())
-      .then(data => this.setState({ restaurants: data }))
+      .then(data => this.setState({ restaurants: data }, () => console.log('restaurants state', this.state.restaurants)))
       .catch(err => console.error(err));
   }
 
   getRestaurantDetails(yelpId) {
-    fetch(`/api/restaurants/${yelpId}`)
+    fetch(`/api/view/${yelpId}`)
       .then(res => res.json())
-      .then(data => this.setState({ details: data }))
+      .then(data => this.setState({ details: data }, () => console.log('details state', this.state.details)))
       .catch(err => console.error(err));
+  }
+
+  componentDidMount() {
+    this.getRestaurantDetails('V8KXkj4sDhRlS5G6z8-79g');
+    this.getRestaurants();
+    console.log('launching getRestDetails');
   }
 
   likeRestaurant(yelpId, index) {
