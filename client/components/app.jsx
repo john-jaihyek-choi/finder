@@ -43,6 +43,7 @@ export default class App extends React.Component {
           likedRestaurants: likedRestaurantsArr
         })
       })
+      .catch(err => console.error(err))
   }
 
   getReviewedRestaurants() {
@@ -53,7 +54,13 @@ export default class App extends React.Component {
           reviewedRestaurants: reviewedRestaurants
         })
       })
+      .catch(err => console.error(err))
   }
+
+  // componentDidUpdate() {
+  //   this.getLikedRestaurants()
+  //   this.getReviewedRestaurants()
+  // }
 
   render() {
     if (this.state.view === "login") {
