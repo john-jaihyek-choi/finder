@@ -1,6 +1,14 @@
 import React from 'react'
 
 export default class LikedReviewedCards extends React.Component {
+    constructor(props) {
+        super(props)
+        this.check = this.check.bind(this);
+    }
+
+    check(event) {
+        console.log(event.target.getAttribute("data-yelpid"))
+    }
 
     render() {
         const price = [];
@@ -45,7 +53,7 @@ export default class LikedReviewedCards extends React.Component {
                     <div className='d-flex flex-wrap mt-4 pt-2 text-pink'>
                         {this.props.viewState === "likedRestaurants"
                             ? <><i className="fas fa-comment-dots fa-2x col-6"></i>
-                                <i className="fas fa-trash-alt fa-2x col-6"></i></>
+                                <i onClick={this.check} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
                             : <><i class="fas fa-info-circle fa-2x col-6"></i>
                                 <i class="fas fa-edit fa-2x col-6"></i></>
                         }
