@@ -1,10 +1,15 @@
 require('dotenv/config');
+const Dotenv = require('dotenv-webpack');
+
 const path = require('path');
 
 const clientPath = path.join(__dirname, 'client/');
 const publicPath = path.join(__dirname, 'server/public/');
 
 module.exports = {
+  plugins: [
+    new Dotenv()
+  ],
   resolve: {
     extensions: ['.js', '.jsx']
   },

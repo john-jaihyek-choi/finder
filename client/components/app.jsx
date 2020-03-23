@@ -55,7 +55,6 @@ export default class App extends React.Component {
       })
   }
 
-
   render() {
     if (this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
