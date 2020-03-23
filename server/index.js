@@ -195,6 +195,8 @@ app.post('/api/search/', (req, res, next) => {
   .catch( err => next(err))
 })
 
+
+
 app.get('/api/view/:yelpId', (req, res, next) => {
   const { yelpId } = req.params;
 
@@ -210,10 +212,11 @@ app.get('/api/view/:yelpId', (req, res, next) => {
       set
       "photosUrl" = $2,
       "hours" = $3,
-      "reviews" = $4
+      "reviews" = $4,
+      "rating" = $5,
       where "yelpId" = $1;
       `
-      const restaurantRow = [yelpId, photosUrl, hours, reviews]
+      const restaurantRow = [yelpId, photosUrl, hours, reviews, rating]
 
       db.query(sql, restaurantRow)
       .then( result => {
