@@ -72,6 +72,9 @@ export default class CardStack extends React.Component {
       return (
         <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
           <h1 className='text-pink text-center font-weight-bold'>Rendering matches</h1>
+          <div className="spinner-border text-pink mt-3" role="status">
+            <span className="sr-only"></span>
+          </div>
         </div>
       );
     }
