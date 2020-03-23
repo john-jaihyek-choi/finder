@@ -21,11 +21,8 @@ export default class LikedReviewedCards extends React.Component {
     }
 
     addReview(event) {
-        fetch('/api/reviews', {
-            method: 'GET',
-            headers: { 'Content-Type' : "application/json" },
-            body: JSON.stringify({ yelpId: event.target.getAttribute('data-yelpid') })
-        })
+        console.log(event.target.getAttribute('data-yelpid'))
+        fetch(`/api/reviews/${event.target.getAttribute('data-yelpid')}`)
             .then(result => console.log(result.json()))
             .catch(err => console.error(err))
     }
