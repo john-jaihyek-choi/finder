@@ -31,7 +31,7 @@ const getReviews = function (yelpId){
 
 function searchAllRestaurants  (lat , long, term){
 
-  return fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=${term}&limit=50`, {
+  return fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=${term}&limit=5`, {
     headers: {
       'Authorization': apiKey
     }
