@@ -165,6 +165,22 @@ app.get('/api/reviewedRestaurants', (req, res, next) => {
     .catch(err => next(err))
 })
 
+app.get('/api/reviews', (req, res, next) => {
+  const reviews = `
+    select * 
+    from "reviewedRestaurants"
+    where "yelpId" = $1 AND "userId" = $2
+  `
+  const userInfo = [req.body.yelpId, req.session.userInfo.userId]
+
+  db.query(reviews, userInfo)
+    .then(result => {
+      const [review] = result.rows
+      res.json(review)
+    })
+    .catch(err => next(err))
+})
+
 app.get('/api/search', (req, res, next) => {
   const latitude = req.body.latitude
   const longitude = req.body.longitude
