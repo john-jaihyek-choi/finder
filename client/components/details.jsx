@@ -7,7 +7,10 @@ export default class Details extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ mapIsReady: true });
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=`;
+    script.onload = () => this.setState({ mapIsReady: true });
+    document.body.appendChild(script);
   }
 
   componentDidUpdate(prevProps) {

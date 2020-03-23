@@ -2,9 +2,9 @@ import React from 'react';
 import IntroPages from './introPages';
 import Splash from './splash';
 import CardStack from './cardStack';
-import GuestLogIn from './guestLogIn'
-import CurrentSearch from './currentSearch'
-import LikedReviewedRestaurants from './likedReviewedRestaurants'
+import GuestLogIn from './guestLogIn';
+import CurrentSearch from './currentSearch';
+import LikedReviewedRestaurants from './likedReviewedRestaurants';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -43,6 +43,7 @@ export default class App extends React.Component {
           likedRestaurants: likedRestaurantsArr
         })
       })
+      .catch(err => console.error(err))
   }
 
   getReviewedRestaurants() {
@@ -53,8 +54,8 @@ export default class App extends React.Component {
           reviewedRestaurants: reviewedRestaurants
         })
       })
+      .catch(err => console.error(err))
   }
-
 
   render() {
     if (this.state.view === "login") {

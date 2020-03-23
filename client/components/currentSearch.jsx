@@ -6,8 +6,15 @@ export default class CurrentSearch extends React.Component {
     this.state = { food: '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    // this.setView = this.setView.bind(this);
     this.currentQuery = '';
   }
+
+  // setView(viewMode) {
+  //   this.setState({
+  //     view: viewMode
+  //   });
+  // }
 
   handleChange(event) {
     this.setState({ food: event.target.value })
@@ -70,7 +77,7 @@ export default class CurrentSearch extends React.Component {
           </div>
           <div className="d-flex justify-content-center mt-2">
             <button type="text" form="userSignUp" className="form-control shadow d-flex submit btn font-weight-bold"
-                    onClick={this.handleClick}>SUBMIT</button>
+              onClick={this.handleClick}>SUBMIT</button>
           </div>
           <div className="d-flex justify-content-center mt-5">
             <h5>Or try one of our suggestions below:</h5>

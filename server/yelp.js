@@ -43,4 +43,4 @@ function searchAllRestaurants  (lat , long, term){
 
 }
 
-module.exports = { getRestaurantDetails,searchAllRestaurants};
+module.exports = { getRestaurantDetails, searchAllRestaurants, getReviews};
