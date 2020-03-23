@@ -172,7 +172,7 @@ app.get('/api/reviewedRestaurants', (req, res, next) => {
 app.get('/api/reviews/:yelpId', (req, res, next) => {
   const reviews = `
     select "thumbsRate",
-      "note" 
+      "note"
     from "reviewedRestaurants"
     where "yelpId"=$1 AND "userId"=$2
   `
@@ -278,8 +278,11 @@ app.get('/api/view/:yelpId', (req, res, next) => {
     })
 });
 
+
 // User Can Navigate to Swiped Page with Suggested Keywords  -----------------------------
-app.get('/api/navigate', (req, res, next) => {
+// The category filter can be a list of comma delimited categories.For example, "bars,french" will filter by Bars OR French.
+// The category identifier should be used(for example "discgolf", not "Disc Golf").
+app.get('/api/category', (req, res, next) => {
   const latitude = req.body.latitude
   const longitude = req.body.longitude
   const categories = req.body.categories
