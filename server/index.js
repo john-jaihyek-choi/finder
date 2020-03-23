@@ -149,7 +149,7 @@ app.get('/api/reviewedRestaurants', (req, res, next) => {
     .catch(err => next(err))
 })
 
-app.get('/api/search', (req, res, next) => {
+app.post('/api/search/', (req, res, next) => {
   const latitude = req.body.latitude
   const longitude = req.body.longitude
   const term = req.body.term
@@ -195,8 +195,8 @@ app.get('/api/search', (req, res, next) => {
   .catch( err => next(err))
 })
 
-app.get('/api/view', (req, res, next) => {
-  const yelpId = req.body.yelpId;
+app.get('/api/view/:yelpId', (req, res, next) => {
+  const { yelpId } = req.params;
 
   getRestaurantDetails(yelpId)
     .then(newObj => {
