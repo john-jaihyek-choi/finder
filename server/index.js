@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
-const {searchAllRestaurants} = require('./yelp')
-const {getReviews} = require('./yelp')
-const {getRestaurantDetails} = require('./yelp')
+const { searchAllRestaurants } = require('./yelp')
+const { getRestaurantDetails } = require('./yelp')
+const { searchByCategories } = require('./yelp')
 
 const db = require('./database');
 const ClientError = require('./client-error');
@@ -62,7 +62,7 @@ app.post('/api/users', (req, res, next) => {
 })
 
 app.get('/api/likedRestaurants', (req, res, next) => {
-  if(!req.session.userInfo) return res.json([])
+  if (!req.session.userInfo) return res.json([])
   const likedRestaurants = `
     select "r".*
     from "restaurants" as "r"
@@ -190,44 +190,44 @@ app.get('/api/search', (req, res, next) => {
   const term = req.body.term
 
   searchAllRestaurants(latitude, longitude, term)
-  .then(allRestaurants => {
-    const insertPromises =[];
-    for(let i = 0; i < allRestaurants.length ; i++){
+    .then(allRestaurants => {
+      const insertPromises = [];
+      for (let i = 0; i < allRestaurants.length; i++) {
 
-      const restaurant = allRestaurants[i]
-      const yelpId = restaurant.id
-      const restaurantName = (restaurant.name || "")
-      const yelpUrl = restaurant.url
-      const storeImageUrl = restaurant.image_url
-      const distance = restaurant.distance
-      const photosUrl = []
-      const hours = []
-      const location = restaurant.location
-      const categories = restaurant.categories
-      const coordinates = restaurant.coordinates
-      const reviews = []
-      const price = (restaurant.price || "")
+        const restaurant = allRestaurants[i]
+        const yelpId = restaurant.id
+        const restaurantName = (restaurant.name || "")
+        const yelpUrl = restaurant.url
+        const storeImageUrl = restaurant.image_url
+        const distance = restaurant.distance
+        const photosUrl = []
+        const hours = []
+        const location = restaurant.location
+        const categories = restaurant.categories
+        const coordinates = restaurant.coordinates
+        const reviews = []
+        const price = (restaurant.price || "")
 
-      const sql=`
+        const sql = `
       insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price" )
         values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 )
       on conflict("yelpId")
       do nothing
       `
-      const val = [yelpId, restaurantName, yelpUrl, storeImageUrl, distance, JSON.stringify(photosUrl), JSON.stringify(hours), JSON.stringify(location),
-        JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price]
+        const val = [yelpId, restaurantName, yelpUrl, storeImageUrl, distance, JSON.stringify(photosUrl), JSON.stringify(hours), JSON.stringify(location),
+          JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price]
 
-      const restaurantPromise = db.query(sql, val)
-      .then( () => {
-        return {yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price}
-      })
-      insertPromises.push(restaurantPromise)
-    }
+        const restaurantPromise = db.query(sql, val)
+          .then(() => {
+            return { yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price }
+          })
+        insertPromises.push(restaurantPromise)
+      }
 
-    return Promise.all(insertPromises)
-  })
-  .then(restaurants => res.status(200).json(restaurants))
-  .catch( err => next(err))
+      return Promise.all(insertPromises)
+    })
+    .then(restaurants => res.status(200).json(restaurants))
+    .catch(err => next(err))
 })
 
 app.get('/api/view', (req, res, next) => {
@@ -251,23 +251,69 @@ app.get('/api/view', (req, res, next) => {
       const restaurantRow = [yelpId, photosUrl, hours, reviews]
 
       db.query(sql, restaurantRow)
-      .then( result => {
-        const sql =`
+        .then(result => {
+          const sql = `
         select *
         from "restaurants"
         where "yelpId" = $1;
         `
-        const value = [yelpId]
-        return db.query(sql, value)
-          .then(wholeRow => {
-            const row = wholeRow.rows[0]
-            res.status(200).json(row)
-          })
-      })
-      .catch( err => next(err))
+          const value = [yelpId]
+          return db.query(sql, value)
+            .then(wholeRow => {
+              const row = wholeRow.rows[0]
+              res.status(200).json(row)
+            })
+        })
+        .catch(err => next(err))
     })
 });
 
+// User Can Navigate to Swiped Page with Suggested Keywords  -----------------------------
+app.get('/api/navigate', (req, res, next) => {
+  const latitude = req.body.latitude
+  const longitude = req.body.longitude
+  const categories = req.body.categories
+
+  searchByCategories(latitude, longitude, categories)
+    .then(result => {
+      const insertPromises = [];
+      for (let i = 0; i < result.length; i++) {
+        const info = result[i]
+
+        const yelpId = info.id
+        const restaurantName = (info.name || "")
+        const yelpUrl = info.url
+        const storeImageUrl = info.image_url
+        const distance = info.distance
+        const photosUrl = []
+        const hours = []
+        const location = info.location
+        const categories = info.categories
+        const coordinates = info.coordinates
+        const reviews = []
+        const price = (info.price || "")
+
+        const sql = `
+      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price" )
+        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 )
+      on conflict("yelpId")
+      do nothing
+      `
+        const val = [yelpId, restaurantName, yelpUrl, storeImageUrl, distance, JSON.stringify(photosUrl), JSON.stringify(hours), JSON.stringify(location),
+          JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price]
+
+        const infoPromise = db.query(sql, val)
+          .then(() => {
+            return { yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price }
+          })
+        insertPromises.push(infoPromise)
+      }
+
+      return Promise.all(insertPromises)
+    })
+    .then(categories => res.status(200).json(categories))
+    .catch(err => next(err))
+})
 
 
 app.use('/api', (req, res, next) => {
