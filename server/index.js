@@ -33,6 +33,7 @@ app.post('/api/users', (req, res, next) => {
     .catch(err => next(err))
 })
 
+// stretch feature for when we have username. ** note: once we have the username, delete the other post api/users
 app.post('/api/users', (req, res, next) => {
   const user = `
   insert into "users" ("userName", "distanceRadius")
@@ -111,6 +112,7 @@ app.delete('/api/likedRestaurants', (req, res, next) => {
     .catch(err => next(err));
 })
 
+// another stretch feature for users
 app.get('/api/users', (req, res, next) => {
   const sql = `
   select *
@@ -127,6 +129,7 @@ app.get('/api/users', (req, res, next) => {
     .catch(err => next(err));
 })
 
+//yet another stretch feature for user (to sign up)
 app.get('/api/users/:userId', (req, res, next) => {
   const { userId } = req.params;
   if (!parseInt(userId, 10)) {
@@ -165,7 +168,22 @@ app.get('/api/reviewedRestaurants', (req, res, next) => {
     .catch(err => next(err))
 })
 
-//User Can Search Nearby Restaurants -----------------------------
+app.get('/api/reviews', (req, res, next) => {
+  const reviews = `
+    select * 
+    from "reviewedRestaurants"
+    where "yelpId" = $1 AND "userId" = $2
+  `
+  const userInfo = [req.body.yelpId, req.session.userInfo.userId]
+
+  db.query(reviews, userInfo)
+    .then(result => {
+      const [review] = result.rows
+      res.json(review)
+    })
+    .catch(err => next(err))
+})
+
 app.get('/api/search', (req, res, next) => {
   const latitude = req.body.latitude
   const longitude = req.body.longitude
