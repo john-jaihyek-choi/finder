@@ -172,19 +172,20 @@ app.post('/api/search/', (req, res, next) => {
       const coordinates = restaurant.coordinates
       const reviews = []
       const price = (restaurant.price || "")
+      const rating = restaurant.rating
 
       const sql=`
-      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price")
-        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price", "rating")
+        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       on conflict("yelpId")
       do nothing
       `
       const val = [yelpId, restaurantName, yelpUrl, storeImageUrl, distance, JSON.stringify(photosUrl), JSON.stringify(hours), JSON.stringify(location),
-        JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price]
+        JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price, rating]
 
       const restaurantPromise = db.query(sql, val)
       .then( () => {
-        return {yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price }
+        return {yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price, rating }
       })
       insertPromises.push(restaurantPromise)
     }
@@ -204,18 +205,20 @@ app.get('/api/view/:yelpId', (req, res, next) => {
     .then(newObj => {
       const yelpId = newObj.id
       const photosUrl = JSON.stringify(newObj.photos)
-      const hours = JSON.stringify(newObj.hours || [])
+      const hours = JSON.stringify(newObj.hours)
       const reviews = JSON.stringify(newObj.reviews)
+      const rating = newObj.rating
 
       const sql = `
       update "restaurants"
       set
       "photosUrl" = $2,
       "hours" = $3,
-      "reviews" = $4
+      "reviews" = $4,
+      "rating" = $5
       where "yelpId" = $1;
       `
-      const restaurantRow = [yelpId, photosUrl, hours, reviews]
+      const restaurantRow = [yelpId, photosUrl, hours, reviews, rating]
 
       db.query(sql, restaurantRow)
       .then( result => {
