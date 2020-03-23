@@ -24,11 +24,11 @@ export default class LikedReviewedCards extends React.Component {
 
         const rating = [];
         for (let i = 0; i < Math.floor(this.props.restaurant.rating); i++){
-            rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
+            rating.push(<i className='fas fa-star fa-xs' key={'rating' + i}></i>);
         }
 
         if (!Number.isInteger(this.props.restaurant.rating) && this.props.restaurant.rating) {
-            rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
+            rating.push(<i className='fas fa-star-half fa-xs' key={'rating' + rating.length}></i>);
         }
 
         return (      
@@ -43,13 +43,13 @@ export default class LikedReviewedCards extends React.Component {
                     </div>
 
                     <div className='d-flex flex-wrap mt-2 mb-4 text-pink'>
-                        <div className="w-50 col-6">
+                        <div className="w-50 col-7 p-0 text-center">
                             {this.props.viewState === "likedRestaurants" 
                                 ? rating 
                                 : <i class="far fa-thumbs-up fa-2x"></i>}
                         </div> 
                         {this.props.viewState === "likedRestaurants" ? "|" : ""}
-                        <div className={`w-50 ${this.props.viewState === "likedRestaurants" ? "col-5" : "col-6"}`}>
+                        <div className={`w-50 ${this.props.viewState === "likedRestaurants" ? "col-4" : "col-6"}`}>
                             {this.props.viewState === "likedRestaurants" 
                                 ? price 
                                 : <i class="far fa-thumbs-down fa-2x"></i>}
