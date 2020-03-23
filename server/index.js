@@ -172,20 +172,19 @@ app.post('/api/search/', (req, res, next) => {
       const coordinates = restaurant.coordinates
       const reviews = []
       const price = (restaurant.price || "")
-      const rating = restaurant.rating
 
       const sql=`
-      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price", "rating")
-        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13 )
+      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price")
+        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
       on conflict("yelpId")
       do nothing
       `
       const val = [yelpId, restaurantName, yelpUrl, storeImageUrl, distance, JSON.stringify(photosUrl), JSON.stringify(hours), JSON.stringify(location),
-        JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price, JSON.stringify(rating)]
+        JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price]
 
       const restaurantPromise = db.query(sql, val)
       .then( () => {
-        return {yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price, rating}
+        return {yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price }
       })
       insertPromises.push(restaurantPromise)
     }
@@ -213,11 +212,10 @@ app.get('/api/view/:yelpId', (req, res, next) => {
       set
       "photosUrl" = $2,
       "hours" = $3,
-      "reviews" = $4,
-      "rating" = $5,
+      "reviews" = $4
       where "yelpId" = $1;
       `
-      const restaurantRow = [yelpId, photosUrl, hours, reviews, rating]
+      const restaurantRow = [yelpId, photosUrl, hours, reviews]
 
       db.query(sql, restaurantRow)
       .then( result => {
