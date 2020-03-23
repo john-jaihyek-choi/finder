@@ -4,6 +4,7 @@ export default class LikedReviewedCards extends React.Component {
     constructor(props) {
         super(props)
         this.deleteRestaurant = this.deleteRestaurant.bind(this);
+        this.addReview = this.addReview.bind(this);
     }
 
     deleteRestaurant(event) {
@@ -16,6 +17,16 @@ export default class LikedReviewedCards extends React.Component {
                 this.props.getLikedRestaurants()
                 return result.json()
             })
+            .catch(err => console.error(err))
+    }
+
+    addReview(event) {
+        fetch('/api/reviews', {
+            method: 'GET',
+            headers: { 'Content-Type' : "application/json" },
+            body: JSON.stringify({ yelpId: event.target.getAttribute('data-yelpid') })
+        })
+            .then(result => console.log(result.json()))
             .catch(err => console.error(err))
     }
 
@@ -61,7 +72,7 @@ export default class LikedReviewedCards extends React.Component {
 
                     <div className='d-flex flex-wrap mt-4 pt-2 text-pink'>
                         {this.props.viewState === "likedRestaurants"
-                            ? <><i className="fas fa-comment-dots fa-2x col-6"></i>
+                            ? <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} className="fas fa-comment-dots fa-2x col-6"></i>
                                 <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
                             : <><i class="fas fa-info-circle fa-2x col-6"></i>
                                 <i class="fas fa-edit fa-2x col-6"></i></>
