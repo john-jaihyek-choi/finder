@@ -220,8 +220,8 @@ app.get('/api/view', (req, res, next) => {
         const sql =`
         select *
         from "restaurants"
-        where "yelpId" = $1
-        `;
+        where "yelpId" = $1;
+        `
         const value = [yelpId]
         return db.query(sql, value)
           .then(wholeRow => {
