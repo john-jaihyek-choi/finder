@@ -198,15 +198,69 @@ app.post('/api/search/', (req, res, next) => {
 
 
 
+// app.post('/api/searches/', (req, res, next) => {
+//   const latitude = req.body.latitude
+//   const longitude = req.body.longitude
+//   const term = req.body.term
+
+//   searchAllRestaurants(latitude, longitude, term)
+//     .then(restaurants => restaurants.map(restaurant => restaurant.id))
+//     .then(restaurantIds => console.log('restaurantIds', restaurantIds))
+// }
+
+
+
+    //   {
+    //   const insertPromises = [];
+    //   for (let i = 0; i < allRestaurants.length; i++) {
+
+    //     const restaurant = allRestaurants[i]
+    //     const yelpId = restaurant.id
+    //     const restaurantName = (restaurant.name || "")
+    //     const yelpUrl = restaurant.url
+    //     const storeImageUrl = restaurant.image_url
+    //     const distance = restaurant.distance
+    //     const photosUrl = []
+    //     const hours = []
+    //     const location = restaurant.location
+    //     const categories = restaurant.categories
+    //     const coordinates = restaurant.coordinates
+    //     const reviews = []
+    //     const price = (restaurant.price || "")
+    //     const rating = restaurant.rating
+
+    //     const sql = `
+    //   insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price", "rating")
+    //     values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+    //   on conflict("yelpId")
+    //   do nothing
+    //   `
+    //     const val = [yelpId, restaurantName, yelpUrl, storeImageUrl, distance, JSON.stringify(photosUrl), JSON.stringify(hours), JSON.stringify(location),
+    //       JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price, rating]
+
+    //     const restaurantPromise = db.query(sql, val)
+    //       .then(() => {
+    //         return { yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price, rating }
+    //       })
+    //     insertPromises.push(restaurantPromise)
+    //   }
+
+    //   return Promise.all(insertPromises)
+    // })
+    // .then(restaurants => res.status(200).json(restaurants))
+    // .catch(err => next(err))
+// })
+
+
 app.get('/api/view/:yelpId', (req, res, next) => {
   const { yelpId } = req.params;
 
   getRestaurantDetails(yelpId)
     .then(newObj => {
       const yelpId = newObj.id
-      const photosUrl = JSON.stringify(newObj.photos)
-      const hours = JSON.stringify(newObj.hours)
-      const reviews = JSON.stringify(newObj.reviews)
+      const photosUrl = JSON.stringify(newObj.photos || [])
+      const hours = JSON.stringify(newObj.hours || [])
+      const reviews = JSON.stringify(newObj.reviews || [])
       const rating = newObj.rating
 
       const sql = `
