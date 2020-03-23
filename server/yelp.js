@@ -29,15 +29,15 @@ const getReviews = function (yelpId){
     )
 }
 
-function searchAllRestaurants  (lat , long, term){
+function searchAllRestaurants(lat, long, term) {
 
-  return fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=${term}`, {
+  return fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=${term}&limit=30`, {
     headers: {
       'Authorization': apiKey
     }
   })
     .then(response => response.json())
-    .then(data =>{
+    .then(data => {
       return data.businesses
     })
 
