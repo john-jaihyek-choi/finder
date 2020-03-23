@@ -7,6 +7,16 @@ export default class CurrentSearch extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.currentQuery = '';
+    const resCats = ["African", "American", "Arabian", "Armenian", "Baguettes", "Bangladeshi", "Barbeque",
+                     "Brazilian", "Breakfast", "Brunch", "Burgers", "Cafes", "Cambodian", "Caribbean",
+                     "Cheesesteaks", "Chicken Shop", "Chicken Wings", "Chilean", "Chinese", "Creperies",
+                     "Cuban", "Delis", "Dinner Theater", "Ethiopian", "Filipino", "Fish & Chips", "Fondue",
+                     "French", "Gastropubs", "German", "Greek", "Guamanian", "Halal", "Hawaiian", "Hot Dogs",
+                     "Hungarian", "Indian", "Indonesian", "Irish", "Israeli", "Italian", "Japanese", "Korean",
+                     "Kosher", "Mediterranean", "Mexican", "Middle Eastern", "Mongolian", "Moroccan", "Noodles",
+                     "Pakistani", "Persian", "Pizza", "Polish", "Polynesian", "Portuguese", "Salad", "Sandwiches",
+                     "Soup", "Spanish", "Steakhouses", "Sushi Bars", "Tex-Mex", "Thai", "Vegan", "Vietnamese",
+                     "Waffles", "Wraps"];
   }
 
   handleChange(event) {
