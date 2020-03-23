@@ -57,11 +57,6 @@ export default class App extends React.Component {
       .catch(err => console.error(err))
   }
 
-  // componentDidUpdate() {
-  //   this.getLikedRestaurants()
-  //   this.getReviewedRestaurants()
-  // }
-
   render() {
     if (this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
