@@ -8,23 +8,12 @@ export default class LikedReviewedCards extends React.Component {
     }
 
     deleteRestaurant(event) {
-        fetch('/api/likedRestaurants', {
-            method: 'DELETE',
-            headers: { 'Content-Type' : 'application/json' },
-            body: JSON.stringify({ yelpId: event.target.getAttribute('data-yelpid')})
-          })
-            .then(result => {
-                this.props.getLikedRestaurants()
-                return result.json()
-            })
-            .catch(err => console.error(err))
+        this.props.deleteRestaurant(event.target.getAttribute('data-yelpid'))
     }
 
     addReview(event) {
-        console.log(event.target.getAttribute('data-yelpid'))
-        fetch(`/api/reviews/${event.target.getAttribute('data-yelpid')}`)
-            .then(result => console.log(result.json()))
-            .catch(err => console.error(err))
+        this.props.addReview(event.target.getAttribute('data-yelpid'))
+        this.props.setView('writeReview')
     }
 
     render() {
