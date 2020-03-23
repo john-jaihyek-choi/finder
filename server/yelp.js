@@ -38,7 +38,6 @@ function searchAllRestaurants  (lat , long, term){
   })
     .then(response => response.json())
     .then(data =>{
-      console.log('within searchAllRest method')
       return data.businesses
     })
 
