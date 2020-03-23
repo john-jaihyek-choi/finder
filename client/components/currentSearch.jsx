@@ -7,16 +7,6 @@ export default class CurrentSearch extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.currentQuery = '';
-    const resCats = ["African", "American", "Arabian", "Armenian", "Baguettes", "Bangladeshi", "Barbeque",
-                     "Brazilian", "Breakfast", "Brunch", "Burgers", "Cafes", "Cambodian", "Caribbean",
-                     "Cheesesteaks", "Chicken Shop", "Chicken Wings", "Chilean", "Chinese", "Creperies",
-                     "Cuban", "Delis", "Dinner Theater", "Ethiopian", "Filipino", "Fish & Chips", "Fondue",
-                     "French", "Gastropubs", "German", "Greek", "Guamanian", "Halal", "Hawaiian", "Hot Dogs",
-                     "Hungarian", "Indian", "Indonesian", "Irish", "Israeli", "Italian", "Japanese", "Korean",
-                     "Kosher", "Mediterranean", "Mexican", "Middle Eastern", "Mongolian", "Moroccan", "Noodles",
-                     "Pakistani", "Persian", "Pizza", "Polish", "Polynesian", "Portuguese", "Salad", "Sandwiches",
-                     "Soup", "Spanish", "Steakhouses", "Sushi Bars", "Tex-Mex", "Thai", "Vegan", "Vietnamese",
-                     "Waffles", "Wraps"];
   }
 
   handleChange(event) {
@@ -31,6 +21,34 @@ export default class CurrentSearch extends React.Component {
 }
 
   render() {
+    const resCats = ["African", "American", "Arabian", "Armenian", "Baguettes", "Bangladeshi", "Barbeque",
+      "Brazilian", "Breakfast", "Brunch", "Burgers", "Cafes", "Cambodian", "Caribbean",
+      "Cheesesteaks", "Chicken Shop", "Chicken Wings", "Chilean", "Chinese", "Creperies",
+      "Cuban", "Delis", "Dinner Theater", "Ethiopian", "Filipino", "Fish & Chips", "Fondue",
+      "French", "Gastropubs", "German", "Greek", "Guamanian", "Halal", "Hawaiian", "Hot Dogs",
+      "Hungarian", "Indian", "Indonesian", "Irish", "Israeli", "Italian", "Japanese", "Korean",
+      "Kosher", "Mediterranean", "Mexican", "Middle Eastern", "Mongolian", "Moroccan", "Noodles",
+      "Pakistani", "Persian", "Pizza", "Polish", "Polynesian", "Portuguese", "Salad", "Sandwiches",
+      "Soup", "Spanish", "Steakhouses", "Sushi Bars", "Tex-Mex", "Thai", "Vegan", "Vietnamese",
+      "Waffles", "Wraps"];
+
+    let randomRest = [];
+    function shuffle(resCats) {
+      var i = 0;
+      var j = 0;
+      var temp = null;
+      for (i = resCats.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = resCats[i];
+        resCats[i] = resCats[j];
+        resCats[j] = temp;
+      }
+    }
+    shuffle(resCats);
+    for (var i = 0; i < 7; i++) {
+      randomRest += ' ' + resCats[i];
+    }
+
     return (
       <div className="container column display-flex">
         <div className="column w-90 my-3 display-flex">
@@ -57,13 +75,11 @@ export default class CurrentSearch extends React.Component {
           <div className="d-flex justify-content-center mt-5">
             <h5>Or try one of our suggestions below:</h5>
           </div>
-          <ul className="foodCategory pink">
-            <li onClick={this.handleClick}>Burgers</li>
-            <li onClick={this.handleClick}>Italian</li>
-            <li onClick={this.handleClick}>Sushi</li>
-            <li onClick={this.handleClick}>Chinese</li>
-            <li onClick={this.handleClick}>Thai</li>
-          </ul>
+          <div className="col-6 display-flex">
+            <ul className="foodCategory pink">
+              <li className="categoryList justify-content-left" onClick={this.handleClick}>{randomRest}</li>
+            </ul>
+          </div>
         </div>
       </div>
     );
