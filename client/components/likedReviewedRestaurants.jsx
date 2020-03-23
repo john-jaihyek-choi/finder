@@ -57,7 +57,10 @@ export default class LikedReviewedRestaurants extends React.Component {
                                     : restaurant.yelpId}
                                 restaurant={restaurant}
                                 viewState={this.props.viewState}
-                                getLikedRestaurants={this.props.getLikedRestaurants}/>
+                                getLikedRestaurants={this.props.getLikedRestaurants}
+                                deleteRestaurant={this.props.deleteRestaurant}
+                                addReview={this.props.addReview}
+                                setView={this.props.setView}/>
                         )
                 }
                 </div>

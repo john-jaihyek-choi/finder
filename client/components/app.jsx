@@ -12,12 +12,15 @@ export default class App extends React.Component {
     this.state = {
       view: "login",
       likedRestaurants: [],
-      reviewedRestaurants: []
+      reviewedRestaurants: [],
+      review: []
     }
     this.setView = this.setView.bind(this);
     this.registerUser = this.registerUser.bind(this);
     this.getLikedRestaurants = this.getLikedRestaurants.bind(this);
     this.getReviewedRestaurants = this.getReviewedRestaurants.bind(this);
+    this.deleteRestaurant = this.deleteRestaurant.bind(this);
+    this.addReview = this.addReview.bind(this);
   }
 
   setView(viewMode) {
@@ -38,23 +41,46 @@ export default class App extends React.Component {
   getLikedRestaurants() {
     fetch('/api/likedRestaurants')
       .then(result => result.json())
-      .then(likedRestaurantsArr => {
-        return this.setState({
+      .then(likedRestaurantsArr =>
+        this.setState({
           likedRestaurants: likedRestaurantsArr
         })
-      })
+      )
       .catch(err => console.error(err))
   }
 
   getReviewedRestaurants() {
     fetch('/api/reviewedRestaurants')
       .then(result => result.json())
-      .then(reviewedRestaurants => {
-        return this.setState({
+      .then(reviewedRestaurants => 
+        this.setState({
           reviewedRestaurants: reviewedRestaurants
         })
-      })
+      )
       .catch(err => console.error(err))
+  }
+
+  deleteRestaurant(yelpId) {
+    fetch('/api/likedRestaurants', {
+        method: 'DELETE',
+        headers: { 'Content-Type' : 'application/json' },
+        body: JSON.stringify({ yelpId: yelpId})
+      })
+        .then(result => 
+            this.getLikedRestaurants()
+        )
+        .catch(err => console.error(err))
+  }
+
+  addReview(yelpId) {
+      fetch(`/api/reviews/${yelpId}`)
+          .then(result => result.json())
+          .then(review =>
+              this.setState({
+                review: review
+              })
+          )
+          .catch(err => console.error(err))
   }
 
   render() {
@@ -73,6 +99,8 @@ export default class App extends React.Component {
           setView={this.setView}
           getLikedRestaurants={this.getLikedRestaurants}
           getReviewedRestaurants={this.getReviewedRestaurants}
+          deleteRestaurant={this.deleteRestaurant}
+          addReview={this.addReview}
           likedRestaurantsArr={this.state.likedRestaurants}
           reviewedRestaurantsArr={this.state.reviewedRestaurants}
           viewState={this.state.view}/>
@@ -80,6 +108,9 @@ export default class App extends React.Component {
     }
     if (this.state.view === "search") {
       return <CurrentSearch setView={this.setView} />;
+    }
+    if (this.state.view === "writeReview") {
+      return <div>this is the test review page</div>
     }
   }
 }

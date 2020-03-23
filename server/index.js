@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
-const {searchAllRestaurants} = require('./yelp')
-const {getReviews} = require('./yelp')
-const {getRestaurantDetails} = require('./yelp')
+const { searchAllRestaurants } = require('./yelp')
+const { getRestaurantDetails } = require('./yelp')
+const { searchByCategories } = require('./yelp')
 
 const db = require('./database');
 const ClientError = require('./client-error');
@@ -16,7 +16,8 @@ app.use(sessionMiddleware);
 
 app.use(express.json());
 
-app.post('/api/users', (req, res, next) => {
+
+('/api/users', (req, res, next) => {
   const guestUser = `
     insert into "users" ("distanceRadius")
     values ($1)
@@ -33,6 +34,7 @@ app.post('/api/users', (req, res, next) => {
     .catch(err => next(err))
 })
 
+// stretch feature for when we have username. ** note: once we have the username, delete the other post api/users
 app.post('/api/users', (req, res, next) => {
   const user = `
   insert into "users" ("userName", "distanceRadius")
@@ -61,7 +63,7 @@ app.post('/api/users', (req, res, next) => {
 })
 
 app.get('/api/likedRestaurants', (req, res, next) => {
-  if(!req.session.userInfo) return res.json([])
+  if (!req.session.userInfo) return res.json([])
   const likedRestaurants = `
     select "r".*
     from "restaurants" as "r"
@@ -111,6 +113,7 @@ app.delete('/api/likedRestaurants', (req, res, next) => {
     .catch(err => next(err));
 })
 
+// another stretch feature for users
 app.get('/api/users', (req, res, next) => {
   const sql = `
   select *
@@ -127,6 +130,7 @@ app.get('/api/users', (req, res, next) => {
     .catch(err => next(err));
 })
 
+//yet another stretch feature for user (to sign up)
 app.get('/api/users/:userId', (req, res, next) => {
   const { userId } = req.params;
   if (!parseInt(userId, 10)) {
@@ -165,12 +169,33 @@ app.get('/api/reviewedRestaurants', (req, res, next) => {
     .catch(err => next(err))
 })
 
-app.get('/api/search', (req, res, next) => {
+app.get('/api/reviews/:yelpId', (req, res, next) => {
+  const reviews = `
+    select "thumbsRate",
+      "note" 
+    from "reviewedRestaurants"
+    where "yelpId"=$1 AND "userId"=$2
+  `
+  const userInfo = [req.params.yelpId, req.session.userInfo.userId];
+
+  db.query(reviews, userInfo)
+    .then(result => {
+      const [reviews] = result.rows
+      if(!reviews) {
+        return res.json({note: null, thumbsRate: null})
+      }
+      return res.json(reviews)
+    })
+    .catch(err => next(err))
+})
+
+app.post('/api/search/', (req, res, next) => {
   const latitude = req.body.latitude
   const longitude = req.body.longitude
   const term = req.body.term
 
   searchAllRestaurants(latitude, longitude, term)
+
   .then(allRestaurants => {
     const insertPromises =[];
     for(let i = 0; i < allRestaurants.length ; i++){
@@ -188,19 +213,20 @@ app.get('/api/search', (req, res, next) => {
       const coordinates = restaurant.coordinates
       const reviews = []
       const price = (restaurant.price || "")
+      const rating = restaurant.rating
 
       const sql=`
-      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price" )
-        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 )
+      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price", "rating")
+        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       on conflict("yelpId")
       do nothing
       `
       const val = [yelpId, restaurantName, yelpUrl, storeImageUrl, distance, JSON.stringify(photosUrl), JSON.stringify(hours), JSON.stringify(location),
-        JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price]
+        JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price, rating]
 
       const restaurantPromise = db.query(sql, val)
       .then( () => {
-        return {yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price}
+        return {yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price, rating }
       })
       insertPromises.push(restaurantPromise)
     }
@@ -209,46 +235,95 @@ app.get('/api/search', (req, res, next) => {
   })
   .then(restaurants => res.status(200).json(restaurants))
   .catch( err => next(err))
+
 })
 
-app.get('/api/view', (req, res, next) => {
-  const yelpId = req.body.yelpId;
+app.get('/api/view/:yelpId', (req, res, next) => {
+  const { yelpId } = req.params;
 
   getRestaurantDetails(yelpId)
     .then(newObj => {
       const yelpId = newObj.id
-      const photosUrl = JSON.stringify(newObj.photos)
+      const photosUrl = JSON.stringify(newObj.photos || [])
       const hours = JSON.stringify(newObj.hours || [])
-      const reviews = JSON.stringify(newObj.reviews)
+      const reviews = JSON.stringify(newObj.reviews || [])
+      const rating = newObj.rating
 
       const sql = `
       update "restaurants"
       set
       "photosUrl" = $2,
       "hours" = $3,
-      "reviews" = $4
+      "reviews" = $4,
+      "rating" = $5
       where "yelpId" = $1;
       `
-      const restaurantRow = [yelpId, photosUrl, hours, reviews]
+      const restaurantRow = [yelpId, photosUrl, hours, reviews, rating]
 
       db.query(sql, restaurantRow)
-      .then( result => {
-        const sql =`
+        .then(result => {
+          const sql = `
         select *
         from "restaurants"
         where "yelpId" = $1;
         `
-        const value = [yelpId]
-        return db.query(sql, value)
-          .then(wholeRow => {
-            const row = wholeRow.rows[0]
-            res.status(200).json(row)
-          })
-      })
-      .catch( err => next(err))
+          const value = [yelpId]
+          return db.query(sql, value)
+            .then(wholeRow => {
+              const row = wholeRow.rows[0]
+              res.status(200).json(row)
+            })
+        })
+        .catch(err => next(err))
     })
 });
 
+// User Can Navigate to Swiped Page with Suggested Keywords  -----------------------------
+app.get('/api/navigate', (req, res, next) => {
+  const latitude = req.body.latitude
+  const longitude = req.body.longitude
+  const categories = req.body.categories
+
+  searchByCategories(latitude, longitude, categories)
+    .then(result => {
+      const insertPromises = [];
+      for (let i = 0; i < result.length; i++) {
+        const info = result[i]
+
+        const yelpId = info.id
+        const restaurantName = (info.name || "")
+        const yelpUrl = info.url
+        const storeImageUrl = info.image_url
+        const distance = info.distance
+        const photosUrl = []
+        const hours = []
+        const location = info.location
+        const categories = info.categories
+        const coordinates = info.coordinates
+        const reviews = []
+        const price = (info.price || "")
+
+        const sql = `
+      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price" )
+        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 )
+      on conflict("yelpId")
+      do nothing
+      `
+        const val = [yelpId, restaurantName, yelpUrl, storeImageUrl, distance, JSON.stringify(photosUrl), JSON.stringify(hours), JSON.stringify(location),
+          JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price]
+
+        const infoPromise = db.query(sql, val)
+          .then(() => {
+            return { yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price }
+          })
+        insertPromises.push(infoPromise)
+      }
+
+      return Promise.all(insertPromises)
+    })
+    .then(categories => res.status(200).json(categories))
+    .catch(err => next(err))
+})
 
 
 app.use('/api', (req, res, next) => {

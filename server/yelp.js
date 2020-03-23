@@ -29,9 +29,22 @@ const getReviews = function (yelpId){
     )
 }
 
-function searchAllRestaurants  (lat , long, term){
+function searchAllRestaurants(lat, long, term) {
 
-  return fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=${term}`, {
+  return fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=${term}&limit=30`, {
+    headers: {
+      'Authorization': apiKey
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      return data.businesses
+    })
+
+}
+
+function searchByCategories ( lat, long, categories){
+  return fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&categories=${categories}`, {
     headers: {
       'Authorization': apiKey
     }
@@ -40,7 +53,6 @@ function searchAllRestaurants  (lat , long, term){
     .then(data =>{
       return data.businesses
     })
-
 }
 
-module.exports = { getRestaurantDetails, searchAllRestaurants, getReviews};
+module.exports = { getRestaurantDetails, searchAllRestaurants, searchByCategories};
