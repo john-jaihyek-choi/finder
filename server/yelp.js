@@ -43,4 +43,18 @@ function searchAllRestaurants  (lat , long, term){
 
 }
 
-module.exports = { getRestaurantDetails, searchAllRestaurants, getReviews};
+function searchByCategories ( lat, long, categories){
+  return fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&categories=${categories}`, {
+    headers: {
+      'Authorization': apiKey
+    }
+  })
+    .then(response => response.json())
+    .then(data =>{
+      return data.businesses
+    })
+}
+
+
+
+module.exports = { getRestaurantDetails, searchAllRestaurants, searchByCategories};
