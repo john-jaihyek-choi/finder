@@ -1,5 +1,4 @@
 import React from 'react';
-import apiKeys from '../../database/apiKeys.json';
 
 export default class Details extends React.Component {
   constructor(props) {
