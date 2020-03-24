@@ -4,10 +4,14 @@ export default class WriteReview extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            thumbsRate: null
+            thumbsRate: null,
+            reviewNote: ""
         }
-        this.thumbsDown = this.thumbsDown.bind(this)
-        this.thumbsUp = this.thumbsUp.bind(this)
+        this.reviewNote = '';
+        this.thumbsDown = this.thumbsDown.bind(this);
+        this.thumbsUp = this.thumbsUp.bind(this);
+        this.submitForm = this.submitForm.bind(this);
+        this.inputChange = this.inputChange.bind(this);
     }
 
     thumbsUp(event) {
@@ -28,8 +32,18 @@ export default class WriteReview extends React.Component {
         })
     }
 
+    submitForm(event) {
+        event.preventDefault()
+
+    }
+
+    inputChange(event) {
+        this.setState({
+            reviewNote: event.target.value
+        })
+    }
+
     render() {
-        console.log(this.state.thumbsRate)
         return (
             <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center'>
                 <div className='w-100 my-3'>
@@ -46,16 +60,18 @@ export default class WriteReview extends React.Component {
                         <i onClick={this.thumbsDown} className={`fa-4x ${this.state.thumbsRate === false ? "fas fa-thumbs-down" : "far fa-thumbs-down"}`}></i>
                     </div>
                 </div>
-                <form className='w-100 my-4' id="reviewForm">
-                    <textarea form='reviewForm' className='w-75 mx-auto px-4 d-flex flex-column align-items-center justify-content-center card rounded shadow'
+                <form className='w-100 my-4' id="reviewForm" onSubmit={this.submitForm}>
+                    <textarea
+                        onChange={this.inputChange}
+                        className='w-75 mx-auto px-4 d-flex flex-column align-items-center justify-content-center card rounded shadow'
                         style={{ height: '300px' }}
                         placeholder='Please input your review'></textarea>
                 </form>
                 <div className='row w-100 h-25 pb-4 text-center d-flex flex-column align-items-center justify-content-center'>
-                    <button className='w-50 h-25 btn text-white submitButton'>
+                    <button type='submit' form="reviewForm" className='w-50 h-25 btn text-white submitButton'>
                         <span className="h6">SUBMIT</span> 
                     </button>
-                    <button type='submit' form="reviewForm" className='w-50 h-25 mt-4 btn text-white submitButton'>
+                    <button type='reset' form="reviewForm" className='w-50 h-25 mt-4 btn text-white submitButton'>
                         <span className="h6">CLEAR</span> 
                     </button>
                 </div>
