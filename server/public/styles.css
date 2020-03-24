@@ -17,7 +17,7 @@ button, .button-outline, input {
 }
 
 button, .submit {
-  background-color: #EB606A;
+  background-color: rgb(254,59,115);
   border-radius: 30px;
   width: 90px;
   height: 40px;
@@ -34,8 +34,8 @@ button, .submit {
   height: 50px;
   border-radius: 30px;
   background-color: white;
-  border: 2px solid #EB606A;
-  color: #EB606A;
+  border: 2px solid rgb(254,59,115);
+  color: rgb(254,59,115);
   text-align: center;
 }
 
