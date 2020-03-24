@@ -11,6 +11,7 @@ export default class WriteReview extends React.Component {
         this.thumbsUp = this.thumbsUp.bind(this);
         this.submitForm = this.submitForm.bind(this);
         this.inputChange = this.inputChange.bind(this);
+        this.backToCards = this.backToCards.bind(this);
     }
 
     thumbsUp(event) {
@@ -32,9 +33,14 @@ export default class WriteReview extends React.Component {
     }
 
     inputChange(event) {
+        event.preventDefault();
         this.setState({
             reviewNote: event.target.value
         })
+    }
+
+    backToCards(){
+        this.props.setView('cardstack')
     }
 
     submitForm(event) {
@@ -43,22 +49,21 @@ export default class WriteReview extends React.Component {
         console.log(this.state.reviewNote)
     }
 
-    componentDidMount() {
-        console.log(this.props.reviewInfo)
-        this.setState({
-            thumbsRate: this.props.reviewInfo.thumbsRate,
-            reviewNote: this.props.reviewInfo.note
-        })
+    componentDidUpdate() {
+        if((Object.keys(this.props.reviewInfo).length === 0)) {
+            this.setState({
+                reviewNote: this.props.reviewInfo.note,
+                thumbsRate: this.props.reviewInfo.thumbsRate
+            });
+        }
     }
 
     render() {
-        console.log(this.state.reviewNote)
-        console.log(this.state.thumbsRate)
         return (
             <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center'>
                 <div className='w-100 my-3'>
                     <div className='h-25 mt-2 d-flex align-items-start justify-content-around'>
-                        <div className='d-flex align-items-center text-secondary'><i className='fas fa-arrow-left fa-2x'></i></div>
+                        <div className='d-flex align-items-center text-secondary'><i onClick={this.backToCards} className='fas fa-arrow-left fa-2x'></i></div>
                         <div className='d-flex align-items-center text-white'><i className='fas fa-utensils fa-2x'></i></div>
                         <div className='d-flex align-items-center text-white'><i className='fas fa-heart fa-2x'></i></div>
                     </div>
