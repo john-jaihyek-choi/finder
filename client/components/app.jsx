@@ -14,7 +14,7 @@ export default class App extends React.Component {
       view: "login",
       likedRestaurants: [],
       reviewedRestaurants: [],
-      review: {}
+      review: {},
       location: null
     }
     this.setView = this.setView.bind(this);
@@ -81,7 +81,7 @@ export default class App extends React.Component {
   getReview(yelpId, restaurantName) {
       fetch(`/api/reviews/${yelpId}/${restaurantName}`)
           .then(result => result.json())
-          .then(review => 
+          .then(review =>
               this.setState({
                 review: review
               })
@@ -93,7 +93,7 @@ export default class App extends React.Component {
   searchQuery(currentQuery) {
     this.currentQuery = currentQuery;
   }
-  
+
   setLocation(lat, long) {
     this.setState({ location: { lat, long } });
   }
