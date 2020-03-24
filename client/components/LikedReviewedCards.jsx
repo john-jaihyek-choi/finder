@@ -4,15 +4,15 @@ export default class LikedReviewedCards extends React.Component {
     constructor(props) {
         super(props)
         this.deleteRestaurant = this.deleteRestaurant.bind(this);
-        this.addReview = this.addReview.bind(this);
+        this.getReview = this.getReview.bind(this);
     }
 
     deleteRestaurant(event) {
         this.props.deleteRestaurant(event.target.getAttribute('data-yelpid'))
     }
 
-    addReview(event) {
-        this.props.addReview(event.target.getAttribute('data-yelpid'))
+    getReview(event) {
+        this.props.getReview(event.target.getAttribute('data-yelpid'), event.target.getAttribute('data-restaurantid'))
         this.props.setView('writeReview')
     }
 
@@ -58,7 +58,7 @@ export default class LikedReviewedCards extends React.Component {
 
                     <div className='d-flex flex-wrap mt-4 pt-2 text-pink'>
                         {this.props.viewState === "likedRestaurants"
-                            ? <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} className="fas fa-comment-dots fa-2x col-6"></i>
+                            ? <><i onClick={this.getReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantid={this.props.restaurant.restaurantName} className="fas fa-comment-dots fa-2x col-6"></i>
                                 <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
                             : <><i data-restaurantid={this.props.restaurant.restaurantId} className="fas fa-edit fa-2x col-6"></i>
                                 <i data-restaurantid={this.props.restaurant.restaurantId} className="fas fa-trash-alt fa-2x col-6"></i></>

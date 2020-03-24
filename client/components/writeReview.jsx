@@ -7,7 +7,6 @@ export default class WriteReview extends React.Component {
             thumbsRate: null,
             reviewNote: ""
         }
-        this.reviewNote = '';
         this.thumbsDown = this.thumbsDown.bind(this);
         this.thumbsUp = this.thumbsUp.bind(this);
         this.submitForm = this.submitForm.bind(this);
@@ -32,18 +31,29 @@ export default class WriteReview extends React.Component {
         })
     }
 
-    submitForm(event) {
-        event.preventDefault()
-
-    }
-
     inputChange(event) {
         this.setState({
             reviewNote: event.target.value
         })
     }
 
+    submitForm(event) {
+        event.preventDefault()
+        console.log(this.state.thumbsRate)
+        console.log(this.state.reviewNote)
+    }
+
+    componentDidMount() {
+        console.log(this.props.reviewInfo)
+        this.setState({
+            thumbsRate: this.props.reviewInfo.thumbsRate,
+            reviewNote: this.props.reviewInfo.note
+        })
+    }
+
     render() {
+        console.log(this.state.reviewNote)
+        console.log(this.state.thumbsRate)
         return (
             <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center'>
                 <div className='w-100 my-3'>
@@ -53,11 +63,11 @@ export default class WriteReview extends React.Component {
                         <div className='d-flex align-items-center text-white'><i className='fas fa-heart fa-2x'></i></div>
                     </div>
                 </div>
-                <div className='row text-center d-flex flex-column align-items-center justify-content-around'>
-                    <span className='col text-pink h4'>Name of the Restaurant</span>
-                    <div className='col w-75 my-4 text-pink d-flex justify-content-around'>
-                        <i onClick={this.thumbsUp} className={`fa-4x ${this.state.thumbsRate === true ? "fas fa-thumbs-up" : "far fa-thumbs-up"}`}></i>
-                        <i onClick={this.thumbsDown} className={`fa-4x ${this.state.thumbsRate === false ? "fas fa-thumbs-down" : "far fa-thumbs-down"}`}></i>
+                <div className='row text-center d-flex align-items-center justify-content-around'>
+                    <span className='col-12 text-pink h4'>{this.props.reviewInfo.restaurantName}</span>
+                    <div className='col-12 w-75 my-4 text-pink d-flex justify-content-center'>
+                        <i onClick={this.thumbsUp} className={`fa-4x mr-4 ${this.state.thumbsRate === true ? "fas fa-thumbs-up" : "far fa-thumbs-up"}`}></i>
+                        <i onClick={this.thumbsDown} className={`fa-4x ml-4 ${this.state.thumbsRate === false ? "fas fa-thumbs-down" : "far fa-thumbs-down"}`}></i>
                     </div>
                 </div>
                 <form className='w-100 my-4' id="reviewForm" onSubmit={this.submitForm}>
@@ -65,7 +75,8 @@ export default class WriteReview extends React.Component {
                         onChange={this.inputChange}
                         className='w-75 mx-auto px-4 d-flex flex-column align-items-center justify-content-center card rounded shadow'
                         style={{ height: '300px' }}
-                        placeholder='Please input your review'></textarea>
+                        value={this.state.reviewNote}
+                        placeholder='Please input your review here'></textarea>
                 </form>
                 <div className='row w-100 h-25 pb-4 text-center d-flex flex-column align-items-center justify-content-center'>
                     <button type='submit' form="reviewForm" className='w-50 h-25 btn text-white submitButton'>

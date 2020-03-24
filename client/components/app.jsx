@@ -14,14 +14,14 @@ export default class App extends React.Component {
       view: "login",
       likedRestaurants: [],
       reviewedRestaurants: [],
-      review: []
+      review: {}
     }
     this.setView = this.setView.bind(this);
     this.registerUser = this.registerUser.bind(this);
     this.getLikedRestaurants = this.getLikedRestaurants.bind(this);
     this.getReviewedRestaurants = this.getReviewedRestaurants.bind(this);
     this.deleteRestaurant = this.deleteRestaurant.bind(this);
-    this.addReview = this.addReview.bind(this);
+    this.getReview = this.getReview.bind(this);
   }
 
   setView(viewMode) {
@@ -73,10 +73,10 @@ export default class App extends React.Component {
         .catch(err => console.error(err))
   }
 
-  addReview(yelpId) {
-      fetch(`/api/reviews/${yelpId}`)
+  getReview(yelpId, restaurantName) {
+      fetch(`/api/reviews/${yelpId}/${restaurantName}`)
           .then(result => result.json())
-          .then(review =>
+          .then(review => 
               this.setState({
                 review: review
               })
@@ -85,7 +85,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <WriteReview setView={this.setView}/>;
     if (this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
@@ -102,7 +101,7 @@ export default class App extends React.Component {
           getLikedRestaurants={this.getLikedRestaurants}
           getReviewedRestaurants={this.getReviewedRestaurants}
           deleteRestaurant={this.deleteRestaurant}
-          addReview={this.addReview}
+          getReview={this.getReview}
           likedRestaurantsArr={this.state.likedRestaurants}
           reviewedRestaurantsArr={this.state.reviewedRestaurants}
           viewState={this.state.view}/>
@@ -112,7 +111,7 @@ export default class App extends React.Component {
       return <CurrentSearch setView={this.setView} />;
     }
     if (this.state.view === "writeReview") {
-      return <WriteReview setView={this.setView}/>
+      return <WriteReview setView={this.setView} reviewInfo={this.state.review}/>;
     }
   }
 }
