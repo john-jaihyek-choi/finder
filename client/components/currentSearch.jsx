@@ -89,7 +89,7 @@ export default class CurrentSearch extends React.Component {
           </div>
           <div className="d-flex justify-content-center mt-2">
             <button type="text" form="userSignUp" className="form-control shadow d-flex submit btn font-weight-bold"
-              onClick={this.handleClick}>SUBMIT</button>
+              id="submit" onClick={this.handleClick}>SUBMIT</button>
           </div>
           <div className="d-flex justify-content-center mt-5">
             <h5>Or try one of our suggestions below:</h5>
