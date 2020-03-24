@@ -61,7 +61,6 @@ export default class CurrentSearch extends React.Component {
    }
 
    componentDidMount(){
-     console.log(this.list);
      this.categories();
    }
 
