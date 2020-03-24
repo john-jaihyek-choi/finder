@@ -1,8 +1,9 @@
 require('dotenv').config();
 const express = require('express');
-const { searchAllRestaurants } = require('./yelp')
 const { getRestaurantDetails } = require('./yelp')
-const { searchByCategories } = require('./yelp')
+const { getReviews } = require('./yelp')
+const { searchAllRestaurants } = require('./yelp')
+
 
 const db = require('./database');
 const ClientError = require('./client-error');
@@ -166,6 +167,29 @@ app.get('/api/reviewedRestaurants', (req, res, next) => {
   db.query(reviewedRestaurants, currentUser)
     .then(result => res.json(result.rows))
     .catch(err => next(err))
+})
+
+app.post('/api/reviewedRestaurants', (req, res, next) => {
+  console.log(req.body)
+  const sql = `
+  update "reviewedRestaurants"
+  set "thumbsRate" = $2,
+      "note" = $3
+  where "reviewedRestaurantId" = $1
+  returning *
+  `;
+  const thumbsRate = req.body.thumbsRate;
+  const note = req.body.note;
+  const reviewedRestaurantId = req.body.reviewedRestaurantId;
+  console.log(reviewedRestaurantId);
+  const params = [parseInt(reviewedRestaurantId), thumbsRate, note];
+  console.log(params , "testing")
+  db.query(sql, params)
+    .then(result => {
+      const reviewedRestaurantRow = result.rows[0]
+      res.status(200).json(reviewedRestaurantRow)
+    })
+    .catch( err => next(err))
 })
 
 app.get('/api/reviews/:yelpId', (req, res, next) => {
