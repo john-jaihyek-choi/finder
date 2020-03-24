@@ -7,26 +7,19 @@ export default class Details extends React.Component {
   }
 
   componentDidMount() {
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=`;
-    script.onload = () => this.setState({ mapIsReady: true });
-    document.body.appendChild(script);
+    const map = new google.maps.Map(document.getElementById('map'), {
+      center: { lat: this.props.restaurant.coordinates.latitude, lng: this.props.restaurant.coordinates.longitude },
+      zoom: 18,
+    });
+
+    const marker = new google.maps.Marker({
+      position: { lat: this.props.restaurant.coordinates.latitude, lng: this.props.restaurant.coordinates.longitude },
+      map: map,
+      title: 'Restaurant'
+    });
   }
 
   componentDidUpdate(prevProps) {
-    if (this.state.mapIsReady) {
-      const map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: this.props.restaurant.coordinates.latitude, lng: this.props.restaurant.coordinates.longitude },
-        zoom: 18,
-      });
-
-      const marker = new google.maps.Marker({
-        position: { lat: this.props.restaurant.coordinates.latitude, lng: this.props.restaurant.coordinates.longitude },
-        map: map,
-        title: 'Restaurant'
-      });
-    }
-
     if (prevProps.restaurant !== this.props.restaurant) this.setState({ infoIndex: 3, photoIndex: 0 });
   }
 
