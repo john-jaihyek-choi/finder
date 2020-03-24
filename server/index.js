@@ -16,7 +16,6 @@ app.use(sessionMiddleware);
 
 app.use(express.json());
 
-
 app.post('/api/users', (req, res, next) => {
   const guestUser = `
     insert into "users" ("distanceRadius")
@@ -278,7 +277,6 @@ app.get('/api/view/:yelpId', (req, res, next) => {
     })
 });
 
-
 // User Can Navigate to Swiped Page with Suggested Keywords  -----------------------------
 app.post('/api/category', (req, res, next) => {
 // The category filter can be a list of comma delimited categories.For example, "bars,french" will filter by Bars OR French.
@@ -328,7 +326,6 @@ app.post('/api/category', (req, res, next) => {
     .then(categories => res.status(200).json(categories))
     .catch(err => next(err))
 })
-
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
