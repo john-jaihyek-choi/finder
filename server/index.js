@@ -193,27 +193,45 @@ app.get('/api/reviews', (req, res, next) => {
     .catch(err => next(err))
 })
 
-app.post('/api/reviewedRestaurants', (req, res, next) => {
-  console.log(req.body)
+//when its the first time the user makes review
+app.patch('/api/reviews', (req, res, next) => {
   const sql = `
   update "reviewedRestaurants"
   set "thumbsRate" = $2,
       "note" = $3
-  where "reviewedRestaurantId" = $1
+  where "userId"=$1 AND "yelpId"=$4
   returning *
   `;
   const thumbsRate = req.body.thumbsRate;
   const note = req.body.note;
-  const reviewedRestaurantId = req.body.reviewedRestaurantId;
-  console.log(reviewedRestaurantId);
-  const params = [parseInt(reviewedRestaurantId), thumbsRate, note];
-  console.log(params , "testing")
+  const yelpId = req.body.yelpId;
+  const userId = req.session.userInfo.userId
+
+  const params = [userId, thumbsRate, note, yelpId];
+
   db.query(sql, params)
     .then(result => {
       const reviewedRestaurantRow = result.rows[0]
-      res.status(200).json(reviewedRestaurantRow)
+      console.log(reviewedRestaurantRow)
+      return res.status(200).json(reviewedRestaurantRow)
     })
     .catch( err => next(err))
+})
+
+app.post('/api/reviews', (req, res, next) => {
+  const reviews = `
+    insert into "reviewedRestaurants" ("userId", "yelpId","thumbsRate", "note", "timeCreated")
+    values ($1, $2, $3, $4, NOW())
+    returning *
+  `
+  const params = [req.session.userInfo.userId, req.body.yelpId, req.body.thumbsRate, req.body.note]
+
+  db.query(reviews, params)
+    .then(result => {
+      const [newReview] = result.rows;
+      return res.status(200).json(newReview)
+    })
+    .catch(err => next(err));
 })
 
 app.get('/api/reviews/:yelpId', (req, res, next) => {

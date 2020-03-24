@@ -3,6 +3,9 @@ import React from 'react'
 export default class LikedReviewedCards extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            thumbsRate: null
+        }
         this.deleteRestaurant = this.deleteRestaurant.bind(this);
         this.addReview = this.addReview.bind(this);
     }
@@ -46,13 +49,13 @@ export default class LikedReviewedCards extends React.Component {
                         <div className={`w-50 text-center ${this.props.viewState === "likedRestaurants" ? "col-7 p-0 pr-0" : "col-6"}`}>
                             {this.props.viewState === "likedRestaurants" 
                                 ? rating 
-                                : <i className="far fa-thumbs-up fa-2x"></i>}
+                                : <i data-yelpId={this.props.restaurant.yelpId} className="far fa-thumbs-up fa-2x"></i>}
                         </div> 
                         {this.props.viewState === "likedRestaurants" ? "|" : ""}
                         <div className={`w-50 ${this.props.viewState === "likedRestaurants" ? "col-3 pr-0 pl-1" : "col-6"}`}>
                             {this.props.viewState === "likedRestaurants" 
                                 ? price 
-                                : <i className="far fa-thumbs-down fa-2x"></i>}
+                                : <i data-yelpId={this.props.restaurant.yelpId} className="far fa-thumbs-down fa-2x"></i>}
                         </div>
                     </div>
 
