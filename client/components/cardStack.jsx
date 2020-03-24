@@ -34,6 +34,7 @@ export default class CardStack extends React.Component {
   getRestaurantDetails(yelpId) {
     fetch(`/api/view/${yelpId}`)
       .then(res => res.json())
+      // .then(data => console.log('rest details', data))
       .then(data => this.setState({ details: data, showDetails: true }))
       .catch(err => console.error(err));
   }
