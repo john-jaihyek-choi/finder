@@ -12,11 +12,11 @@ export default class CardStack extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.currentQuery);
-    this.getRestaurants(33.650561, -117.7254, this.props.currentQuery);
+    console.log('currentQuery', this.props.currentQuery);
+    this.getRestaurants();
   }
 
-  getRestaurants(lat, long, term) {
+  getRestaurants() {
     fetch('/api/search/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
