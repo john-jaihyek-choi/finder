@@ -17,7 +17,7 @@ app.use(sessionMiddleware);
 app.use(express.json());
 
 
-('/api/users', (req, res, next) => {
+app.post('/api/users', (req, res, next) => {
   const guestUser = `
     insert into "users" ("distanceRadius")
     values ($1)
