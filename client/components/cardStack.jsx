@@ -27,14 +27,14 @@ export default class CardStack extends React.Component {
       })
     })
       .then(res => res.json())
-      .then(data => this.setState({ restaurants: data }, () => console.log('restaurants', this.state.restaurants)))
+      .then(data => this.setState({ restaurants: data }))
       .catch(err => console.error(err));
   }
 
   getRestaurantDetails(yelpId) {
     fetch(`/api/view/${yelpId}`)
       .then(res => res.json())
-      .then(data => this.setState({ details: data, showDetails: true }, () => console.log('details', this.state.details)))
+      .then(data => this.setState({ details: data, showDetails: true }))
       .catch(err => console.error(err));
   }
 
