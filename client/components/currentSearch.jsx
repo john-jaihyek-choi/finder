@@ -76,7 +76,7 @@ export default class CurrentSearch extends React.Component {
           </div>
           <div className="my-5">
             <div className="justify-content-left">
-              <h4 className="pink justify-content-left ml-3">Current Query</h4>
+              <h4 className="text-pink justify-content-left ml-3">Current Query</h4>
             </div>
             <div className="justify-content-center">
               <h4 className="query w-95 px-1 py-2 justify-content-center">{this.currentQuery}</h4>
@@ -88,7 +88,7 @@ export default class CurrentSearch extends React.Component {
               value={this.state.food} onChange={this.handleChange}></input>
           </div>
           <div className="d-flex justify-content-center mt-2">
-            <button type="text" form="userSignUp" className="form-control shadow d-flex submit btn font-weight-bold"
+            <button type="text" form="userSignUp" className="w-25 mt-2 btn submit font-weight-bold"
               id="submit" onClick={this.handleClick}>SUBMIT</button>
           </div>
           <div className="d-flex justify-content-center mt-5">
@@ -96,7 +96,7 @@ export default class CurrentSearch extends React.Component {
           </div>
           <div className="d-flex justify-content-flex-start">
             <div className="ml-3">
-              <ul className="foodCategory pink pl-0 mt-1">
+              <ul className="foodCategory text-pink pl-0 mt-1">
                 <div className="categoryList text-left">{listItems}</div>
               </ul>
             </div>
