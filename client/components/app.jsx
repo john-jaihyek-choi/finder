@@ -5,6 +5,7 @@ import CardStack from './cardStack';
 import GuestLogIn from './guestLogIn';
 import CurrentSearch from './currentSearch';
 import LikedReviewedRestaurants from './likedReviewedRestaurants';
+import WriteReview from './writeReview';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ export default class App extends React.Component {
       view: "login",
       likedRestaurants: [],
       reviewedRestaurants: [],
-      review: [],
+      review: {}
       location: null
     }
     this.setView = this.setView.bind(this);
@@ -21,6 +22,7 @@ export default class App extends React.Component {
     this.getLikedRestaurants = this.getLikedRestaurants.bind(this);
     this.getReviewedRestaurants = this.getReviewedRestaurants.bind(this);
     this.deleteRestaurant = this.deleteRestaurant.bind(this);
+    this.getReview = this.getReview.bind(this);
     this.addReview = this.addReview.bind(this);
     this.searchQuery = this.searchQuery.bind(this);
     this.currentQuery = '';
@@ -76,10 +78,10 @@ export default class App extends React.Component {
         .catch(err => console.error(err))
   }
 
-  addReview(yelpId) {
-      fetch(`/api/reviews/${yelpId}`)
+  getReview(yelpId, restaurantName) {
+      fetch(`/api/reviews/${yelpId}/${restaurantName}`)
           .then(result => result.json())
-          .then(review =>
+          .then(review => 
               this.setState({
                 review: review
               })
@@ -113,7 +115,7 @@ export default class App extends React.Component {
           getLikedRestaurants={this.getLikedRestaurants}
           getReviewedRestaurants={this.getReviewedRestaurants}
           deleteRestaurant={this.deleteRestaurant}
-          addReview={this.addReview}
+          getReview={this.getReview}
           likedRestaurantsArr={this.state.likedRestaurants}
           reviewedRestaurantsArr={this.state.reviewedRestaurants}
           viewState={this.state.view}/>
@@ -123,7 +125,7 @@ export default class App extends React.Component {
       return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} />;
     }
     if (this.state.view === "writeReview") {
-      return <div>this is the test review page</div>
+      return <WriteReview setView={this.setView} reviewInfo={this.state.review}/>;
     }
   }
 }

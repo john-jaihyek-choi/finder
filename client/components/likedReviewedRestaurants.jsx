@@ -50,7 +50,7 @@ export default class LikedReviewedRestaurants extends React.Component {
                             <br/>
                             <h5 className="text-secondary align-bottom">There are no {this.props.viewState === "likedRestaurants" ? "liked" : "reviewed"} restaurants</h5>
                         </div>
-                    :   restaurantsArr.map( restaurant =>
+                    :   restaurantsArr.map( restaurant => 
                             <LikedReviewedCards
                                 key={restaurantsArr.length === 0
                                     ? "noRestaurantArr"
@@ -58,10 +58,10 @@ export default class LikedReviewedRestaurants extends React.Component {
                                 restaurant={restaurant}
                                 viewState={this.props.viewState}
                                 getLikedRestaurants={this.props.getLikedRestaurants}
+                                getReview={this.props.getReview}
                                 deleteRestaurant={this.props.deleteRestaurant}
-                                addReview={this.props.addReview}
                                 setView={this.props.setView}/>
-                        )
+                            )
                 }
                 </div>
             </div>

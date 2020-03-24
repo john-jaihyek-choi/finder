@@ -116,6 +116,11 @@ h1, h3, h5, h6 {
   font-size: 12px;
 }
 
+.submitButton {
+  background-color: #FF3B74;
+  border-radius: 30px;
+}
+
 .foodCategory {
   list-style-type: none;
   font-size: 1.5rem;
