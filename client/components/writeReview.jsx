@@ -49,12 +49,17 @@ export default class WriteReview extends React.Component {
         console.log(this.state.reviewNote)
     }
 
-    componentDidUpdate() {
-        if((Object.keys(this.props.reviewInfo).length === 0)) {
+    componentDidUpdate(prevProps) {
+        if((this.props.reviewInfo !== prevProps.reviewInfo)) {
             this.setState({
                 reviewNote: this.props.reviewInfo.note,
                 thumbsRate: this.props.reviewInfo.thumbsRate
             });
+            if(this.props.reviewInfo.note === null){
+                this.setState({
+                    reviewNote: ""
+                })
+            }
         }
     }
 
