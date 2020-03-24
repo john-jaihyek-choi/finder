@@ -1,8 +1,9 @@
 require('dotenv').config();
 const express = require('express');
-const { searchAllRestaurants } = require('./yelp')
 const { getRestaurantDetails } = require('./yelp')
 const { searchByCategories } = require('./yelp')
+const { searchAllRestaurants } = require('./yelp')
+
 
 const db = require('./database');
 const ClientError = require('./client-error');
@@ -15,7 +16,6 @@ app.use(staticMiddleware);
 app.use(sessionMiddleware);
 
 app.use(express.json());
-
 
 app.post('/api/users', (req, res, next) => {
   const guestUser = `
@@ -177,6 +177,36 @@ app.get('/api/reviews/:yelpId/:restaurantName', (req, res, next) => {
     from "reviewedRestaurants" as "rR"
     join "restaurants" as "r" using ("yelpId")
     where "r"."yelpId" = $1 AND "rR"."userId"=$2
+
+app.post('/api/reviewedRestaurants', (req, res, next) => {
+  console.log(req.body)
+  const sql = `
+  update "reviewedRestaurants"
+  set "thumbsRate" = $2,
+      "note" = $3
+  where "reviewedRestaurantId" = $1
+  returning *
+  `;
+  const thumbsRate = req.body.thumbsRate;
+  const note = req.body.note;
+  const reviewedRestaurantId = req.body.reviewedRestaurantId;
+  console.log(reviewedRestaurantId);
+  const params = [parseInt(reviewedRestaurantId), thumbsRate, note];
+  console.log(params , "testing")
+  db.query(sql, params)
+    .then(result => {
+      const reviewedRestaurantRow = result.rows[0]
+      res.status(200).json(reviewedRestaurantRow)
+    })
+    .catch( err => next(err))
+})
+
+app.get('/api/reviews/:yelpId', (req, res, next) => {
+  const reviews = `
+    select "thumbsRate",
+      "note"
+    from "reviewedRestaurants"
+    where "yelpId"=$1 AND "userId"=$2
   `
 
   const userInfo = [req.params.yelpId, req.session.userInfo.userId];
@@ -282,7 +312,9 @@ app.get('/api/view/:yelpId', (req, res, next) => {
 });
 
 // User Can Navigate to Swiped Page with Suggested Keywords  -----------------------------
-app.get('/api/navigate', (req, res, next) => {
+app.post('/api/category', (req, res, next) => {
+// The category filter can be a list of comma delimited categories.For example, "bars,french" will filter by Bars OR French.
+// The category identifier should be used(for example "discgolf", not "Disc Golf").
   const latitude = req.body.latitude
   const longitude = req.body.longitude
   const categories = req.body.categories
@@ -305,19 +337,20 @@ app.get('/api/navigate', (req, res, next) => {
         const coordinates = info.coordinates
         const reviews = []
         const price = (info.price || "")
+        const rating = info.rating
 
         const sql = `
-      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price" )
-        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 )
+      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price", "rating")
+        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       on conflict("yelpId")
       do nothing
       `
         const val = [yelpId, restaurantName, yelpUrl, storeImageUrl, distance, JSON.stringify(photosUrl), JSON.stringify(hours), JSON.stringify(location),
-          JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price]
+          JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price, rating]
 
         const infoPromise = db.query(sql, val)
           .then(() => {
-            return { yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price }
+            return { yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price, rating }
           })
         insertPromises.push(infoPromise)
       }
@@ -327,7 +360,6 @@ app.get('/api/navigate', (req, res, next) => {
     .then(categories => res.status(200).json(categories))
     .catch(err => next(err))
 })
-
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
