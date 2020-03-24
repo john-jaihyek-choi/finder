@@ -23,7 +23,6 @@ export default class App extends React.Component {
     this.getReviewedRestaurants = this.getReviewedRestaurants.bind(this);
     this.deleteRestaurant = this.deleteRestaurant.bind(this);
     this.getReview = this.getReview.bind(this);
-    this.addReview = this.addReview.bind(this);
     this.searchQuery = this.searchQuery.bind(this);
     this.currentQuery = '';
     this.setLocation = this.setLocation.bind(this);
