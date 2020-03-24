@@ -43,16 +43,16 @@ export default class LikedReviewedCards extends React.Component {
                     </div>
 
                     <div className='d-flex flex-wrap mt-2 mb-4 text-pink'>
-                        <div className="w-50 col-7 p-0 text-center">
+                        <div className={`w-50 text-center ${this.props.viewState === "likedRestaurants" ? "col-7 p-0" : "col-6"}`}>
                             {this.props.viewState === "likedRestaurants" 
                                 ? rating 
-                                : <i class="far fa-thumbs-up fa-2x"></i>}
+                                : <i className="far fa-thumbs-up fa-2x"></i>}
                         </div> 
                         {this.props.viewState === "likedRestaurants" ? "|" : ""}
                         <div className={`w-50 ${this.props.viewState === "likedRestaurants" ? "col-4" : "col-6"}`}>
                             {this.props.viewState === "likedRestaurants" 
                                 ? price 
-                                : <i class="far fa-thumbs-down fa-2x"></i>}
+                                : <i className="far fa-thumbs-down fa-2x"></i>}
                         </div>
                     </div>
 
@@ -60,8 +60,8 @@ export default class LikedReviewedCards extends React.Component {
                         {this.props.viewState === "likedRestaurants"
                             ? <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} className="fas fa-comment-dots fa-2x col-6"></i>
                                 <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
-                            : <><i class="fas fa-info-circle fa-2x col-6"></i>
-                                <i class="fas fa-edit fa-2x col-6"></i></>
+                            : <><i className="fas fa-info-circle fa-2x col-6"></i>
+                                <i className="fas fa-edit fa-2x col-6"></i></>
                         }
                     </div>
                 </div>
