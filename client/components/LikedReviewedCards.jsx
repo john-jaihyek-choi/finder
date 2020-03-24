@@ -34,7 +34,7 @@ export default class LikedReviewedCards extends React.Component {
         return (      
             <div className='w-100 my-1 d-flex flex-wrap align-items-center justify-content-center card rounded cardShadow' style={{ height: '200px' }}>
                 <div className='d-flex align-items-center text-secondary col-7 p-1'>
-                    <img className="restaurantPhoto" src={this.props.restaurant.photosUrl[0]}/>
+                    <img className="restaurantPhoto" src={this.props.restaurant.photosUrl[0]} data-yelpid={this.props.restaurant.yelpId}/>
                 </div>
 
                 <div className='flex-column align-items-center text-secondary container col-5 p-1'>
@@ -43,13 +43,13 @@ export default class LikedReviewedCards extends React.Component {
                     </div>
 
                     <div className={`d-flex flex-wrap ${this.props.viewState === "likedRestaurants" ? "mt-4" : "mt-2"} mb-4 text-pink`}>
-                        <div className={`w-50 text-center ${this.props.viewState === "likedRestaurants" ? "col-7 p-0" : "col-6"}`}>
+                        <div className={`w-50 text-center ${this.props.viewState === "likedRestaurants" ? "col-7 p-0 pr-0" : "col-6"}`}>
                             {this.props.viewState === "likedRestaurants" 
                                 ? rating 
                                 : <i className="far fa-thumbs-up fa-2x"></i>}
                         </div> 
                         {this.props.viewState === "likedRestaurants" ? "|" : ""}
-                        <div className={`w-50 ${this.props.viewState === "likedRestaurants" ? "col-4" : "col-6"}`}>
+                        <div className={`w-50 ${this.props.viewState === "likedRestaurants" ? "col-3 pr-0 pl-1" : "col-6"}`}>
                             {this.props.viewState === "likedRestaurants" 
                                 ? price 
                                 : <i className="far fa-thumbs-down fa-2x"></i>}
@@ -60,8 +60,8 @@ export default class LikedReviewedCards extends React.Component {
                         {this.props.viewState === "likedRestaurants"
                             ? <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} className="fas fa-comment-dots fa-2x col-6"></i>
                                 <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
-                            : <><i className="fas fa-info-circle fa-2x col-6"></i>
-                                <i className="fas fa-edit fa-2x col-6"></i></>
+                            : <><i data-restaurantid={this.props.restaurant.restaurantId} className="fas fa-edit fa-2x col-6"></i>
+                                <i data-restaurantid={this.props.restaurant.restaurantId} className="fas fa-trash-alt fa-2x col-6"></i></>
                         }
                     </div>
                 </div>
