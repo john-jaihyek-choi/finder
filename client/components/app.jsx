@@ -21,6 +21,8 @@ export default class App extends React.Component {
     this.getReviewedRestaurants = this.getReviewedRestaurants.bind(this);
     this.deleteRestaurant = this.deleteRestaurant.bind(this);
     this.addReview = this.addReview.bind(this);
+    this.searchQuery = this.searchQuery.bind(this);
+    this.currentQuery = '';
   }
 
   setView(viewMode) {
@@ -52,7 +54,7 @@ export default class App extends React.Component {
   getReviewedRestaurants() {
     fetch('/api/reviewedRestaurants')
       .then(result => result.json())
-      .then(reviewedRestaurants => 
+      .then(reviewedRestaurants =>
         this.setState({
           reviewedRestaurants: reviewedRestaurants
         })
@@ -66,7 +68,7 @@ export default class App extends React.Component {
         headers: { 'Content-Type' : 'application/json' },
         body: JSON.stringify({ yelpId: yelpId})
       })
-        .then(result => 
+        .then(result =>
             this.getLikedRestaurants()
         )
         .catch(err => console.error(err))
@@ -83,6 +85,10 @@ export default class App extends React.Component {
           .catch(err => console.error(err))
   }
 
+  searchQuery(currentQuery) {
+   this.currentQuery = currentQuery;
+  }
+
   render() {
     if (this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
@@ -91,7 +97,7 @@ export default class App extends React.Component {
       return <Splash setView={this.setView} />;
     }
     if (this.state.view === "cardstack") {
-      return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} />;
+      return <CardStack currentQuery={this.currentQuery} setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} />;
     }
     if (this.state.view === "likedRestaurants" || this.state.view === "reviewed") {
       return (
@@ -107,7 +113,7 @@ export default class App extends React.Component {
       )
     }
     if (this.state.view === "search") {
-      return <CurrentSearch setView={this.setView} />;
+      return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} />;
     }
     if (this.state.view === "writeReview") {
       return <div>this is the test review page</div>

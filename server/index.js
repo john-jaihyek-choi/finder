@@ -17,7 +17,7 @@ app.use(sessionMiddleware);
 app.use(express.json());
 
 
-('/api/users', (req, res, next) => {
+app.post('/api/users', (req, res, next) => {
   const guestUser = `
     insert into "users" ("distanceRadius")
     values ($1)
@@ -172,7 +172,7 @@ app.get('/api/reviewedRestaurants', (req, res, next) => {
 app.get('/api/reviews/:yelpId', (req, res, next) => {
   const reviews = `
     select "thumbsRate",
-      "note" 
+      "note"
     from "reviewedRestaurants"
     where "yelpId"=$1 AND "userId"=$2
   `
@@ -279,7 +279,7 @@ app.get('/api/view/:yelpId', (req, res, next) => {
 });
 
 // User Can Navigate to Swiped Page with Suggested Keywords  -----------------------------
-app.get('/api/navigate', (req, res, next) => {
+app.post('/api/category', (req, res, next) => {
   const latitude = req.body.latitude
   const longitude = req.body.longitude
   const categories = req.body.categories

@@ -9,7 +9,6 @@ export default class CurrentSearch extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.currentQuery = '';
     this.categories = this.categories.bind(this);
     this.list = [];
     this.shuffle = this.shuffle.bind(this);
@@ -20,29 +19,22 @@ export default class CurrentSearch extends React.Component {
   }
 
   handleClick(event) {
-    event.preventDefault();
-    this.currentQuery = this.state.food;
-    this.setState({ food:''});
+  console.log(event.target.getAttribute('data-cat'));
+    this.props.searchQuery(event.target.getAttribute('data-cat'));
     this.props.setView('cardstack');
 }
 
-  shuffle(){
-    function shuffle(resCats) {
+  shuffle(array){
       var i = 0;
       var j = 0;
       var temp = null;
-      for (i = resCats.length - 1; i > 0; i--) {
+    for (i = array.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * (i + 1));
-        temp = resCats[i];
-        resCats[i] = resCats[j];
-        resCats[j] = temp;
+        temp = array[i];
+      array[i] = array[j];
+        array[j] = temp;
       }
-      let randomRest = [];
-      for (var i = 0; i < 7; i++) {
-        randomRest += ' ' + resCats[i];
-      }
-      return randomRest;
-    }
+      return array;
   }
 
    categories() {
@@ -74,7 +66,7 @@ export default class CurrentSearch extends React.Component {
     console.log(this.listItems);
     console.log(this.list);
     const listItems = (this.state.catList.map((restaurant) =>
-     <li key={restaurant}>{restaurant}</li>
+      <li onClick={this.handleClick} key={restaurant} data-cat={restaurant}>{restaurant}</li>
     ));
     return (
       <div className="container column display-flex">
@@ -103,9 +95,9 @@ export default class CurrentSearch extends React.Component {
             <h5>Or try one of our suggestions below:</h5>
           </div>
           <div className="d-flex justify-content-flex-start">
-            <div className="col-6">
+            <div className="col-8">
               <ul className="foodCategory pink pl-0 mt-1">
-                <div className="categoryList text-left" onClick={this.handleClick}>{listItems}</div>
+                <div className="categoryList text-left">{listItems}</div>
               </ul>
             </div>
           </div>
