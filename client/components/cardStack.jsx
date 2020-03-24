@@ -12,11 +12,11 @@ export default class CardStack extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.currentQuery);
-    this.getRestaurants(33.650561, -117.7254, this.props.currentQuery);
+    console.log('currentQuery', this.props.currentQuery);
+    this.getRestaurants();
   }
 
-  getRestaurants(lat, long, term) {
+  getRestaurants() {
     fetch('/api/search/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -27,14 +27,14 @@ export default class CardStack extends React.Component {
       })
     })
       .then(res => res.json())
-      .then(data => this.setState({ restaurants: data }, () => console.log('restaurants', this.state.restaurants)))
+      .then(data => this.setState({ restaurants: data }))
       .catch(err => console.error(err));
   }
 
   getRestaurantDetails(yelpId) {
     fetch(`/api/view/${yelpId}`)
       .then(res => res.json())
-      .then(data => this.setState({ details: data, showDetails: true }, () => console.log('details', this.state.details)))
+      .then(data => this.setState({ details: data, showDetails: true }))
       .catch(err => console.error(err));
   }
 
@@ -104,7 +104,7 @@ export default class CardStack extends React.Component {
         </div>
         <div className='w-100 h-100'>
           <img
-            className='rounded'
+            className='rounded hover'
             id='details'
             onClick={this.handleClick}
             src={this.state.restaurants[this.state.index].storeImageUrl}
@@ -127,7 +127,7 @@ export default class CardStack extends React.Component {
           <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
             <div className='d-flex align-items-center text-white'><i className='fas fa-heart fa-2x'></i></div>
             <div className='d-flex align-items-center text-pink'><i className='fas fa-utensils fa-2x'></i></div>
-            <div className='d-flex align-items-center text-secondary' onClick={this.toLikedRestaurant}><i className='fas fa-heart fa-2x'></i></div>
+            <div className='d-flex align-items-center text-secondary' onClick={this.toLikedRestaurant}><i className='fas fa-heart fa-2x hover'></i></div>
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>

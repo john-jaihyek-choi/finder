@@ -19,10 +19,14 @@ export default class CurrentSearch extends React.Component {
   }
 
   handleClick(event) {
-  console.log(event.target.getAttribute('data-cat'));
+    if (event.target.id === 'submit') {
+      if (!this.state.food) return;
+      this.props.searchQuery(this.state.food);
+      return this.props.setView('cardstack');
+    }
     this.props.searchQuery(event.target.getAttribute('data-cat'));
     this.props.setView('cardstack');
-}
+  }
 
   shuffle(array){
       var i = 0;
@@ -58,15 +62,12 @@ export default class CurrentSearch extends React.Component {
    }
 
    componentDidMount(){
-     console.log(this.list);
      this.categories();
    }
 
   render() {
-    console.log(this.listItems);
-    console.log(this.list);
     const listItems = (this.state.catList.map((restaurant) =>
-      <li onClick={this.handleClick} key={restaurant} data-cat={restaurant}>{restaurant}</li>
+      <li onClick={this.handleClick} className="hover" key={restaurant} data-cat={restaurant}>{restaurant}</li>
     ));
     return (
       <div className="container column display-flex">
@@ -76,7 +77,7 @@ export default class CurrentSearch extends React.Component {
           </div>
           <div className="my-5">
             <div className="justify-content-left">
-              <h4 className="pink justify-content-left ml-3">Current Query</h4>
+              <h4 className="text-pink justify-content-left ml-3">Current Query</h4>
             </div>
             <div className="justify-content-center">
               <h4 className="query w-95 px-1 py-2 justify-content-center">{this.currentQuery}</h4>
@@ -88,15 +89,15 @@ export default class CurrentSearch extends React.Component {
               value={this.state.food} onChange={this.handleChange}></input>
           </div>
           <div className="d-flex justify-content-center mt-2">
-            <button type="text" form="userSignUp" className="form-control shadow d-flex submit btn font-weight-bold"
-              onClick={this.handleClick}>SUBMIT</button>
+            <button type="text" form="userSignUp" className="w-25 mt-2 btn submit font-weight-bold"
+              id="submit" onClick={this.handleClick}>SUBMIT</button>
           </div>
           <div className="d-flex justify-content-center mt-5">
             <h5>Or try one of our suggestions below:</h5>
           </div>
           <div className="d-flex justify-content-flex-start">
-            <div className="col-8">
-              <ul className="foodCategory pink pl-0 mt-1">
+            <div className="ml-3">
+              <ul className="foodCategory text-pink pl-0 mt-1">
                 <div className="categoryList text-left">{listItems}</div>
               </ul>
             </div>
