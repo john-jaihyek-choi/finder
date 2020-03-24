@@ -13,7 +13,8 @@ export default class App extends React.Component {
       view: "login",
       likedRestaurants: [],
       reviewedRestaurants: [],
-      review: []
+      review: [],
+      location: null
     }
     this.setView = this.setView.bind(this);
     this.registerUser = this.registerUser.bind(this);
@@ -23,6 +24,7 @@ export default class App extends React.Component {
     this.addReview = this.addReview.bind(this);
     this.searchQuery = this.searchQuery.bind(this);
     this.currentQuery = '';
+    this.setLocation = this.setLocation.bind(this);
   }
 
   setView(viewMode) {
@@ -85,8 +87,13 @@ export default class App extends React.Component {
           .catch(err => console.error(err))
   }
 
+
   searchQuery(currentQuery) {
-   this.currentQuery = currentQuery;
+    this.currentQuery = currentQuery;
+  }
+  
+  setLocation(lat, long) {
+    this.setState({ location: { lat, long } });
   }
 
   render() {
@@ -94,10 +101,10 @@ export default class App extends React.Component {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
     if (this.state.view === "splash") {
-      return <Splash setView={this.setView} />;
+      return <Splash setView={this.setView} setLocation={this.setLocation} />;
     }
     if (this.state.view === "cardstack") {
-      return <CardStack currentQuery={this.currentQuery} setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} />;
+      return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} currentQuery={this.currentQuery} />;
     }
     if (this.state.view === "likedRestaurants" || this.state.view === "reviewed") {
       return (

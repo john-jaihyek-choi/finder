@@ -278,8 +278,11 @@ app.get('/api/view/:yelpId', (req, res, next) => {
     })
 });
 
+
 // User Can Navigate to Swiped Page with Suggested Keywords  -----------------------------
 app.post('/api/category', (req, res, next) => {
+// The category filter can be a list of comma delimited categories.For example, "bars,french" will filter by Bars OR French.
+// The category identifier should be used(for example "discgolf", not "Disc Golf").
   const latitude = req.body.latitude
   const longitude = req.body.longitude
   const categories = req.body.categories
