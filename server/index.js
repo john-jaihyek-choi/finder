@@ -169,14 +169,30 @@ app.get('/api/reviewedRestaurants', (req, res, next) => {
     .catch(err => next(err))
 })
 
-// app.get('/api/reviews/:yelpId/:restaurantName', (req, res, next) => {
-//   const reviews = `
-//     select "rR".*,
-//       "r"."yelpId",
-//       "r"."restaurantName"
-//     from "reviewedRestaurants" as "rR"
-//     join "restaurants" as "r" using ("yelpId")
-//     where "r"."yelpId" = $1 AND "rR"."userId"=$2
+
+app.get('/api/reviews', (req, res, next) => {
+  const reviews = `
+    select "rR".*,
+      "r"."yelpId",
+      "r"."restaurantName"
+    from "reviewedRestaurants" as "rR"
+    join "restaurants" as "r" using ("yelpId")
+    where "r"."yelpId" = $1 AND "rR"."userId"=$2
+  `
+
+  const values = [req.query.yelpId, req.session.userInfo.userId]
+
+  db.query(reviews, values)
+    .then(result => {
+      const [review] = result.rows
+        if(!review) {
+          return res.json( {note: null, restaurantName: req.query.restaurantName, thumbsRate: null, yelpId: req.query.yelpId})
+        }
+        res.json(review)
+      }
+    )
+    .catch(err => next(err))
+})
 
 app.post('/api/reviewedRestaurants', (req, res, next) => {
   console.log(req.body)

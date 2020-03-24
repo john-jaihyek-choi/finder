@@ -78,7 +78,7 @@ export default class App extends React.Component {
   }
 
   getReview(yelpId, restaurantName) {
-      fetch(`/api/reviews/${yelpId}/${restaurantName}`)
+      fetch(`/api/reviews?yelpId=${yelpId}&restaurantName=${restaurantName}`)
           .then(result => result.json())
           .then(review =>
               this.setState({
