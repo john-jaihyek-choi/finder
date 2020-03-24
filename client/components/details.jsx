@@ -3,7 +3,7 @@ import React from 'react';
 export default class Details extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { mapIsReady: false, infoIndex: 3, photoIndex: 0 };
+    this.state = { infoIndex: 3, photoIndex: 0 };
   }
 
   componentDidMount() {
