@@ -19,10 +19,13 @@ export default class CurrentSearch extends React.Component {
   }
 
   handleClick(event) {
-  console.log(event.target.getAttribute('data-cat'));
+    if (event.target.id === 'submit') {
+      this.props.searchQuery(this.state.food);
+      return this.props.setView('cardstack');
+    }
     this.props.searchQuery(event.target.getAttribute('data-cat'));
     this.props.setView('cardstack');
-}
+  }
 
   shuffle(array){
       var i = 0;
