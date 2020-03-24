@@ -169,14 +169,14 @@ app.get('/api/reviewedRestaurants', (req, res, next) => {
     .catch(err => next(err))
 })
 
-app.get('/api/reviews/:yelpId/:restaurantName', (req, res, next) => {
-  const reviews = `
-    select "rR".*,
-      "r"."yelpId",
-      "r"."restaurantName"
-    from "reviewedRestaurants" as "rR"
-    join "restaurants" as "r" using ("yelpId")
-    where "r"."yelpId" = $1 AND "rR"."userId"=$2
+// app.get('/api/reviews/:yelpId/:restaurantName', (req, res, next) => {
+//   const reviews = `
+//     select "rR".*,
+//       "r"."yelpId",
+//       "r"."restaurantName"
+//     from "reviewedRestaurants" as "rR"
+//     join "restaurants" as "r" using ("yelpId")
+//     where "r"."yelpId" = $1 AND "rR"."userId"=$2
 
 app.post('/api/reviewedRestaurants', (req, res, next) => {
   console.log(req.body)
