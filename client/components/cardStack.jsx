@@ -21,8 +21,8 @@ export default class CardStack extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         term: 'thai',
-        latitude: '33.650561',
-        longitude: '-117.74425'
+        latitude: this.props.location.lat,
+        longitude: this.props.location.long
       })
     })
       .then(res => res.json())
@@ -36,30 +36,6 @@ export default class CardStack extends React.Component {
       .then(data => this.setState({ details: data, showDetails: true }, () => console.log('details', this.state.details)))
       .catch(err => console.error(err));
   }
-
-  // Faster, but unstable way of storing all details in state restaurants array
-
-  // getRestaurants(lat, long, term) {
-  //   fetch('/api/searches/', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({
-  //       term: 'thai',
-  //       latitude: '33.650561',
-  //       longitude: '-117.74425'
-  //     })
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => Promise.all(data.map(restaurant => this.getRestaurantDetails(restaurant.yelpId))).then(values => this.setState({ restaurants: values })))
-  //     .catch(err => console.error(err));
-  // }
-
-  // getRestaurantDetails(yelpId) {
-  //   return fetch(`/api/view/${yelpId}`)
-  //     .then(res => res.json())
-  //     .then(data => data)
-  //     .catch(err => console.error(err));
-  // }
 
   likeRestaurant(yelpId, index) {
     fetch('/api/likedRestaurants/', {
