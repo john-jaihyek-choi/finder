@@ -42,7 +42,7 @@ export default class LikedReviewedCards extends React.Component {
                     <h6>{this.props.restaurant.restaurantName}</h6>
                     </div>
 
-                    <div className='d-flex flex-wrap mt-2 mb-4 text-pink'>
+                    <div className={`d-flex flex-wrap ${this.props.viewState === "likedRestaurants" ? "mt-4" : "mt-2"} mb-4 text-pink`}>
                         <div className={`w-50 text-center ${this.props.viewState === "likedRestaurants" ? "col-7 p-0" : "col-6"}`}>
                             {this.props.viewState === "likedRestaurants" 
                                 ? rating 
