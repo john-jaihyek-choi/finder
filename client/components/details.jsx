@@ -47,7 +47,7 @@ export default class Details extends React.Component {
       let hours;
       if (!this.props.restaurant.hours[0].open[ind]) hours = `${day}: Closed`;
       else hours = `${day}: ${this.calculateTime(this.props.restaurant.hours[0].open[ind].start)} - ${this.calculateTime(this.props.restaurant.hours[0].open[ind].end)}`;
-      return <div>{hours}</div>;
+      return <div key={day}>{hours}</div>;
     });
   }
 
