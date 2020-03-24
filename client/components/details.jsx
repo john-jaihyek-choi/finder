@@ -57,6 +57,7 @@ export default class Details extends React.Component {
     const rating = [];
     for (let i = 0; i < Math.floor(this.props.restaurant.rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
     if (!Number.isInteger(this.props.restaurant.rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
+    return rating;
   }
 
   cycleInfo() {
@@ -81,7 +82,7 @@ export default class Details extends React.Component {
         <div className='w-100 h-50'>
           <img
             className='rounded hover'
-            onClick={() => this.props.toCardStack()}
+            onClick={() => this.props.toPrevious()}
             src={this.props.restaurant.photosUrl[this.state.photoIndex]}
             alt={this.props.restaurant.restaurantName}
             style={{ objectFit: 'cover', objectPosition: 'center bottom', height: '200px', width: '100%' }} />
