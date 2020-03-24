@@ -104,7 +104,7 @@ export default class CardStack extends React.Component {
         </div>
         <div className='w-100 h-100'>
           <img
-            className='rounded'
+            className='rounded hover'
             id='details'
             onClick={this.handleClick}
             src={this.state.restaurants[this.state.index].storeImageUrl}
@@ -127,7 +127,7 @@ export default class CardStack extends React.Component {
           <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
             <div className='d-flex align-items-center text-white'><i className='fas fa-heart fa-2x'></i></div>
             <div className='d-flex align-items-center text-pink'><i className='fas fa-utensils fa-2x'></i></div>
-            <div className='d-flex align-items-center text-secondary' onClick={this.toLikedRestaurant}><i className='fas fa-heart fa-2x'></i></div>
+            <div className='d-flex align-items-center text-secondary' onClick={this.toLikedRestaurant}><i className='fas fa-heart fa-2x hover'></i></div>
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
