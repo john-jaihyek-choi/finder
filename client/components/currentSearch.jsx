@@ -20,6 +20,7 @@ export default class CurrentSearch extends React.Component {
 
   handleClick(event) {
     if (event.target.id === 'submit') {
+      if (!this.state.food) return;
       this.props.searchQuery(this.state.food);
       return this.props.setView('cardstack');
     }
