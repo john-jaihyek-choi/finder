@@ -1,8 +1,10 @@
 require('dotenv').config();
 const express = require('express');
-const {searchAllRestaurants} = require('./yelp')
-const {getReviews} = require('./yelp')
-const {getRestaurantDetails} = require('./yelp')
+const { getRestaurantDetails } = require('./yelp')
+const { getReviews } = require('./yelp')
+const { searchAllRestaurants } = require('./yelp')
+
+
 
 const db = require('./database');
 const ClientError = require('./client-error');
@@ -154,23 +156,46 @@ app.get('/api/users/:userId', (req, res, next) => {
     .catch(err => next(err))
 })
 
-app.get('/api/reviewedRestaurants', (req, res, next) => {
-  const reviewedRestaurants = `
-    select "r".* as "details"
-    from "restaurants" as "r"
-    join "reviewedRestaurants" as "rR" using ("yelpId")
-    where "rR"."userId" = $1
-  `
-  const currentUser = [req.session.userInfo.userId]
+// app.get('/api/reviewedRestaurants', (req, res, next) => {
+//   const reviewedRestaurants = `
+//     select "r".* as "details"
+//     from "restaurants" as "r"
+//     join "reviewedRestaurants" as "rR" using ("yelpId")
+//     where "rR"."userId" = $1
+//   `
+//   const currentUser = [req.session.userInfo.userId]
 
-  db.query(reviewedRestaurants, currentUser)
-    .then(result => res.json(result.rows))
-    .catch(err => next(err))
+//   db.query(reviewedRestaurants, currentUser)
+//     .then(result => res.json(result.rows))
+//     .catch(err => next(err))
+// })
+
+app.post('/api/reviewedRestaurants', (req, res, next) => {
+  console.log(req.body)
+  const sql = `
+  update "reviewedRestaurants"
+  set "thumbsRate" = $2,
+      "note" = $3
+  where "reviewedRestaurantId" = $1
+  returning *
+  `;
+  const thumbsRate = req.body.thumbsRate;
+  const note = req.body.note;
+  const reviewedRestaurantId = req.body.reviewedRestaurantId;
+  console.log(reviewedRestaurantId);
+  const params = [parseInt(reviewedRestaurantId), thumbsRate, note];
+  console.log(params , "testing")
+  db.query(sql, params)
+    .then(result => {
+      const reviewedRestaurantRow = result.rows[0]
+      res.status(200).json(reviewedRestaurantRow)
+    })
+    .catch( err => next(err))
 })
 
 app.get('/api/reviews', (req, res, next) => {
   const reviews = `
-    select * 
+    select *
     from "reviewedRestaurants"
     where "yelpId" = $1 AND "userId" = $2
   `
@@ -210,7 +235,7 @@ app.get('/api/search', (req, res, next) => {
 
       const sql=`
       insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price" )
-        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 )
+      values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 )
       on conflict("yelpId")
       do nothing
       `
@@ -267,8 +292,6 @@ app.get('/api/view', (req, res, next) => {
       .catch( err => next(err))
     })
 });
-
-
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
