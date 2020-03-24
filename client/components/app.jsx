@@ -12,12 +12,19 @@ export default class App extends React.Component {
     this.state = {
       view: "login",
       likedRestaurants: [],
-      reviewedRestaurants: []
+      reviewedRestaurants: [],
+      review: [],
+      location: null
     }
     this.setView = this.setView.bind(this);
     this.registerUser = this.registerUser.bind(this);
     this.getLikedRestaurants = this.getLikedRestaurants.bind(this);
     this.getReviewedRestaurants = this.getReviewedRestaurants.bind(this);
+    this.deleteRestaurant = this.deleteRestaurant.bind(this);
+    this.addReview = this.addReview.bind(this);
+    this.searchQuery = this.searchQuery.bind(this);
+    this.currentQuery = '';
+    this.setLocation = this.setLocation.bind(this);
   }
 
   setView(viewMode) {
@@ -38,23 +45,55 @@ export default class App extends React.Component {
   getLikedRestaurants() {
     fetch('/api/likedRestaurants')
       .then(result => result.json())
-      .then(likedRestaurantsArr => {
-        return this.setState({
+      .then(likedRestaurantsArr =>
+        this.setState({
           likedRestaurants: likedRestaurantsArr
         })
-      })
+      )
       .catch(err => console.error(err))
   }
 
   getReviewedRestaurants() {
     fetch('/api/reviewedRestaurants')
       .then(result => result.json())
-      .then(reviewedRestaurants => {
-        return this.setState({
+      .then(reviewedRestaurants =>
+        this.setState({
           reviewedRestaurants: reviewedRestaurants
         })
-      })
+      )
       .catch(err => console.error(err))
+  }
+
+  deleteRestaurant(yelpId) {
+    fetch('/api/likedRestaurants', {
+        method: 'DELETE',
+        headers: { 'Content-Type' : 'application/json' },
+        body: JSON.stringify({ yelpId: yelpId})
+      })
+        .then(result =>
+            this.getLikedRestaurants()
+        )
+        .catch(err => console.error(err))
+  }
+
+  addReview(yelpId) {
+      fetch(`/api/reviews/${yelpId}`)
+          .then(result => result.json())
+          .then(review =>
+              this.setState({
+                review: review
+              })
+          )
+          .catch(err => console.error(err))
+  }
+
+
+  searchQuery(currentQuery) {
+    this.currentQuery = currentQuery;
+  }
+  
+  setLocation(lat, long) {
+    this.setState({ location: { lat, long } });
   }
 
   render() {
@@ -62,10 +101,10 @@ export default class App extends React.Component {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
     if (this.state.view === "splash") {
-      return <Splash setView={this.setView} />;
+      return <Splash setView={this.setView} setLocation={this.setLocation} />;
     }
     if (this.state.view === "cardstack") {
-      return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} />;
+      return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} currentQuery={this.currentQuery} />;
     }
     if (this.state.view === "likedRestaurants" || this.state.view === "reviewed") {
       return (
@@ -73,13 +112,18 @@ export default class App extends React.Component {
           setView={this.setView}
           getLikedRestaurants={this.getLikedRestaurants}
           getReviewedRestaurants={this.getReviewedRestaurants}
+          deleteRestaurant={this.deleteRestaurant}
+          addReview={this.addReview}
           likedRestaurantsArr={this.state.likedRestaurants}
           reviewedRestaurantsArr={this.state.reviewedRestaurants}
           viewState={this.state.view}/>
       )
     }
     if (this.state.view === "search") {
-      return <CurrentSearch setView={this.setView} />;
+      return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} />;
+    }
+    if (this.state.view === "writeReview") {
+      return <div>this is the test review page</div>
     }
   }
 }
