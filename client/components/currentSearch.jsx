@@ -66,10 +66,8 @@ export default class CurrentSearch extends React.Component {
    }
 
   render() {
-    console.log(this.listItems);
-    console.log(this.list);
     const listItems = (this.state.catList.map((restaurant) =>
-      <li onClick={this.handleClick} key={restaurant} data-cat={restaurant}>{restaurant}</li>
+      <li onClick={this.handleClick} className="hover" key={restaurant} data-cat={restaurant}>{restaurant}</li>
     ));
     return (
       <div className="container column display-flex">
@@ -98,7 +96,7 @@ export default class CurrentSearch extends React.Component {
             <h5>Or try one of our suggestions below:</h5>
           </div>
           <div className="d-flex justify-content-flex-start">
-            <div className="col-8">
+            <div className="ml-3">
               <ul className="foodCategory pink pl-0 mt-1">
                 <div className="categoryList text-left">{listItems}</div>
               </ul>
