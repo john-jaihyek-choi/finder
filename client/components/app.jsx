@@ -5,6 +5,7 @@ import CardStack from './cardStack';
 import GuestLogIn from './guestLogIn';
 import CurrentSearch from './currentSearch';
 import LikedReviewedRestaurants from './likedReviewedRestaurants';
+import WriteReview from './writeReview';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -84,6 +85,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    return <WriteReview setView={this.setView}/>;
     if (this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
@@ -110,7 +112,7 @@ export default class App extends React.Component {
       return <CurrentSearch setView={this.setView} />;
     }
     if (this.state.view === "writeReview") {
-      return <div>this is the test review page</div>
+      return <WriteReview setView={this.setView}/>
     }
   }
 }

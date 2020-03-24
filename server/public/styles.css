@@ -115,3 +115,8 @@ h1, h3, h5, h6 {
 .details-text {
   font-size: 12px;
 }
+
+.submitButton {
+  background-color: #FF3B74;
+  border-radius: 30px;
+}
