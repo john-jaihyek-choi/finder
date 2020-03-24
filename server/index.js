@@ -16,7 +16,6 @@ app.use(sessionMiddleware);
 
 app.use(express.json());
 
-
 app.post('/api/users', (req, res, next) => {
   const guestUser = `
     insert into "users" ("distanceRadius")
@@ -278,7 +277,6 @@ app.get('/api/view/:yelpId', (req, res, next) => {
     })
 });
 
-
 // User Can Navigate to Swiped Page with Suggested Keywords  -----------------------------
 app.post('/api/category', (req, res, next) => {
 // The category filter can be a list of comma delimited categories.For example, "bars,french" will filter by Bars OR French.
@@ -305,19 +303,20 @@ app.post('/api/category', (req, res, next) => {
         const coordinates = info.coordinates
         const reviews = []
         const price = (info.price || "")
+        const rating = info.rating
 
         const sql = `
-      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price" )
-        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 )
+      insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price", "rating")
+        values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       on conflict("yelpId")
       do nothing
       `
         const val = [yelpId, restaurantName, yelpUrl, storeImageUrl, distance, JSON.stringify(photosUrl), JSON.stringify(hours), JSON.stringify(location),
-          JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price]
+          JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price, rating]
 
         const infoPromise = db.query(sql, val)
           .then(() => {
-            return { yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price }
+            return { yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price, rating }
           })
         insertPromises.push(infoPromise)
       }
@@ -327,7 +326,6 @@ app.post('/api/category', (req, res, next) => {
     .then(categories => res.status(200).json(categories))
     .catch(err => next(err))
 })
-
 
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
