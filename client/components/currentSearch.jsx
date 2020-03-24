@@ -3,31 +3,71 @@ import React from 'react';
 export default class CurrentSearch extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { food: '' };
+    this.state = {
+      food: '',
+      catList: []
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    // this.setView = this.setView.bind(this);
-    this.currentQuery = '';
+    this.categories = this.categories.bind(this);
+    this.list = [];
+    this.shuffle = this.shuffle.bind(this);
   }
-
-  // setView(viewMode) {
-  //   this.setState({
-  //     view: viewMode
-  //   });
-  // }
 
   handleChange(event) {
     this.setState({ food: event.target.value })
   }
 
   handleClick(event) {
-    event.preventDefault();
-    this.currentQuery = this.state.food;
-    this.setState({ food:''});
+  console.log(event.target.getAttribute('data-cat'));
+    this.props.searchQuery(event.target.getAttribute('data-cat'));
     this.props.setView('cardstack');
 }
 
+  shuffle(array){
+      var i = 0;
+      var j = 0;
+      var temp = null;
+    for (i = array.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = array[i];
+      array[i] = array[j];
+        array[j] = temp;
+      }
+      return array;
+  }
+
+   categories() {
+     const resCats = ["African", "American", "Arabian", "Armenian", "Baguettes", "Bangladeshi", "Barbeque",
+       "Brazilian", "Breakfast", "Brunch", "Burgers", "Cafes ", "Cambodian", "Caribbean",
+       "Cheesesteaks", "Chicken Shop", "Chicken Wings", "Chilean", "Chinese", "Creperies",
+       "Cuban ", "Delis ", "Dinner Theater", "Ethiopian", "Filipino", "Fish & Chips", "Fondue",
+       "French", "Gastropubs", "German", "Greek", "Guamanian", "Halal", "Hawaiian", "Hot Dogs",
+       "Hungarian", "Indian", "Indonesian", "Irish", "Israeli", "Italian", "Japanese", "Korean",
+       "Kosher", "Mediterranean", "Mexican", "Middle Eastern", "Mongolian", "Moroccan", "Noodles",
+       "Pakistani", "Persian", "Pizza", "Polish", "Polynesian", "Portuguese", "Salad", "Sandwiches",
+       "Soup", "Spanish", "Steakhouses", "Sushi Bars", "Tex-Mex", "Thai", "Vegan", "Vietnamese",
+       "Waffles", "Wraps"];
+
+     this.shuffle(resCats);
+
+     const list = resCats.slice(0, 7);
+     this.setState({
+       catList: list
+     })
+   }
+
+   componentDidMount(){
+     console.log(this.list);
+     this.categories();
+   }
+
   render() {
+    console.log(this.listItems);
+    console.log(this.list);
+    const listItems = (this.state.catList.map((restaurant) =>
+      <li onClick={this.handleClick} key={restaurant} data-cat={restaurant}>{restaurant}</li>
+    ));
     return (
       <div className="container column display-flex">
         <div className="column w-90 my-3 display-flex">
@@ -53,6 +93,13 @@ export default class CurrentSearch extends React.Component {
           </div>
           <div className="d-flex justify-content-center mt-5">
             <h5>Or try one of our suggestions below:</h5>
+          </div>
+          <div className="d-flex justify-content-flex-start">
+            <div className="col-8">
+              <ul className="foodCategory pink pl-0 mt-1">
+                <div className="categoryList text-left">{listItems}</div>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

@@ -22,6 +22,8 @@ export default class App extends React.Component {
     this.getReviewedRestaurants = this.getReviewedRestaurants.bind(this);
     this.deleteRestaurant = this.deleteRestaurant.bind(this);
     this.addReview = this.addReview.bind(this);
+    this.searchQuery = this.searchQuery.bind(this);
+    this.currentQuery = '';
     this.setLocation = this.setLocation.bind(this);
   }
 
@@ -85,6 +87,11 @@ export default class App extends React.Component {
           .catch(err => console.error(err))
   }
 
+
+  searchQuery(currentQuery) {
+    this.currentQuery = currentQuery;
+  }
+  
   setLocation(lat, long) {
     this.setState({ location: { lat, long } });
   }
@@ -97,7 +104,7 @@ export default class App extends React.Component {
       return <Splash setView={this.setView} setLocation={this.setLocation} />;
     }
     if (this.state.view === "cardstack") {
-      return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} />;
+      return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} currentQuery={this.currentQuery} />;
     }
     if (this.state.view === "likedRestaurants" || this.state.view === "reviewed") {
       return (
@@ -113,7 +120,7 @@ export default class App extends React.Component {
       )
     }
     if (this.state.view === "search") {
-      return <CurrentSearch setView={this.setView} />;
+      return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} />;
     }
     if (this.state.view === "writeReview") {
       return <div>this is the test review page</div>

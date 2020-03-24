@@ -12,7 +12,8 @@ export default class CardStack extends React.Component {
   }
 
   componentDidMount() {
-    this.getRestaurants();
+    console.log(this.props.currentQuery);
+    this.getRestaurants(33.650561, -117.7254, this.props.currentQuery);
   }
 
   getRestaurants(lat, long, term) {
@@ -20,7 +21,7 @@ export default class CardStack extends React.Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        term: 'thai',
+        term: this.props.currentQuery,
         latitude: this.props.location.lat,
         longitude: this.props.location.long
       })
