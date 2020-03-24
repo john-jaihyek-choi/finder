@@ -120,3 +120,7 @@ h1, h3, h5, h6 {
   list-style-type: none;
   font-size: 1.5rem;
 }
+
+.hover {
+  cursor: pointer;
+}
