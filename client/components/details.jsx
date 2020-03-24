@@ -45,8 +45,23 @@ export default class Details extends React.Component {
     });
   }
 
+  renderPrice() {
+    if (!this.props.restaurant.price) return;
+    const price = [];
+    for (let i = 0; i < this.props.restaurant.price.length; i++) price.push(<i className='fas fa-dollar-sign fa-sm mr-1' key={'price' + i}></i>);
+    return price;
+  }
+
+  renderRating() {
+    if (!this.props.restaurant.rating) return;
+    const rating = [];
+    for (let i = 0; i < Math.floor(this.props.restaurant.rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
+    if (!Number.isInteger(this.props.restaurant.rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
+  }
+
   cycleInfo() {
     if (this.state.infoIndex === 3) return this.renderHours();
+    if (!this.props.restaurant.reviews.length) return;
     const rating = [];
     for (let i = 0; i < Math.floor(this.props.restaurant.reviews[this.state.infoIndex].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
     if (!Number.isInteger(this.props.restaurant.reviews[this.state.infoIndex].rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
