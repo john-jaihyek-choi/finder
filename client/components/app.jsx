@@ -15,6 +15,9 @@ export default class App extends React.Component {
       likedRestaurants: [],
       reviewedRestaurants: [],
       review: {},
+      currentQuery: '',
+      cardStack: null,
+      index: null,
       location: null
     }
     this.setView = this.setView.bind(this);
@@ -24,9 +27,9 @@ export default class App extends React.Component {
     this.deleteRestaurant = this.deleteRestaurant.bind(this);
     this.getReview = this.getReview.bind(this);
     this.searchQuery = this.searchQuery.bind(this);
-    this.currentQuery = '';
     this.setLocation = this.setLocation.bind(this);
     this.postReview = this.postReview.bind(this);
+    this.saveCardStackPos = this.saveCardStackPos.bind(this);
   }
 
   setView(viewMode) {
@@ -70,7 +73,7 @@ export default class App extends React.Component {
     fetch('/api/likedReviewedRestaurants', {
         method: 'DELETE',
         headers: { 'Content-Type' : 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           yelpId: yelpId,
           tableName: tableName
         })
@@ -108,11 +111,16 @@ export default class App extends React.Component {
   }
 
   searchQuery(currentQuery) {
-    this.currentQuery = currentQuery;
+    this.setState({ currentQuery, index: 0, cardStack: null });
   }
 
   setLocation(lat, long) {
     this.setState({ location: { lat, long } });
+  }
+
+  saveCardStackPos(restaurants, index) {
+    this.state.cardStack = restaurants;
+    this.state.index = index;
   }
 
   render() {
@@ -123,7 +131,7 @@ export default class App extends React.Component {
       return <Splash setView={this.setView} setLocation={this.setLocation} />;
     }
     if (this.state.view === "cardstack") {
-      return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} currentQuery={this.currentQuery} />;
+      return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} currentQuery={this.state.currentQuery} index={this.state.index} cardStack={this.state.cardStack} saveCardStackPos={this.saveCardStackPos} />;
     }
     if (this.state.view === "likedRestaurants" || this.state.view === "reviewed") {
       return (
@@ -140,7 +148,7 @@ export default class App extends React.Component {
       )
     }
     if (this.state.view === "search") {
-      return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} />;
+      return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} />;
     }
     if (this.state.view === "writeReview") {
       return <WriteReview setView={this.setView} postReview={this.postReview} reviewInfo={this.state.review}/>;

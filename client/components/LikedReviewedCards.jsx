@@ -21,6 +21,24 @@ export default class LikedReviewedCards extends React.Component {
         this.props.deleteRestaurant(event.target.getAttribute('data-yelpid'), "likedRestaurants")
     }
 
+    thumbsUp(event) {
+        if(this.state.thumbsRate === false) {
+            return this.setState({thumbsRate: true})
+        }
+        this.setState({
+            thumbsRate: this.state.thumbsRate === null ? true : null
+        })
+    }
+
+    thumbsDown(event) {
+        if(this.state.thumbsRate === true) {
+            return this.setState({thumbsRate: false})
+        }
+        this.setState({
+            thumbsRate: this.state.thumbsRate === null ? false : null
+        })
+    }
+
     rate(event) {
         console.log(this.props.restaurant.thumbsRate)
         if(this.props.restaurant.thumbsRate === null && event.target.getAttribute('id') === 'thumbsUp') {
@@ -101,10 +119,10 @@ export default class LikedReviewedCards extends React.Component {
                     </div>
                     <div id="edit_row" className='d-flex flex-wrap mt-4 pt-2 text-pink'>
                         {this.props.viewState === "likedRestaurants"
-                            ? <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantname={this.props.restaurant.restaurantName} className="fas fa-comment-dots fa-2x col-6"></i>
-                                <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
-                            : <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantid={this.props.restaurant.restaurantId} className="fas fa-edit fa-2x col-6"></i>
-                                <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
+                            ? <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantname={this.props.restaurant.restaurantName} className="fas fa-comment-dots fa-2x col-6 hover"></i>
+                                <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6 hover"></i></>
+                            : <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantid={this.props.restaurant.restaurantId} className="fas fa-edit fa-2x col-6 hover"></i>
+                                <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6 hover"></i></>
                         }
                     </div>
                 </div>

@@ -5,14 +5,15 @@ import restaurantData from '../../database/restaurants.json';
 export default class CardStack extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { restaurants: null, details: null, index: 0, canRewind: false, showDetails: false };
+    this.state = { restaurants: this.props.cardStack, details: null, index: this.props.index, canRewind: false, canClick: true, showDetails: false };
     this.handleClick = this.handleClick.bind(this);
     this.toLikedRestaurant = this.toLikedRestaurant.bind(this);
     this.toCardStack = this.toCardStack.bind(this);
   }
 
   componentDidMount() {
-    this.getRestaurants();
+    console.log('currentQuery', this.props.currentQuery);
+    if (!this.state.restaurants) this.getRestaurants();
   }
 
   getRestaurants() {
@@ -39,6 +40,13 @@ export default class CardStack extends React.Component {
   }
 
   likeRestaurant(yelpId, index) {
+    this.setState({ canClick: false });
+
+    fetch(`/api/view/${yelpId}`)
+      .then(res => res.json())
+      .then(() => this.setState({ canClick: true }))
+      .catch(err => console.error(err));
+
     fetch('/api/likedRestaurants/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -53,14 +61,17 @@ export default class CardStack extends React.Component {
   }
 
   handleClick(e) {
-    if (!this.state.restaurants) return;
+    if (!this.state.canClick) return;
     if (e.currentTarget.id === 'like' && this.state.restaurants.length) return this.likeRestaurant(this.state.restaurants[this.state.index].yelpId, this.state.index);
     if (e.currentTarget.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true, showDetails: false });
     if (e.currentTarget.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false, showDetails: false });
     if (e.currentTarget.id === 'details') return this.getRestaurantDetails(this.state.restaurants[this.state.index].yelpId);
+    if (e.currentTarget.id === 'search') this.props.setView('search');
+    if (e.currentTarget.id === 'likedRes') this.toLikedRestaurant();
   }
 
   toLikedRestaurant (e) {
+    this.props.saveCardStackPos(this.state.restaurants, this.state.index);
     this.props.getLikedRestaurants();
     this.props.setView('likedRestaurants');
   }
@@ -126,9 +137,9 @@ export default class CardStack extends React.Component {
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className='w-100 h-100 my-3'>
           <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
-            <div className='d-flex align-items-center text-gray' onClick={() => this.props.setView('search')}><i className='fas fa-arrow-left fa-3x gray'></i></div>
+            <div className='d-flex align-items-center text-secondary' id='search' onClick={this.handleClick}><i className='fas fa-arrow-left fa-2x gray hover'></i></div>
             <div className='d-flex align-items-center text-pink'><i className='fas fa-utensils fa-2x'></i></div>
-            <div className='d-flex align-items-center text-secondary' onClick={this.toLikedRestaurant}><i className='fas fa-heart fa-2x hover'></i></div>
+            <div className='d-flex align-items-center text-secondary' id='likedRes' onClick={this.handleClick}><i className='fas fa-heart fa-2x hover gray'></i></div>
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
