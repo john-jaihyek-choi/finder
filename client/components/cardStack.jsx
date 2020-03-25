@@ -12,7 +12,6 @@ export default class CardStack extends React.Component {
   }
 
   componentDidMount() {
-    console.log('currentQuery', this.props.currentQuery);
     this.getRestaurants();
   }
 
