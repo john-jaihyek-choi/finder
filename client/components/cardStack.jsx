@@ -70,6 +70,7 @@ export default class CardStack extends React.Component {
     if (e.currentTarget.id === 'details') return this.getRestaurantDetails(this.state.restaurants[this.state.index].yelpId);
     if (e.currentTarget.id === 'search') this.props.setView('search');
     if (e.currentTarget.id === 'likedRes') this.toLikedRestaurant();
+    if (e.currentTarget.id === 'arrow-left') this.toCardStack();
   }
 
   toLikedRestaurant (e) {
@@ -135,11 +136,14 @@ export default class CardStack extends React.Component {
   }
 
   render() {
+    let icon;
+    this.state.showDetails ? icon = 'arrow-left' : icon = 'search';
+
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className='w-100 h-100 my-3'>
           <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
-            <div className='d-flex align-items-center text-secondary' id='search' onClick={this.handleClick}><i className='fas fa-arrow-left fa-2x gray hover'></i></div>
+            <div className='d-flex align-items-center text-secondary' id={icon} onClick={this.handleClick}><i className={`fas fa-${icon} fa-2x gray hover`}></i></div>
             <div className='d-flex align-items-center text-pink'><i className='fas fa-utensils fa-2x'></i></div>
             <div className='d-flex align-items-center text-secondary' id='likedRes' onClick={this.handleClick}><i className='fas fa-heart fa-2x hover gray'></i></div>
           </div>
