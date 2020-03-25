@@ -27,6 +27,9 @@ export default class App extends React.Component {
     this.currentQuery = '';
     this.setLocation = this.setLocation.bind(this);
     this.postReview = this.postReview.bind(this);
+    this.saveCardStackPos = this.saveCardStackPos.bind(this);
+    this.cardStack = [];
+    this.index = 0;
   }
 
   setView(viewMode) {
