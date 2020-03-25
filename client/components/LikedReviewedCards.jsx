@@ -17,7 +17,7 @@ export default class LikedReviewedCards extends React.Component {
     deleteRestaurant(event) {
         this.props.deleteRestaurant(event.target.getAttribute('data-yelpid'), "likedRestaurants")
     }
-  
+
     thumbsUp(event) {
         if(this.state.thumbsRate === false) {
             return this.setState({thumbsRate: true})
@@ -46,7 +46,7 @@ export default class LikedReviewedCards extends React.Component {
         this.props.postReview(this.props.restaurant.yelpId, this.props.restaurant.note, this.state.thumbsRate, false)
     }
 
- 
+
   addReview(event) {
     this.props.getReview(event.target.getAttribute('data-yelpid'), event.target.getAttribute('data-restaurantname'))
     this.props.setView('writeReview')
@@ -75,30 +75,30 @@ export default class LikedReviewedCards extends React.Component {
         </div>
 
         <div className='flex-column align-items-center text-secondary container col-5 p-1'>
-          <div className="col-12 p-1 h-25 text-dark pb-4">
+          <div className="col-12 p-1 h-25 text-pink pb-4">
             <h6>{this.props.restaurant.restaurantName}</h6>
           </div>
                     <div className={`d-flex flex-wrap ${this.props.viewState === "likedRestaurants" ? "mt-4" : "mt-2"} mb-4 text-pink`}>
                         <div className={`w-50 text-center ${this.props.viewState === "likedRestaurants" ? "col-7 p-0 pr-0" : "col-6"}`}>
-                            {this.props.viewState === "likedRestaurants" 
-                                ? rating 
-                                : <i data-yelpid={this.props.restaurant.yelpId} onClick={this.rate} id="thumbsUp" className={`fa-2x ${this.state.thumbsRate === true ? "fas fa-thumbs-up" : "far fa-thumbs-up"}`}></i>}
-                        </div> 
+                            {this.props.viewState === "likedRestaurants"
+                                ? rating
+                                : <i data-yelpid={this.props.restaurant.yelpId} onClick={this.rate} id="thumbsUp" className={`fa-2x hover ${this.state.thumbsRate === true ? "fas fa-thumbs-up" : "far fa-thumbs-up"}`}></i>}
+                        </div>
                         {this.props.viewState === "likedRestaurants" ? "|" : ""}
                         <div className={`w-50 ${this.props.viewState === "likedRestaurants" ? "col-3 pr-0 pl-1" : "col-6"}`}>
-                            {this.props.viewState === "likedRestaurants" 
-                                ? price 
-                                : <i data-yelpid={this.props.restaurant.yelpId} onClick={this.rate} id="thumbsDown" className={`fa-2x ${this.state.thumbsRate === false ? "fas fa-thumbs-down" : "far fa-thumbs-down"}`}></i>}
+                            {this.props.viewState === "likedRestaurants"
+                                ? price
+                                : <i data-yelpid={this.props.restaurant.yelpId} onClick={this.rate} id="thumbsDown" className={`fa-2x hover ${this.state.thumbsRate === false ? "fas fa-thumbs-down" : "far fa-thumbs-down"}`}></i>}
 
                         </div>
                     </div>
 
                     <div id="edit_row" className='d-flex flex-wrap mt-4 pt-2 text-pink'>
                         {this.props.viewState === "likedRestaurants"
-                            ? <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantname={this.props.restaurant.restaurantName} className="fas fa-comment-dots fa-2x col-6"></i>
-                                <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
-                            : <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantid={this.props.restaurant.restaurantId} className="fas fa-edit fa-2x col-6"></i>
-                                <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
+                            ? <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantname={this.props.restaurant.restaurantName} className="fas fa-comment-dots fa-2x col-6 hover"></i>
+                                <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6 hover"></i></>
+                            : <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantid={this.props.restaurant.restaurantId} className="fas fa-edit fa-2x col-6 hover"></i>
+                                <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6 hover"></i></>
                         }
                     </div>
                 </div>
