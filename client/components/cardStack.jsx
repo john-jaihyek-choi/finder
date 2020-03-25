@@ -22,8 +22,10 @@ export default class CardStack extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         term: this.props.currentQuery,
-        latitude: this.props.location.lat,
-        longitude: this.props.location.long
+        // latitude: this.props.location.lat,
+        // longitude: this.props.location.long
+        latitude: 37.80587,
+        longitude: -122.42058
       })
     })
       .then(res => res.json())
@@ -127,7 +129,7 @@ export default class CardStack extends React.Component {
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className='w-100 h-100 my-3'>
           <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
-            <div className='d-flex align-items-center text-white'><i className='fas fa-heart fa-2x'></i></div>
+            <div className='d-flex align-items-center text-gray' onClick={() => this.props.setView('search')}><i className='fas fa-arrow-left fa-3x gray'></i></div>
             <div className='d-flex align-items-center text-pink'><i className='fas fa-utensils fa-2x'></i></div>
             <div className='d-flex align-items-center text-secondary' onClick={this.toLikedRestaurant}><i className='fas fa-heart fa-2x hover'></i></div>
           </div>

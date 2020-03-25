@@ -26,6 +26,7 @@ export default class App extends React.Component {
     this.searchQuery = this.searchQuery.bind(this);
     this.currentQuery = '';
     this.setLocation = this.setLocation.bind(this);
+    this.postReview = this.postReview.bind(this);
   }
 
   setView(viewMode) {
@@ -80,14 +81,29 @@ export default class App extends React.Component {
   getReview(yelpId, restaurantName) {
       fetch(`/api/reviews?yelpId=${yelpId}&restaurantName=${restaurantName}`)
           .then(result => result.json())
-          .then(review =>
+          .then(review => {
+            console.log(review)
               this.setState({
                 review: review
               })
+            }
           )
           .catch(err => console.error(err))
   }
 
+  postReview(yelpId, note, thumbsRate, newReview) {
+    fetch('/api/reviews', {
+      method: `${newReview ? 'POST' : 'PATCH'}`,
+      headers: { 'Content-Type' : 'application/json' },
+      body: JSON.stringify({
+          thumbsRate: thumbsRate,
+          note: note,
+          yelpId: yelpId
+      })
+    })
+      .then(result => console.log(result.json()))
+      .catch(err => console.error(err))
+  }
 
   searchQuery(currentQuery) {
     this.currentQuery = currentQuery;
@@ -115,6 +131,7 @@ export default class App extends React.Component {
           getReviewedRestaurants={this.getReviewedRestaurants}
           deleteRestaurant={this.deleteRestaurant}
           getReview={this.getReview}
+          postReview={this.postReview}
           likedRestaurantsArr={this.state.likedRestaurants}
           reviewedRestaurantsArr={this.state.reviewedRestaurants}
           viewState={this.state.view}/>
@@ -124,7 +141,7 @@ export default class App extends React.Component {
       return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} />;
     }
     if (this.state.view === "writeReview") {
-      return <WriteReview setView={this.setView} reviewInfo={this.state.review}/>;
+      return <WriteReview setView={this.setView} postReview={this.postReview} reviewInfo={this.state.review}/>;
     }
   }
 }

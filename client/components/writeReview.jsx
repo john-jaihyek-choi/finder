@@ -4,6 +4,7 @@ export default class WriteReview extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            newReview: null,
             thumbsRate: null,
             reviewNote: ""
         }
@@ -12,6 +13,7 @@ export default class WriteReview extends React.Component {
         this.submitForm = this.submitForm.bind(this);
         this.inputChange = this.inputChange.bind(this);
         this.backToCards = this.backToCards.bind(this);
+        this.clearInput = this.clearInput.bind(this);
     }
 
     thumbsUp(event) {
@@ -40,21 +42,37 @@ export default class WriteReview extends React.Component {
     }
 
     backToCards(){
-        this.props.setView('cardstack')
+        this.props.setView('likedRestaurants')
     }
 
     submitForm(event) {
         event.preventDefault()
-        console.log(this.state.thumbsRate)
-        console.log(this.state.reviewNote)
+        console.log(this.state, this.props.reviewInfo)
+        this.props.postReview(this.props.reviewInfo.yelpId, this.state.reviewNote, this.state.thumbsRate, this.state.newReview)
+        this.props.setView('likedRestaurants')
+    }
+
+    clearInput(event) {
+        event.preventDefault()
+        this.setState({
+            thumbsRate: null,
+            reviewNote: ""
+        })
     }
 
     componentDidUpdate(prevProps) {
         if((this.props.reviewInfo !== prevProps.reviewInfo)) {
             this.setState({
+                newReview: false,
                 reviewNote: this.props.reviewInfo.note,
                 thumbsRate: this.props.reviewInfo.thumbsRate
             });
+            if(this.props.reviewInfo.note === null){
+                this.setState({
+                    newReview: true,
+                    reviewNote: ""
+                })
+            }
         }
     }
 
@@ -77,7 +95,7 @@ export default class WriteReview extends React.Component {
                         <i onClick={this.thumbsDown} className={`fa-4x ml-4 ${this.state.thumbsRate === false ? "fas fa-thumbs-down" : "far fa-thumbs-down"}`}></i>
                     </div>
                 </div>
-                <form className='w-100 my-4' id="reviewForm" onSubmit={this.submitForm}>
+                <form className='w-100 my-4' id="reviewForm" onSubmit={this.submitForm} onReset={this.clearInput}>
                     <textarea
                         onChange={this.inputChange}
                         className='w-75 mx-auto px-4 d-flex flex-column align-items-center justify-content-center card rounded shadow'
