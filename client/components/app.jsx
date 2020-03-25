@@ -66,11 +66,14 @@ export default class App extends React.Component {
       .catch(err => console.error(err))
   }
 
-  deleteRestaurant(yelpId) {
-    fetch('/api/likedRestaurants', {
+  deleteRestaurant(yelpId, tableName) {
+    fetch('/api/likedReviewedRestaurants', {
         method: 'DELETE',
         headers: { 'Content-Type' : 'application/json' },
-        body: JSON.stringify({ yelpId: yelpId})
+        body: JSON.stringify({ 
+          yelpId: yelpId,
+          tableName: tableName
+        })
       })
         .then(result =>
             this.getLikedRestaurants()
@@ -82,7 +85,6 @@ export default class App extends React.Component {
       fetch(`/api/reviews?yelpId=${yelpId}&restaurantName=${restaurantName}`)
           .then(result => result.json())
           .then(review => {
-            console.log(review)
               this.setState({
                 review: review
               })
@@ -101,7 +103,7 @@ export default class App extends React.Component {
           yelpId: yelpId
       })
     })
-      .then(result => console.log(result.json()))
+      .then(result => result.json())
       .catch(err => console.error(err))
   }
 

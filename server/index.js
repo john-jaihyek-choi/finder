@@ -97,15 +97,15 @@ app.post('/api/likedRestaurants', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.delete('/api/likedRestaurants', (req, res, next) => {
-  const likedRestaurant = `
-    delete from "likedRestaurants"
+app.delete('/api/likedReviewedRestaurants', (req, res, next) => {
+  const likedReviewedRestaurants = `
+    delete from "${req.body.tableName}"
     where "userId"=$1 AND "yelpId"=$2
     returning *
   `
   const values = [req.session.userInfo.userId, req.body.yelpId]
 
-  db.query(likedRestaurant, values)
+  db.query(likedReviewedRestaurants, values)
     .then(result => {
       const [deletedObj] = result.rows
       return res.status(200).json(deletedObj)
@@ -157,7 +157,8 @@ app.get('/api/users/:userId', (req, res, next) => {
 
 app.get('/api/reviewedRestaurants', (req, res, next) => {
   const reviewedRestaurants = `
-    select "r".* as "details"
+    select "r".* as "details",
+      "rR".* as "reviews"
     from "restaurants" as "r"
     join "reviewedRestaurants" as "rR" using ("yelpId")
     where "rR"."userId" = $1
