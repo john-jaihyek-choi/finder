@@ -34,7 +34,7 @@ export default class LikedReviewedCards extends React.Component {
     return (
       <div className='w-100 my-1 d-flex flex-wrap align-items-center justify-content-center card rounded cardShadow' style={{ height: '200px' }}>
         <div className='d-flex align-items-center text-secondary col-7 p-1'>
-          <img className="restaurantPhoto" src={this.props.restaurant.photosUrl[0]} data-yelpid={this.props.restaurant.yelpId} />
+          <img className="restaurantPhoto" src={this.props.restaurant.photosUrl[0]} data-yelpid={this.props.restaurant.yelpId} onClick={() => this.props.toDetails(this.props.restaurant)} />
         </div>
 
         <div className='flex-column align-items-center text-secondary container col-5 p-1'>
