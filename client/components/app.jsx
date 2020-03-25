@@ -70,7 +70,7 @@ export default class App extends React.Component {
     fetch('/api/likedReviewedRestaurants', {
         method: 'DELETE',
         headers: { 'Content-Type' : 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           yelpId: yelpId,
           tableName: tableName
         })
@@ -113,6 +113,11 @@ export default class App extends React.Component {
 
   setLocation(lat, long) {
     this.setState({ location: { lat, long } });
+  }
+
+  saveCardStackPos(restaurants, index) {
+    this.cardStack = restaurants;
+    this.index = index;
   }
 
   render() {
