@@ -69,7 +69,7 @@ export default class LikedReviewedCards extends React.Component {
                     </div>
                 </div>
 
-            </div>
+          <div>
             {this.props.viewState === "likedRestaurants" ? "|" : ""}
             <div className={`w-50 ${this.props.viewState === "likedRestaurants" ? "col-3 pr-0 pl-1" : "col-6"}`}>
               {this.props.viewState === "likedRestaurants"
@@ -87,7 +87,6 @@ export default class LikedReviewedCards extends React.Component {
             }
           </div>
         </div>
-      </div>
     )
   }
 }
