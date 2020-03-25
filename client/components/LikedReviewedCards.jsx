@@ -62,12 +62,12 @@ export default class LikedReviewedCards extends React.Component {
                     <div id="edit_row" className='d-flex flex-wrap mt-4 pt-2 text-pink'>
                         {this.props.viewState === "likedRestaurants"
                         //liked bubble
-                            ? <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantname={this.props.restaurant.restaurantName} id="bubble" className="fas fa-comment-dots fa-2x col-6"></i>
+                            ? <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantname={this.props.restaurant.restaurantName} className="fas fa-comment-dots fa-2x col-6"></i>
                                 <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
 
                         //review notepad
-                            : <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantid={this.props.restaurant.restaurantId} id="note" className="fas fa-edit fa-2x col-6"></i>
-                                <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} data-restaurantid={this.props.restaurant.restaurantId} className="fas fa-trash-alt fa-2x col-6"></i></>
+                            : <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantid={this.props.restaurant.restaurantId} className="fas fa-edit fa-2x col-6"></i>
+                                <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
                         }
                     </div>
                 </div>
