@@ -5,7 +5,8 @@ export default class CurrentSearch extends React.Component {
     super(props);
     this.state = {
       food: '',
-      catList: []
+      catList: [],
+      currentQuery: this.props.currentQuery
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -24,6 +25,8 @@ export default class CurrentSearch extends React.Component {
       this.props.searchQuery(this.state.food);
       return this.props.setView('cardstack');
     }
+    if (event.target.id === 'cardstack' && !this.state.currentQuery) return;
+    if (event.target.id === 'cardstack' && this.state.currentQuery) return this.props.setView('cardstack');
     this.props.searchQuery(event.target.getAttribute('data-cat'));
     this.props.setView('cardstack');
   }
@@ -73,14 +76,14 @@ export default class CurrentSearch extends React.Component {
       <div className="container column display-flex">
         <div className="column w-90 my-5 display-flex">
           <div className="display-flex justify-content-left">
-            <i className="fas fa-arrow-left fa-2x gray ml-4"></i>
+            <i className="fas fa-arrow-left fa-2x gray ml-4 hover" id="cardstack" onClick={this.handleClick}></i>
           </div>
           <div className="my-5">
             <div className="justify-content-left">
               <h4 className="text-pink justify-content-left ml-3">Current Query</h4>
             </div>
             <div className="justify-content-center">
-              <h4 className="query w-95 px-1 py-2 justify-content-center">{this.currentQuery}</h4>
+              <h4 className="query w-95 px-1 py-2 justify-content-center">{this.state.currentQuery}</h4>
             </div>
             </div>
           <div className="wrapper justify-content-center mt-5">
