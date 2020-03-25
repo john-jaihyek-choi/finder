@@ -10,6 +10,7 @@ export default class LikedReviewedRestaurants extends React.Component {
     this.toReviewedPage = this.toReviewedPage.bind(this)
     this.toLikedPage = this.toLikedPage.bind(this)
     this.toDetails = this.toDetails.bind(this)
+    this.toPrevious = this.toPrevious.bind(this)
   }
 
   toSwipePage(event) {
@@ -27,6 +28,10 @@ export default class LikedReviewedRestaurants extends React.Component {
 
   toDetails(restaurant) {
     this.setState({ showDetails: true, details: restaurant });
+  }
+
+  toPrevious() {
+    this.setState({ showDetails: false });
   }
 
   renderCard() {
