@@ -83,7 +83,6 @@ export default class Details extends React.Component {
         <div className='w-100 h-50'>
           <img
             className='rounded hover'
-            onClick={() => this.props.toPrevious()}
             src={this.props.restaurant.photosUrl[this.state.photoIndex]}
             alt={this.props.restaurant.restaurantName}
             style={{ objectFit: 'cover', objectPosition: 'center bottom', height: '200px', width: '100%' }} />
