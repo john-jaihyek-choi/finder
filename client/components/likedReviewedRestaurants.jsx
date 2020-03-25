@@ -27,7 +27,11 @@ export default class LikedReviewedRestaurants extends React.Component {
   }
 
   toDetails(restaurant) {
-    this.setState({ showDetails: true, details: restaurant });
+    fetch(`/api/view/${restaurant.yelpId}`)
+      .then(res => res.json())
+      .then(() => this.setState({ showDetails: true, details: restaurant }))
+      .catch(err => console.error(err));
+
   }
 
   toPrevious() {
