@@ -5,7 +5,7 @@ import restaurantData from '../../database/restaurants.json';
 export default class CardStack extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { restaurants: null, details: null, index: 0, canRewind: false, showDetails: false };
+    this.state = { restaurants: this.props.cardStack, details: null, index: this.props.index, canRewind: false, showDetails: false };
     this.handleClick = this.handleClick.bind(this);
     this.toLikedRestaurant = this.toLikedRestaurant.bind(this);
     this.toCardStack = this.toCardStack.bind(this);
