@@ -36,6 +36,7 @@ export default class CardStack extends React.Component {
   getRestaurantDetails(yelpId) {
     fetch(`/api/view/${yelpId}`)
       .then(res => res.json())
+      // .then(data => console.log('rest details', data))
       .then(data => this.setState({ details: data, showDetails: true }))
       .catch(err => console.error(err));
   }
@@ -55,6 +56,7 @@ export default class CardStack extends React.Component {
   }
 
   handleClick(e) {
+    if (!this.state.restaurants) return;
     if (e.currentTarget.id === 'like' && this.state.restaurants.length) return this.likeRestaurant(this.state.restaurants[this.state.index].yelpId, this.state.index);
     if (e.currentTarget.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true, showDetails: false });
     if (e.currentTarget.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false, showDetails: false });
@@ -96,7 +98,7 @@ export default class CardStack extends React.Component {
     for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
     if (!Number.isInteger(this.state.restaurants[this.state.index].rating) && this.state.restaurants[this.state.index].rating) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
 
-    if (this.state.showDetails) return <Details price={price} rating={rating} restaurant={this.state.details} toCardStack={this.toCardStack} />;
+    if (this.state.showDetails) return <Details price={price} rating={rating} restaurant={this.state.details} toPrevious={this.toCardStack} />;
 
     return (
       <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>

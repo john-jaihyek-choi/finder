@@ -169,6 +169,7 @@ app.get('/api/reviewedRestaurants', (req, res, next) => {
     .catch(err => next(err))
 })
 
+
 app.get('/api/reviews', (req, res, next) => {
   const reviews = `
     select "rR".*,
@@ -311,7 +312,7 @@ app.get('/api/view/:yelpId', (req, res, next) => {
     .then(newObj => {
       const yelpId = newObj.id
       const photosUrl = JSON.stringify(newObj.photos || [])
-      const hours = JSON.stringify(newObj.hours || [])
+      const hours = JSON.stringify(newObj.hours || [{ open: [] }])
       const reviews = JSON.stringify(newObj.reviews || [])
       const rating = newObj.rating
 
