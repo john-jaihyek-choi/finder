@@ -27,7 +27,6 @@ export default class App extends React.Component {
     this.deleteRestaurant = this.deleteRestaurant.bind(this);
     this.getReview = this.getReview.bind(this);
     this.searchQuery = this.searchQuery.bind(this);
-
     this.setLocation = this.setLocation.bind(this);
     this.postReview = this.postReview.bind(this);
     this.saveCardStackPos = this.saveCardStackPos.bind(this);
@@ -112,7 +111,7 @@ export default class App extends React.Component {
   }
 
   searchQuery(currentQuery) {
-    this.setState({ currentQuery,  });
+    this.setState({ currentQuery, index: 0, cardStack: null });
   }
 
   setLocation(lat, long) {
@@ -120,8 +119,8 @@ export default class App extends React.Component {
   }
 
   saveCardStackPos(restaurants, index) {
-    this.cardStack = restaurants;
-    this.index = index;
+    this.state.cardStack = restaurants;
+    this.state.index = index;
   }
 
   render() {
