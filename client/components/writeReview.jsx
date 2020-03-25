@@ -98,6 +98,7 @@ export default class WriteReview extends React.Component {
                         className='w-75 mx-auto px-4 d-flex flex-column align-items-center justify-content-center card rounded shadow'
                         style={{ height: '300px' }}
                         value={this.state.reviewNote}
+                        placeholder="Please input your review here"
                         ></textarea>
                 </form>
                 <div className='row w-100 h-25 pb-4 text-center d-flex flex-column align-items-center justify-content-center'>
