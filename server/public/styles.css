@@ -63,6 +63,12 @@ input, .search {
   left: 20px;
 }
 
+.mag-glass2 {
+  position: absolute;
+  top: 6px;
+  left: 20px;
+}
+
 .gradient {
   background: rgb(254,59,115);
   background: linear-gradient(45deg, rgba(254,59,115,1) 30%, rgba(255,104,92,1) 100%);
