@@ -64,6 +64,7 @@ export default class CardStack extends React.Component {
   }
 
   toLikedRestaurant (e) {
+    this.props.saveCardStackPos(this.state.restaurants, this.state.index);
     this.props.getLikedRestaurants();
     this.props.setView('likedRestaurants');
   }
