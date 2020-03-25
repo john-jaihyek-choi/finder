@@ -71,9 +71,9 @@ export default class CurrentSearch extends React.Component {
     ));
     return (
       <div className="container column display-flex">
-        <div className="column w-90 my-3 display-flex">
+        <div className="column w-90 my-5 display-flex">
           <div className="display-flex justify-content-left">
-            <i className="fas fa-arrow-left fa-3x gray"></i>
+            <i className="fas fa-arrow-left fa-3x gray ml-4"></i>
           </div>
           <div className="my-5">
             <div className="justify-content-left">
