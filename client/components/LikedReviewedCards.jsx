@@ -67,11 +67,11 @@ export default class LikedReviewedCards extends React.Component {
     if (!Number.isInteger(this.props.restaurant.rating) && this.props.restaurant.rating) {
       rating.push(<i className='fas fa-star-half fa-xs' key={'rating' + rating.length}></i>);
     }
-
+    console.log(this.props.restaurant)
     return (
       <div className='w-100 my-1 d-flex flex-wrap align-items-center justify-content-center card rounded cardShadow' style={{ height: '200px' }}>
         <div className='d-flex align-items-center text-secondary col-7 p-1'>
-          <img className="restaurantPhoto" src={this.props.restaurant.photosUrl[0]} data-yelpid={this.props.restaurant.yelpId} onClick={() => this.props.toDetails(this.props.restaurant)} />
+          <img className="restaurantPhoto" src={this.props.restaurant.storeImageUrl} data-yelpid={this.props.restaurant.yelpId} onClick={() => this.props.toDetails(this.props.restaurant)} />
         </div>
 
         <div className='flex-column align-items-center text-secondary container col-5 p-1'>
