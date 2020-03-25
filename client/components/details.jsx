@@ -3,7 +3,6 @@ import React from 'react';
 export default class Details extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props.restaurant)
     this.state = { infoIndex: this.props.restaurant.reviews.length, photoIndex: 0 };
   }
 
