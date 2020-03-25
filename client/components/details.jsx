@@ -62,7 +62,7 @@ export default class Details extends React.Component {
   }
 
   cycleInfo() {
-    if (this.state.infoIndex === 3) return this.renderHours();
+    if (this.state.infoIndex === this.props.restaurant.reviews.length) return this.renderHours();
     if (!this.props.restaurant.reviews.length) return;
     const rating = [];
     for (let i = 0; i < Math.floor(this.props.restaurant.reviews[this.state.infoIndex].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
