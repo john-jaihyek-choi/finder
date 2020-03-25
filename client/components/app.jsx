@@ -131,7 +131,7 @@ export default class App extends React.Component {
       return <Splash setView={this.setView} setLocation={this.setLocation} />;
     }
     if (this.state.view === "cardstack") {
-      return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} currentQuery={this.currentQuery} />;
+      return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} currentQuery={this.currentQuery} index={this.index} cardStack={this.cardStack} saveCardStackPos={this.saveCardStackPos} />;
     }
     if (this.state.view === "likedRestaurants" || this.state.view === "reviewed") {
       return (
