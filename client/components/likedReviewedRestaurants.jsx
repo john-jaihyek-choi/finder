@@ -42,11 +42,13 @@ export default class LikedReviewedRestaurants extends React.Component {
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className='w-100 h-100 my-3'>
           <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
-            <div className='d-flex align-items-center text-pink'><i className='fas fa-heart fa-2x'></i></div>
+            <div className='gray' onClick={this.toPrevious}><i className='fas fa-arrow-left fa-2x'></i></div>
+            <div className='text-pink'><i className='fas fa-heart fa-2x'></i></div>
+            <div className='text-white'><i className='fas fa-heart fa-2x'></i></div>
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
-          <Details restaurant={this.state.details} toPrevious={this.toPrevious} />
+          <Details restaurant={this.state.details} />
         </div>
         <div className='w-100 h-100 mb-3'></div>
       </div>
