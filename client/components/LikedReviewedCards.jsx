@@ -67,7 +67,7 @@ export default class LikedReviewedCards extends React.Component {
 
                         //review notepad
                             : <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantid={this.props.restaurant.restaurantId} className="fas fa-edit fa-2x col-6"></i>
-                                <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
+                                <i onClick={console.log('click')} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6"></i></>
                         }
                     </div>
                 </div>
