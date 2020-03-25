@@ -47,7 +47,6 @@ export default class WriteReview extends React.Component {
 
     submitForm(event) {
         event.preventDefault()
-        console.log(this.state, this.props.reviewInfo)
         this.props.postReview(this.props.reviewInfo.yelpId, this.state.reviewNote, this.state.thumbsRate, this.state.newReview)
         this.props.setView('likedRestaurants')
     }
@@ -77,8 +76,6 @@ export default class WriteReview extends React.Component {
     }
 
     render() {
-      console.log('rev info', this.props.reviewInfo);
-      console.log('state note', this.state.reviewNote, 'state rate', this.state.thumbsRate)
         return (
             <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center'>
                 <div className='w-100 my-3'>
@@ -101,6 +98,7 @@ export default class WriteReview extends React.Component {
                         className='w-75 mx-auto px-4 d-flex flex-column align-items-center justify-content-center card rounded shadow text-secondary'
                         style={{ height: '300px' }}
                         value={this.state.reviewNote}
+                        placeholder="Please input your review here"
                         ></textarea>
                 </form>
                 <div className='row w-100 h-25 pb-4 text-center d-flex flex-column align-items-center justify-content-center'>
