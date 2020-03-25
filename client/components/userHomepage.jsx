@@ -22,20 +22,13 @@ export default class UserHomepage extends React.Component {
         </div>
 
         <div className='w-100 h-100 mb-3 d-flex flex-column align-items-center justify-content-start'>
-          <h1>Welcome,</h1>
-          <h1>Tester</h1>
+          <h1>FiNdEr_Tim</h1>
         </div>
         <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
-          <button
-            type='button'
-            className='w-75 btn btn-outline-light button-outline font-weight-bold'
-            onClick={() => props.setView('search')}>
-            LET'S EAT
-        </button>
+          <div className='d-flex align-items-center'><i className='fas fa-user-alt fa-2x text-pink'></i></div>
+          <div className='d-flex align-items-center' id='likedRes' onClick={this.toSwipePage}><i className='fas fa-utensils fa-2x hover gray'></i></div>
         </div>
         <div className='w-100 h-100 mb-3'></div>
-
-
 
       </div>
     )
