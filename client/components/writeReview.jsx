@@ -42,13 +42,13 @@ export default class WriteReview extends React.Component {
     }
 
     backToCards(){
-        this.props.setView('likedRestaurants')
+        this.props.setView(this.props.from)
     }
 
     submitForm(event) {
         event.preventDefault()
         this.props.postReview(this.props.reviewInfo.yelpId, this.state.reviewNote, this.state.thumbsRate, this.state.newReview)
-        this.props.setView('likedRestaurants')
+        this.backToCards();
     }
 
     clearInput(event) {

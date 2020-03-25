@@ -18,7 +18,13 @@ export default class LikedReviewedCards extends React.Component {
     }
 
     deleteRestaurant(event) {
-        this.props.deleteRestaurant(event.target.getAttribute('data-yelpid'), "likedRestaurants")
+        if(this.props.viewState === 'likedRestaurants'){
+            this.props.deleteRestaurant(event.target.getAttribute('data-yelpid'), "likedRestaurants")
+        }
+        if(this.props.viewState === 'reviewed') {
+            this.props.deleteRestaurant(event.target.getAttribute('data-yelpid'), "reviewedRestaurants")
+            this.props.toReviewedPage()
+        }
     }
 
     thumbsUp(event) {
@@ -61,11 +67,12 @@ export default class LikedReviewedCards extends React.Component {
     }
 
     addReview(event) {
-        this.props.getReview(event.target.getAttribute('data-yelpid'), event.target.getAttribute('data-restaurantname'))
+        this.props.getReview(event.target.getAttribute('data-yelpid'), event.target.getAttribute('data-restaurantname'), this.props.viewState)
         this.props.setView('writeReview')
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
+        console.log(prevProps)
         if(this.state.thumbsUpdate) {
             this.setState({thumbsUpdate: !this.state.thumbsUpdate})
         };
