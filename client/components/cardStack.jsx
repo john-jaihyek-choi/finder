@@ -106,7 +106,7 @@ export default class CardStack extends React.Component {
     const rating = [];
     for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
     if (!Number.isInteger(this.state.restaurants[this.state.index].rating) && this.state.restaurants[this.state.index].rating) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
-
+    console.log(this.state.details)
     if (this.state.showDetails) return <Details price={price} rating={rating} restaurant={this.state.details} />;
 
     return (
