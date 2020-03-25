@@ -73,7 +73,7 @@ export default class CurrentSearch extends React.Component {
       <div className="container column display-flex">
         <div className="column w-90 my-5 display-flex">
           <div className="display-flex justify-content-left">
-            <i className="fas fa-arrow-left fa-3x gray ml-4"></i>
+            <i className="fas fa-arrow-left fa-2x gray ml-4"></i>
           </div>
           <div className="my-5">
             <div className="justify-content-left">
@@ -85,7 +85,7 @@ export default class CurrentSearch extends React.Component {
             </div>
           <div className="wrapper justify-content-center mt-5">
             <i className="mag-glass fas fa-search fa-2x gray"></i>
-            <input className="search shadow w-100 px-1 py-2 justify-content-left" placeholder="Search"
+            <input className="search text-secondary shadow w-100 px-1 py-2 justify-content-left" placeholder="Search"
               value={this.state.food} onChange={this.handleChange}></input>
           </div>
           <div className="d-flex justify-content-center mt-2">
@@ -93,7 +93,7 @@ export default class CurrentSearch extends React.Component {
               id="submit" onClick={this.handleClick}>SUBMIT</button>
           </div>
           <div className="d-flex justify-content-center mt-5">
-            <h5>Or try one of our suggestions below:</h5>
+            <h5 className="text-secondary">Or try one of our suggestions below:</h5>
           </div>
           <div className="d-flex justify-content-flex-start">
             <div className="ml-3">
