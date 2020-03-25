@@ -46,7 +46,6 @@ export default class LikedReviewedCards extends React.Component {
     }
 
     rate(event) {
-        console.log(this.props.restaurant.thumbsRate)
         if(this.props.restaurant.thumbsRate === null && event.target.getAttribute('id') === 'thumbsUp') {
             this.props.restaurant.thumbsRate = true
         } else if(this.props.restaurant.thumbsRate === null && event.target.getAttribute('id') === 'thumbsDown') {
@@ -72,7 +71,6 @@ export default class LikedReviewedCards extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log(prevProps)
         if(this.state.thumbsUpdate) {
             this.setState({thumbsUpdate: !this.state.thumbsUpdate})
         };
