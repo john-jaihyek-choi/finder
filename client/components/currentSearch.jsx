@@ -71,7 +71,7 @@ export default class CurrentSearch extends React.Component {
 
    componentDidUpdate() {
     if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
-    if(this.props.location !== null && this.state.loading) this.setState({loading: false});
+    // if(this.props.location !== null && this.state.loading) this.setState({loading: false});
   }
 
   render() {
@@ -85,7 +85,13 @@ export default class CurrentSearch extends React.Component {
           <div className='w-100 h-100 my-3'></div>
           <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
             <div className="w-90 h-50 d-flex flex-column">
-              <h1 className='w-100 text-white font-weight-bold title'>Locating...</h1>
+              <div className="w-100">
+                <h1 className='text-white font-weight-bold title'>Locating
+                <span className="ml-2 spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
+                <span className="spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
+                <span className="spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
+                </h1>
+              </div>
               <div className="d-flex justify-content-center">
                 <div className="spinner-border text-white mt-3" role="status" style={ {width: '5rem', height: '5rem'} }>
                   <span className="sr-only"></span>
