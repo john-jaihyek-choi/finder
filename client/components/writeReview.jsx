@@ -83,7 +83,7 @@ export default class WriteReview extends React.Component {
             <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center'>
                 <div className='w-100 my-3'>
                     <div className='h-25 mt-2 d-flex align-items-start justify-content-around'>
-                        <div className='d-flex align-items-center text-secondary'><i onClick={this.backToCards} className='fas fa-arrow-left fa-2x'></i></div>
+                        <div className='d-flex align-items-center gray hover'><i onClick={this.backToCards} className='fas fa-arrow-left fa-2x'></i></div>
                         <div className='d-flex align-items-center text-white'><i className='fas fa-utensils fa-2x'></i></div>
                         <div className='d-flex align-items-center text-white'><i className='fas fa-heart fa-2x'></i></div>
                     </div>
@@ -91,14 +91,14 @@ export default class WriteReview extends React.Component {
                 <div className='row text-center d-flex align-items-center justify-content-around'>
                     <span className='col-12 text-pink h4'>{this.props.reviewInfo.restaurantName}</span>
                     <div className='col-12 w-75 my-4 text-pink d-flex justify-content-center'>
-                        <i onClick={this.thumbsUp} className={`fa-4x mr-4 ${this.state.thumbsRate === true ? "fas fa-thumbs-up" : "far fa-thumbs-up"}`}></i>
-                        <i onClick={this.thumbsDown} className={`fa-4x ml-4 ${this.state.thumbsRate === false ? "fas fa-thumbs-down" : "far fa-thumbs-down"}`}></i>
+                        <i onClick={this.thumbsUp} className={`fa-4x mr-4 hover ${this.state.thumbsRate === true ? "fas fa-thumbs-up" : "far fa-thumbs-up"}`}></i>
+                        <i onClick={this.thumbsDown} className={`fa-4x ml-4 hover ${this.state.thumbsRate === false ? "fas fa-thumbs-down" : "far fa-thumbs-down"}`}></i>
                     </div>
                 </div>
                 <form className='w-100 my-4' id="reviewForm" onSubmit={this.submitForm} onReset={this.clearInput}>
                     <textarea
                         onChange={this.inputChange}
-                        className='w-75 mx-auto px-4 d-flex flex-column align-items-center justify-content-center card rounded shadow'
+                        className='w-75 mx-auto px-4 d-flex flex-column align-items-center justify-content-center card rounded shadow text-secondary'
                         style={{ height: '300px' }}
                         value={this.state.reviewNote}
                         ></textarea>
