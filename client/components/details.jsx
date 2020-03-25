@@ -38,7 +38,8 @@ export default class Details extends React.Component {
     const days = ['Mon','Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     return days.map((day, ind) => {
       let hours;
-      if (!this.props.restaurant.hours[0].open.length) hours = `${day}: No data`
+      if (!this.props.restaurant.hours.length) return <div>No hours data</div>
+      else if (!this.props.restaurant.hours[0].open.length) hours = `${day}: No data`
       else if (!this.props.restaurant.hours[0].open[ind]) hours = `${day}: Closed`;
       else hours = `${day}: ${this.calculateTime(this.props.restaurant.hours[0].open[ind].start)} - ${this.calculateTime(this.props.restaurant.hours[0].open[ind].end)}`;
       return <div key={day}>{hours}</div>;
@@ -46,14 +47,14 @@ export default class Details extends React.Component {
   }
 
   renderPrice() {
-    if (!this.props.restaurant.price) return;
+    if (!this.props.restaurant.price) return <div>No price data</div>;
     const price = [];
     for (let i = 0; i < this.props.restaurant.price.length; i++) price.push(<i className='fas fa-dollar-sign fa-sm mr-1' key={'price' + i}></i>);
     return price;
   }
 
   renderRating() {
-    if (!this.props.restaurant.rating) return;
+    if (!this.props.restaurant.rating) return <div>No rating data</div>;
     const rating = [];
     for (let i = 0; i < Math.floor(this.props.restaurant.rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
     if (!Number.isInteger(this.props.restaurant.rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
@@ -93,8 +94,8 @@ export default class Details extends React.Component {
             <div className=''>{this.props.restaurant.location.city}, {this.props.restaurant.location.state}</div>
           </div>
           <div className='w-100 h-25 text-center text-pink font-weight-bold d-flex align-items-center justify-content-center'>
-            <div className='w-100'>{this.props.rating}</div> |
-            <div className='w-100'>{this.props.price}</div> |
+            <div className='w-100'>{this.renderRating()}</div> |
+            <div className='w-100'>{this.renderPrice()}</div> |
             <div className='w-100'><i className="fas fa-map-marker-alt mr-2"></i>{(this.props.restaurant.distance * 0.000621371).toFixed(1)} mi</div>
           </div>
         </div>
