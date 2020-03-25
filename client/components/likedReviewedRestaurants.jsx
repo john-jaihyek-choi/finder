@@ -31,7 +31,6 @@ export default class LikedReviewedRestaurants extends React.Component {
       .then(res => res.json())
       .then(() => this.setState({ showDetails: true, details: restaurant }))
       .catch(err => console.error(err));
-
   }
 
   toPrevious() {
@@ -68,13 +67,13 @@ export default class LikedReviewedRestaurants extends React.Component {
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className='w-100 sticky-top navTop' style={{ background: 'white' }}>
           <div className='h-25 mt-2 d-flex align-items-start justify-content-around'>
-            <div className='d-flex align-items-center text-secondary' onClick={this.toSwipePage}><i className='fas fa-utensils fa-2x'></i></div>
+            <div className='d-flex align-items-center gray hover' onClick={this.toSwipePage}><i className='fas fa-utensils fa-2x'></i></div>
             <div className='d-flex align-items-center text-pink'><i className='fas fa-heart fa-2x'></i></div>
             <div className='d-flex align-items-center text-white'><i className='fas fa-heart fa-2x'></i></div>
           </div>
           <div className='mx-auto d-flex align-items-center justify-content-center tab'>
-            <span className={`mx-auto ${this.props.viewState === "reviewed" ? 'text-secondary h4' : 'text-pink h3'}`} onClick={this.toLikedPage}>Liked</span>
-            <span className={`mx-auto ${this.props.viewState === "likedRestaurants" ? 'text-secondary h4' : 'text-pink h3'}`} onClick={this.toReviewedPage}>Reviewed</span>
+            <span className={`mx-auto hover ${this.props.viewState === "reviewed" ? 'text-secondary h4' : 'text-pink h3'}`} onClick={this.toLikedPage}>Liked</span>
+            <span className={`mx-auto hover ${this.props.viewState === "likedRestaurants" ? 'text-secondary h4' : 'text-pink h3'}`} onClick={this.toReviewedPage}>Reviewed</span>
           </div>
         </div>
         <div className='w-100 h-75'>
