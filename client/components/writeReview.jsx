@@ -77,6 +77,8 @@ export default class WriteReview extends React.Component {
     }
 
     render() {
+      console.log('rev info', this.props.reviewInfo);
+      console.log('state note', this.state.reviewNote, 'state rate', this.state.thumbsRate)
         return (
             <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center'>
                 <div className='w-100 my-3'>
@@ -99,14 +101,14 @@ export default class WriteReview extends React.Component {
                         className='w-75 mx-auto px-4 d-flex flex-column align-items-center justify-content-center card rounded shadow'
                         style={{ height: '300px' }}
                         value={this.state.reviewNote}
-                        placeholder='Please input your review here'></textarea>
+                        ></textarea>
                 </form>
                 <div className='row w-100 h-25 pb-4 text-center d-flex flex-column align-items-center justify-content-center'>
                     <button type='submit' form="reviewForm" className='w-50 h-25 btn text-white submitButton'>
-                        <span className="h6">SUBMIT</span> 
+                        <span className="h6">SUBMIT</span>
                     </button>
                     <button type='reset' form="reviewForm" className='w-50 h-25 mt-4 btn text-white submitButton'>
-                        <span className="h6">CLEAR</span> 
+                        <span className="h6">CLEAR</span>
                     </button>
                 </div>
             </div>
