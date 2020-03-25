@@ -148,7 +148,7 @@ export default class App extends React.Component {
       )
     }
     if (this.state.view === "search") {
-      return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} />;
+      return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} />;
     }
     if (this.state.view === "writeReview") {
       return <WriteReview setView={this.setView} postReview={this.postReview} reviewInfo={this.state.review}/>;
