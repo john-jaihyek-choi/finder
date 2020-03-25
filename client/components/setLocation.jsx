@@ -1,31 +1,21 @@
 import React from 'react';
-// import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
-import RangeSlider from 'react-bootstrap-range-slider';
 
 export default class SetLocation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       zipCode: '',
-      radius: [],
-      currentQuery: this.props.currentQuery
+      value: 0
     };
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  // const slider = () => {
-
-  //   const [value, setValue] = useState(0);
-
-  //   return (
-  //     <RangeSlider
-  //       value={value}
-  //       onChange={changeEvent => setValue(changeEvent.target.value)}
-  //     />
-  //   );
-
-  // };
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
 
   render() {
+    const { value } = this.state
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className="my-2">
@@ -38,6 +28,30 @@ export default class SetLocation extends React.Component {
               value={this.state.food} onChange={this.handleChange}></input>
             <i className="fas fa-map-marker-alt fa-3x pink ml-3 mb-2"></i>
           </div>
+        </div>
+        <div className="mt-5 pink">
+          <h4>Distance Radius(mi.)</h4>
+        </div>
+        <div className="d-flex justify-content-center mt-3">
+          <label className="d-flex align-items-center">
+            <input
+              id="typeinp"
+              type="range"
+              min="0" max="24"
+              value={this.state.value}
+              onChange={this.handleChange}
+              step="1"
+              className="mr-3" />
+            <div className="miles pink">
+              {this.state.value}
+            </div>
+          </label>
+        </div>
+        <div className="d-flex justify-content-center mt-2">
+          <button type="text" form="userSignUp" className="w-125 mt-2 mx-3 btn submit font-weight-bold"
+            id="cancel" onClick={this.handleClick}>CANCEL</button>
+          <button type="text" form="userSignUp" className="w-125 mt-2 mx-3 btn submit font-weight-bold"
+            id="submit" onClick={this.handleClick}>SUBMIT</button>
         </div>
       </div>
     )
