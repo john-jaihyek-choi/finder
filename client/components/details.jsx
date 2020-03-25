@@ -35,11 +35,11 @@ export default class Details extends React.Component {
   }
 
   renderHours() {
+    if (!this.props.restaurant.hours.length) return <h5>No hours data</h5>;
     const days = ['Mon','Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     return days.map((day, ind) => {
       let hours;
-      if (!this.props.restaurant.hours.length) return <div>No hours data</div>
-      else if (!this.props.restaurant.hours[0].open.length) hours = `${day}: No data`
+      if (!this.props.restaurant.hours[0].open.length) hours = `${day}: No data`;
       else if (!this.props.restaurant.hours[0].open[ind]) hours = `${day}: Closed`;
       else hours = `${day}: ${this.calculateTime(this.props.restaurant.hours[0].open[ind].start)} - ${this.calculateTime(this.props.restaurant.hours[0].open[ind].end)}`;
       return <div key={day}>{hours}</div>;
