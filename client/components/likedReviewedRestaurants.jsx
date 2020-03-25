@@ -89,6 +89,7 @@ export default class LikedReviewedRestaurants extends React.Component {
                 viewState={this.props.viewState}
                 getLikedRestaurants={this.props.getLikedRestaurants}
                 getReview={this.props.getReview}
+                postReview={this.props.postReview}
                 deleteRestaurant={this.props.deleteRestaurant}
                 setView={this.props.setView}
                 toDetails={this.toDetails} />
