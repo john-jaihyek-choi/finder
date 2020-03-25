@@ -121,7 +121,6 @@ export default class CardStack extends React.Component {
           <img
             className='rounded hover'
             id='details'
-            onClick={this.handleClick}
             src={this.state.restaurants[this.state.index].storeImageUrl}
             alt={this.state.restaurants[this.state.index].restaurantName}
             style={{ objectFit: 'cover', height: '250px', width: '100%' }} />
