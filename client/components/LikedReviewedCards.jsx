@@ -8,6 +8,9 @@ export default class LikedReviewedCards extends React.Component {
         }
         this.deleteRestaurant = this.deleteRestaurant.bind(this);
         this.addReview = this.addReview.bind(this);
+        this.thumbsDown = this.thumbsDown.bind(this);
+        this.thumbsUp = this.thumbsUp.bind(this);
+        this.rate = this.rate.bind(this);
     }
 
     deleteRestaurant(event) {
@@ -18,6 +21,50 @@ export default class LikedReviewedCards extends React.Component {
         this.props.getReview(event.target.getAttribute('data-yelpid'), event.target.getAttribute('data-restaurantname'))
         this.props.setView('writeReview')
     }
+
+    thumbsUp(event) {
+        if(this.state.thumbsRate === false) {
+            return this.setState({thumbsRate: true})
+        }
+        this.setState({
+            thumbsRate: this.state.thumbsRate === null ? true : null
+        })
+    }
+
+    thumbsDown(event) {
+        if(this.state.thumbsRate === true) {
+            return this.setState({thumbsRate: false})
+        }
+        this.setState({
+            thumbsRate: this.state.thumbsRate === null ? false : null
+        })
+    }
+
+    rate(event) {
+        if(event.target.getAttribute('id') === 'thumbsUp') {
+            this.thumbsUp()
+        }
+        if(event.target.getAttribute('id') === 'thumbsDown') {
+            this.thumbsDown()
+        }
+        this.props.postReview(this.props.restaurant.yelpId, this.props.restaurant.note, this.state.thumbsRate, false)
+    }
+
+    componentDidMount() {
+        this.setState({
+            thumbsRate: this.props.restaurant.thumbsRate
+        })
+    }
+
+    // componentDidUpdate(prevProps) {
+    //     console.log("this is the current props", this.props.restaurant)
+    //     console.log("this is the previous props", prevProps.restaurant)
+    //     if((this.props.restaurant !== prevProps.restaurant)) {
+    //         this.setState({
+    //             thumbsRate: this.state.thumbsRate
+    //         });
+    //     }
+    // }
 
     render() {
         const price = [];
@@ -33,11 +80,11 @@ export default class LikedReviewedCards extends React.Component {
         if (!Number.isInteger(this.props.restaurant.rating) && this.props.restaurant.rating) {
             rating.push(<i className='fas fa-star-half fa-xs' key={'rating' + rating.length}></i>);
         }
-
+        console.log(this.props.restaurant)
         return (      
             <div className='w-100 my-1 d-flex flex-wrap align-items-center justify-content-center card rounded cardShadow' style={{ height: '200px' }}>
                 <div className='d-flex align-items-center text-secondary col-7 p-1'>
-                    <img className="restaurantPhoto" src={this.props.restaurant.photosUrl[0]} data-yelpid={this.props.restaurant.yelpId}/>
+                    <img className="restaurantPhoto" src={this.props.restaurant.storeImageUrl} data-yelpid={this.props.restaurant.yelpId}/>
                 </div>
 
                 <div className='flex-column align-items-center text-secondary container col-5 p-1'>
@@ -49,13 +96,13 @@ export default class LikedReviewedCards extends React.Component {
                         <div className={`w-50 text-center ${this.props.viewState === "likedRestaurants" ? "col-7 p-0 pr-0" : "col-6"}`}>
                             {this.props.viewState === "likedRestaurants" 
                                 ? rating 
-                                : <i data-yelpId={this.props.restaurant.yelpId} className="far fa-thumbs-up fa-2x"></i>}
+                                : <i data-yelpid={this.props.restaurant.yelpId} onClick={this.rate} id="thumbsUp" className={`fa-2x ${this.state.thumbsRate === true ? "fas fa-thumbs-up" : "far fa-thumbs-up"}`}></i>}
                         </div> 
                         {this.props.viewState === "likedRestaurants" ? "|" : ""}
                         <div className={`w-50 ${this.props.viewState === "likedRestaurants" ? "col-3 pr-0 pl-1" : "col-6"}`}>
                             {this.props.viewState === "likedRestaurants" 
                                 ? price 
-                                : <i data-yelpId={this.props.restaurant.yelpId} className="far fa-thumbs-down fa-2x"></i>}
+                                : <i data-yelpid={this.props.restaurant.yelpId} onClick={this.rate} id="thumbsDown" className={`fa-2x ${this.state.thumbsRate === false ? "fas fa-thumbs-down" : "far fa-thumbs-down"}`}></i>}
                         </div>
                     </div>
 

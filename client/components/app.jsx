@@ -101,7 +101,7 @@ export default class App extends React.Component {
           yelpId: yelpId
       })
     })
-      .then(result => console.log(result.json()))
+      .then(result => result.json())
       .catch(err => console.error(err))
   }
 

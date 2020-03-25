@@ -157,7 +157,8 @@ app.get('/api/users/:userId', (req, res, next) => {
 
 app.get('/api/reviewedRestaurants', (req, res, next) => {
   const reviewedRestaurants = `
-    select "r".* as "details"
+    select "r".* as "details",
+      "rR".* as "reviews"
     from "restaurants" as "r"
     join "reviewedRestaurants" as "rR" using ("yelpId")
     where "rR"."userId" = $1
