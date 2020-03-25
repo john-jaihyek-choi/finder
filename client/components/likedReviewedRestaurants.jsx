@@ -34,70 +34,31 @@ export default class LikedReviewedRestaurants extends React.Component {
     this.setState({ showDetails: false });
   }
 
-  renderCard() {
+  renderDetails() {
+    return (
+      <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
+        <div className='w-100 h-100 my-3'>
+          <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
+            <div className='d-flex align-items-center text-pink'><i className='fas fa-heart fa-2x'></i></div>
+          </div>
+        </div>
+        <div className='w-100 h-100 mb-3'>
+          <Details restaurant={this.state.details} toPrevious={this.toPrevious} />
+        </div>
+        <div className='w-100 h-100 mb-3'></div>
+      </div>
+    );
+  }
+
+  render() {
+    if (this.state.showDetails) return this.renderDetails();
+
     let restaurantsArr = null
     if (this.props.viewState === "likedRestaurants") {
       restaurantsArr = this.props.likedRestaurantsArr
     } else if (this.props.viewState === "reviewed") {
       restaurantsArr = this.props.reviewedRestaurantsArr
     }
-
-    // if (this.state.showDetails) return <Details price={price} rating={rating} restaurant={this.state.details} toCardStack={this.toCardStack} />;
-
-    if (restaurantsArr < 1) {
-      return (
-        <div className='h-100 text-center mt-4 pt-4'>
-          <i className='fas fa-heart fa-10x text-light mt-4 pt-4'></i>
-          <br />
-          <h5 className="text-secondary align-bottom">There are no {this.props.viewState === "likedRestaurants" ? "liked" : "reviewed"} restaurants</h5>
-        </div>
-      );
-    }
-    return (
-      restaurantsArr.map(restaurant =>
-        <LikedReviewedCards
-          key={restaurantsArr.length === 0
-            ? "noRestaurantArr"
-            : restaurant.yelpId}
-          restaurant={restaurant}
-          viewState={this.props.viewState}
-          getLikedRestaurants={this.props.getLikedRestaurants}
-          getReview={this.props.getReview}
-          deleteRestaurant={this.props.deleteRestaurant}
-          setView={this.props.setView}
-          toDetails={this.toDetails} />
-      )
-    );
-  }
-
-  render() {
-    if (this.state.showDetails) return (
-      <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
-        <div className='w-100 h-100 my-3'>
-          <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
-            <div className='d-flex align-items-center text-white'><i className='fas fa-heart fa-2x'></i></div>
-            <div className='d-flex align-items-center text-pink'><i className='fas fa-heart fa-2x'></i></div>
-            <div className='d-flex align-items-center text-secondary'><i className='fas fa-heart fa-2x hover'></i></div>
-          </div>
-        </div>
-        <div className='w-100 h-100 mb-3'>
-          <Details restaurant={this.state.details} toPrevious={this.toPrevious} />;
-        </div>
-        <div className='w-100 h-100 mb-3'>
-          <div className='h-100 pb-4 d-flex align-items-end justify-content-around'>
-            {/* <button type='button' id='pass' className='stack-button pink btn button-outline shadow' onClick={this.handleClick}>
-              <i className='fas fa-times fa-lg'></i>
-            </button>
-            <button type='button' id='rewind' className='stack-button yellow btn button-outline shadow' onClick={this.handleClick}>
-              <i className='fas fa-undo fa-lg'></i>
-            </button>
-            <button type='button' id='like' className='stack-button green btn button-outline shadow' onClick={this.handleClick}>
-              <i className='fas fa-heart fa-lg'></i>
-            </button> */}
-          </div>
-        </div>
-      </div>
-    );
 
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
@@ -113,8 +74,7 @@ export default class LikedReviewedRestaurants extends React.Component {
           </div>
         </div>
         <div className='w-100 h-75'>
-          {this.renderCard()}
-          {/* {restaurantsArr < 1
+          {restaurantsArr < 1
             ? <div className='h-100 text-center mt-4 pt-4'>
               <i className='fas fa-heart fa-10x text-light mt-4 pt-4'></i>
               <br />
@@ -130,9 +90,10 @@ export default class LikedReviewedRestaurants extends React.Component {
                 getLikedRestaurants={this.props.getLikedRestaurants}
                 getReview={this.props.getReview}
                 deleteRestaurant={this.props.deleteRestaurant}
-                setView={this.props.setView} />
-            )
-          } */}
+                setView={this.props.setView}
+                toDetails={this.toDetails} />
+              )
+            }
         </div>
       </div>
     )
