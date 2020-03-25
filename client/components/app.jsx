@@ -6,6 +6,7 @@ import GuestLogIn from './guestLogIn';
 import CurrentSearch from './currentSearch';
 import LikedReviewedRestaurants from './likedReviewedRestaurants';
 import WriteReview from './writeReview';
+import UserHomepage from './userHomepage';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -154,6 +155,9 @@ export default class App extends React.Component {
     }
     if (this.state.view === "writeReview") {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
+    }
+    if(this.state.view === "userHomepage"){
+      return <UserHomepage />
     }
   }
 }
