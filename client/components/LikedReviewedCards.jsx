@@ -4,7 +4,7 @@ export default class LikedReviewedCards extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            thumbsRate: null
+            thumbsRate: this.props.restaurant.thumbsRate
         }
         this.deleteRestaurant = this.deleteRestaurant.bind(this);
         this.addReview = this.addReview.bind(this);
@@ -14,7 +14,7 @@ export default class LikedReviewedCards extends React.Component {
     }
 
     deleteRestaurant(event) {
-        this.props.deleteRestaurant(event.target.getAttribute('data-yelpid'))
+        this.props.deleteRestaurant(event.target.getAttribute('data-yelpid'), "likedRestaurants")
     }
 
     addReview(event) {
@@ -50,22 +50,6 @@ export default class LikedReviewedCards extends React.Component {
         this.props.postReview(this.props.restaurant.yelpId, this.props.restaurant.note, this.state.thumbsRate, false)
     }
 
-    componentDidMount() {
-        this.setState({
-            thumbsRate: this.props.restaurant.thumbsRate
-        })
-    }
-
-    // componentDidUpdate(prevProps) {
-    //     console.log("this is the current props", this.props.restaurant)
-    //     console.log("this is the previous props", prevProps.restaurant)
-    //     if((this.props.restaurant !== prevProps.restaurant)) {
-    //         this.setState({
-    //             thumbsRate: this.state.thumbsRate
-    //         });
-    //     }
-    // }
-
     render() {
         const price = [];
         for (let i = 0; i < this.props.restaurant.price.length; i++) {
@@ -80,7 +64,7 @@ export default class LikedReviewedCards extends React.Component {
         if (!Number.isInteger(this.props.restaurant.rating) && this.props.restaurant.rating) {
             rating.push(<i className='fas fa-star-half fa-xs' key={'rating' + rating.length}></i>);
         }
-        console.log(this.props.restaurant)
+
         return (      
             <div className='w-100 my-1 d-flex flex-wrap align-items-center justify-content-center card rounded cardShadow' style={{ height: '200px' }}>
                 <div className='d-flex align-items-center text-secondary col-7 p-1'>
