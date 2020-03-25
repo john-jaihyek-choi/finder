@@ -30,6 +30,7 @@ export default class App extends React.Component {
     this.setLocation = this.setLocation.bind(this);
     this.postReview = this.postReview.bind(this);
     this.saveCardStackPos = this.saveCardStackPos.bind(this);
+    this.from = null;
   }
 
   setView(viewMode) {
@@ -84,7 +85,8 @@ export default class App extends React.Component {
         .catch(err => console.error(err))
   }
 
-  getReview(yelpId, restaurantName) {
+  getReview(yelpId, restaurantName, from) {
+      this.from = from;
       fetch(`/api/reviews?yelpId=${yelpId}&restaurantName=${restaurantName}`)
           .then(result => result.json())
           .then(review => {
@@ -151,7 +153,7 @@ export default class App extends React.Component {
       return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} />;
     }
     if (this.state.view === "writeReview") {
-      return <WriteReview setView={this.setView} postReview={this.postReview} reviewInfo={this.state.review}/>;
+      return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
     }
   }
 }
