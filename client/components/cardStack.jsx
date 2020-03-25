@@ -109,7 +109,7 @@ export default class CardStack extends React.Component {
     for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
     if (!Number.isInteger(this.state.restaurants[this.state.index].rating) && this.state.restaurants[this.state.index].rating) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
 
-    if (this.state.showDetails) return <Details price={price} rating={rating} restaurant={this.state.details} toPrevious={this.toCardStack} />;
+    if (this.state.showDetails) return <Details price={price} rating={rating} restaurant={this.state.details} />;
 
     return (
       <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
@@ -123,6 +123,7 @@ export default class CardStack extends React.Component {
             id='details'
             src={this.state.restaurants[this.state.index].storeImageUrl}
             alt={this.state.restaurants[this.state.index].restaurantName}
+            onClick={this.handleClick}
             style={{ objectFit: 'cover', height: '250px', width: '100%' }} />
         </div>
         <div className='w-100 h-100 text-center text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center'>
@@ -142,9 +143,9 @@ export default class CardStack extends React.Component {
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className='w-100 h-100 my-3'>
           <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
-            <div className='d-flex align-items-center text-secondary' id={icon} onClick={this.handleClick}><i className={`fas fa-${icon} fa-2x gray hover`}></i></div>
-            <div className='d-flex align-items-center text-pink'><i className='fas fa-utensils fa-2x'></i></div>
-            <div className='d-flex align-items-center text-secondary' id='likedRes' onClick={this.handleClick}><i className='fas fa-heart fa-2x hover gray'></i></div>
+            <div className='d-flex align-items-center' id={icon} onClick={this.handleClick}><i className={`fas fa-${icon} fa-2x gray hover`}></i></div>
+            <div className='d-flex align-items-center'><i className='fas fa-utensils fa-2x text-pink'></i></div>
+            <div className='d-flex align-items-center' id='likedRes' onClick={this.handleClick}><i className='fas fa-heart fa-2x hover gray'></i></div>
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
