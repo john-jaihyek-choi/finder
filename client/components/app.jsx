@@ -28,7 +28,7 @@ export default class App extends React.Component {
     this.setLocation = this.setLocation.bind(this);
     this.postReview = this.postReview.bind(this);
     this.saveCardStackPos = this.saveCardStackPos.bind(this);
-    this.cardStack = [];
+    this.cardStack = null;
     this.index = 0;
   }
 
