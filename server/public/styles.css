@@ -129,3 +129,11 @@ h1, h3, h5, h6 {
 .hover {
   cursor: pointer;
 }
+
+.effect1:hover {
+  box-shadow: 1px 1px 10px 2px #cccccc;
+}
+
+.effect2:hover {
+  box-shadow: 1px 1px 10px 1px #dddddd;
+}
