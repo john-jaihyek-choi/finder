@@ -7,6 +7,7 @@ import CurrentSearch from './currentSearch';
 import LikedReviewedRestaurants from './likedReviewedRestaurants';
 import WriteReview from './writeReview';
 import Login from './logIn';
+import SignUp from './signUp';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -128,6 +129,10 @@ export default class App extends React.Component {
   render() {
     if (this.state.view === "login") {
       return <Login guestLogIn={this.registerUser} setView={this.setView} />;
+    }
+
+    if (this.state.view === "signup") {
+      return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation} />;
     }
 
     if (this.state.view === "splash") {
