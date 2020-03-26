@@ -41,7 +41,7 @@ export default class SignUp extends React.Component {
                             onChange={this.inputChange}/>
                     </form>
                     <div className="d-flex flex-wrap justify-content-center w-100 h-75">
-                        <h6>{this.state.userName === "" ? "" : this.props.validation}</h6>
+                        <h6>{this.props.validation}</h6>
                     </div>
                 </div>
                 <div className='w-100 h-100 mb-3 d-flex flex-wrap align-items-center justify-content-center align-content-end'>
