@@ -6,6 +6,7 @@ import GuestLogIn from './guestLogIn';
 import CurrentSearch from './currentSearch';
 import LikedReviewedRestaurants from './likedReviewedRestaurants';
 import WriteReview from './writeReview';
+import Login from './logIn';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -126,6 +127,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    return <Login />;
     if (this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
