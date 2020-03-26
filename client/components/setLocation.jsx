@@ -7,11 +7,16 @@ export default class SetLocation extends React.Component {
       zipCode: '',
       distance: 0
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeLocation = this.handleChangeLocation.bind(this);
+    this.handleChangeDistance = this.handleChangeDistance.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleChange(event) {
+  handleChangeLocation(event) {
+    this.setState({ zipCode: event.target.value });
+  }
+
+  handleChangeDistance(event) {
     this.setState({ distance: event.target.value });
   }
 
@@ -32,7 +37,7 @@ export default class SetLocation extends React.Component {
           <div className="wrapper d-flex mt-3">
             <i className="mag-glass2 fas fa-search fa-2x gray mt-2"></i>
             <input className="search text-secondary shadow w-130 px-1 py-2 justify-content-left" placeholder="Search"
-              value={this.state.zipCode} onChange={this.handleChange}></input>
+              value={this.state.zipCode} onChange={this.handleChangeLocation}></input>
             <i className="fas fa-map-marker-alt fa-3x pink ml-3 mb-2"></i>
           </div>
         </div>
@@ -46,7 +51,7 @@ export default class SetLocation extends React.Component {
               type="range"
               min="0" max="24"
               value={this.state.distance}
-              onChange={this.handleChange}
+              onChange={this.handleChangeDistance}
               step="1"
               className="mr-3" />
             <div className="miles pink">
