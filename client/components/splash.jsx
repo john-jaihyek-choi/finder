@@ -8,7 +8,7 @@ export default class Splash extends React.Component {
 
   getLocation() {
     navigator.geolocation.getCurrentPosition((position) => this.props.setLocation(position.coords.latitude, position.coords.longitude));
-    this.props.setView('locationSettings')
+    this.props.setView('userHomepage')
   }
 
   render() {
