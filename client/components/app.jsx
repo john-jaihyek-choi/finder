@@ -141,7 +141,11 @@ export default class App extends React.Component {
   }
 
   setManualLocation(keyword, radius) {
-    this.setState({ location: { keyword: keyword, radius: radius }})
+    const locationObj = {
+      keyword: keyword,
+      radius: radius
+    }
+    this.setState({ location: locationObj})
   }
 
   saveCardStackPos(restaurants, index) {
