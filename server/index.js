@@ -260,9 +260,11 @@ app.get('/api/reviews/:yelpId', (req, res, next) => {
 app.post('/api/search/', (req, res, next) => {
   const latitude = req.body.latitude
   const longitude = req.body.longitude
+  const location = req.body.location
   const term = req.body.term
+  const radius = (req.body.radius * 1609.34)
 
-  searchAllRestaurants(latitude, longitude, term)
+  searchAllRestaurants(latitude, longitude, term, location, radius)
 
   .then(allRestaurants => {
     const insertPromises =[];
