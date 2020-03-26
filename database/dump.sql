@@ -17,6 +17,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 ALTER TABLE ONLY public."likedRestaurants" DROP CONSTRAINT "likedRestaurants_fk0";
+ALTER TABLE ONLY public.users DROP CONSTRAINT "users_userName_key";
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_pk;
 ALTER TABLE ONLY public."reviewedRestaurants" DROP CONSTRAINT "reviewedRestaurants_pk";
 ALTER TABLE ONLY public.restaurants DROP CONSTRAINT "restaurants_yelpUrl_key";
@@ -203,7 +204,8 @@ ALTER SEQUENCE public."reviewedRestaurants_userId_seq" OWNED BY public."reviewed
 
 CREATE TABLE public.users (
     "userId" integer NOT NULL,
-    "distanceRadius" numeric NOT NULL
+    "distanceRadius" numeric NOT NULL,
+    "userName" text DEFAULT 'test'::text NOT NULL
 );
 
 
@@ -290,8 +292,10 @@ COPY public."reviewedRestaurants" ("reviewedRestaurantId", "userId", "yelpId", "
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.users ("userId", "distanceRadius") FROM stdin;
-\.
+COPY public.users ("userId", "distanceRadius", "userName") FROM stdin;
+523	10	test1
+524	10	test2
+
 
 
 --
@@ -305,14 +309,14 @@ SELECT pg_catalog.setval('public."likedRestaurants_userId_seq"', 1, false);
 -- Name: restaurants_restaurantId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."restaurants_restaurantId_seq"', 568, true);
+SELECT pg_catalog.setval('public."restaurants_restaurantId_seq"', 14170, true);
 
 
 --
 -- Name: reviewedRestaurants_reviewedRestaurantId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."reviewedRestaurants_reviewedRestaurantId_seq"', 2, true);
+SELECT pg_catalog.setval('public."reviewedRestaurants_reviewedRestaurantId_seq"', 27, true);
 
 
 --
@@ -326,7 +330,7 @@ SELECT pg_catalog.setval('public."reviewedRestaurants_userId_seq"', 1, false);
 -- Name: users_userId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."users_userId_seq"', 74, true);
+SELECT pg_catalog.setval('public."users_userId_seq"', 524, true);
 
 
 --
@@ -375,6 +379,14 @@ ALTER TABLE ONLY public."reviewedRestaurants"
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pk PRIMARY KEY ("userId");
+
+
+--
+-- Name: users users_userName_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT "users_userName_key" UNIQUE ("userName");
 
 
 --

@@ -6,6 +6,8 @@ import GuestLogIn from './guestLogIn';
 import CurrentSearch from './currentSearch';
 import LikedReviewedRestaurants from './likedReviewedRestaurants';
 import WriteReview from './writeReview';
+import Login from './logIn';
+import SignUp from './signUp';
 import SetLocation from './setLocation';
 
 export default class App extends React.Component {
@@ -145,16 +147,15 @@ export default class App extends React.Component {
   }
 
   saveCardStackPos(restaurants, index) {
-    this.state.cardStack = restaurants;
-    this.state.index = index;
+    this.setState({ cardStack: restaurants, index })
   }
 
   render() {
     if (this.state.view === "login") {
-      return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
+      return <Login guestLogIn={this.registerUser} setView={this.setView} />;
     }
-    if (this.state.view === "signUp") {
-      return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation}/>
+    if (this.state.view === "signup") {
+      return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation} />;
     }
     if (this.state.view === "splash") {
       return <Splash setView={this.setView} setLocation={this.setLocation} />;
