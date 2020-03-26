@@ -9,7 +9,7 @@ export default class Login extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
+    console.log('submitted');
   }
 
   guestClick(event) {
@@ -26,29 +26,32 @@ export default class Login extends React.Component {
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column text-white align-items-center justify-content-center gradient'>
 
-        <div className='w-100 h-100 my-3'></div>
-        <div className='w-100 h-100 mb-3 d-flex flex-column align-items-center justify-content-start'></div>
+        <div className='w-100 h-100 my-3 d-flex align-items-end justify-content-center'>
+          <h1 className="title">finder<i className="fas fa-utensils text-white mx-2"></i></h1>
+        </div>
 
-        <div className='w-100 h-100 mb-3'>
-          <form id='login' onSubmit={this.handleSubmit}>
+        <div className='w-100 h-100 mb-3 d-flex align-items-end '>
+          <form className='w-75 mx-auto' id='login' onSubmit={this.handleSubmit}>
             <label htmlFor="username">USERNAME</label>
-            <select name="username" id="username" form="login">
-              {this.renderUsers()}
-            </select>
-            <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
-              <button
-                type='submit'
-                className='w-75 btn btn-outline-light button-outline font-weight-bold'
-                onClick={this.getLocation}>
-                LET'S EAT
-              </button>
+            <div>
+              <select className='w-100 btn btn-outline-light button-outline font-weight-bold' name="username" id="username" form="login">
+                {this.renderUsers()}
+              </select>
             </div>
           </form>
         </div>
 
-        <div className='w-100 h-100 mb-3'></div>
+        <div className='w-100 h-100 mb-3 d-flex align-items-end justify-content-center'>
+          <div className='text-white btn' style={{ textDecoration: 'underline' }}>CREATE NEW USERNAME</div>
+        </div>
 
-        <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
+        <div className='w-100 h-100 mb-3 d-flex flex-column align-items-center justify-content-start'>
+          <button
+            type='submit'
+            form='login'
+            className='w-75 mb-4 btn btn-outline-light button-outline font-weight-bold'>
+            LOG IN
+          </button>
           <button
             type='button'
             className='w-75 btn btn-outline-light button-outline font-weight-bold'
