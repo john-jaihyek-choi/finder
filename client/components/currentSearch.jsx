@@ -6,7 +6,8 @@ export default class CurrentSearch extends React.Component {
     this.state = {
       food: '',
       catList: [],
-      currentQuery: this.props.currentQuery
+      currentQuery: this.props.currentQuery,
+      loading: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -68,45 +69,80 @@ export default class CurrentSearch extends React.Component {
      this.categories();
    }
 
+   componentDidUpdate() {
+    if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
+    if(this.props.location !== null && this.state.loading) this.setState({loading: false});
+  }
+
   render() {
     const listItems = (this.state.catList.map((restaurant) =>
       <li onClick={this.handleClick} className="hover" key={restaurant} data-cat={restaurant}>{restaurant}</li>
     ));
-    return (
-      <div className="container column display-flex">
-        <div className="column w-90 my-5 display-flex">
-          <div className="display-flex justify-content-left">
-            <i className="fas fa-arrow-left fa-2x gray ml-4 hover" id="cardstack" onClick={this.handleClick}></i>
-          </div>
-          <div className="my-5">
-            <div className="justify-content-left">
-              <h4 className="text-pink justify-content-left ml-3">Current Query</h4>
+
+    if(this.state.loading) {
+      return (
+        <div className='mx-auto vw-100 vh-100 d-flex flex-column text-white align-items-center justify-content-center gradient'>
+          <div className='w-100 h-100 my-3'></div>
+          <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
+            <div className="w-90 h-50 d-flex flex-column">
+              <div className="w-100">
+                <h1 className='text-white font-weight-bold title'>Locating
+                <span className="ml-2 spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
+                <span className="spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
+                <span className="spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
+                </h1>
+              </div>
+              <div className="d-flex justify-content-center">
+                <div className="spinner-border text-white mt-3" role="status" style={ {width: '5rem', height: '5rem'} }>
+                  <span className="sr-only"></span>
+                </div>
+              </div>
             </div>
-            <div className="justify-content-center">
-              <h4 className="query w-95 px-1 py-2 justify-content-center">{this.state.currentQuery}</h4>
+          </div>
+          <div className="flex-row my-5">
+          </div>
+          <div className='w-100 h-100 mb-3'></div>
+        </div>
+      );
+    }
+
+    if(!this.state.loading) {
+      return (
+        <div className="container column display-flex">
+          <div className="column w-90 my-5 display-flex">
+            <div className="display-flex justify-content-left">
+              <i className="fas fa-arrow-left fa-2x gray ml-4 hover" id="cardstack" onClick={this.handleClick}></i>
             </div>
+            <div className="my-5">
+              <div className="justify-content-left">
+                <h4 className="text-pink justify-content-left ml-3">Current Query</h4>
+              </div>
+              <div className="justify-content-center">
+                <h4 className="query w-95 px-1 py-2 justify-content-center">{this.state.currentQuery}</h4>
+              </div>
+              </div>
+            <div className="wrapper justify-content-center mt-5">
+              <i className="mag-glass fas fa-search fa-2x gray"></i>
+              <input className="search text-secondary shadow w-100 px-1 py-2 justify-content-left" placeholder="Search"
+                value={this.state.food} onChange={this.handleChange}></input>
             </div>
-          <div className="wrapper justify-content-center mt-5">
-            <i className="mag-glass fas fa-search fa-2x gray"></i>
-            <input className="search text-secondary shadow w-100 px-1 py-2 justify-content-left" placeholder="Search"
-              value={this.state.food} onChange={this.handleChange}></input>
-          </div>
-          <div className="d-flex justify-content-center mt-2">
-            <button type="text" form="userSignUp" className="w-25 mt-2 btn submit font-weight-bold"
-              id="submit" onClick={this.handleClick}>SUBMIT</button>
-          </div>
-          <div className="d-flex justify-content-center mt-5">
-            <h5 className="text-secondary">Or try one of our suggestions below:</h5>
-          </div>
-          <div className="d-flex justify-content-flex-start">
-            <div className="ml-3">
-              <ul className="foodCategory text-pink pl-0 mt-1">
-                <div className="categoryList text-left">{listItems}</div>
-              </ul>
+            <div className="d-flex justify-content-center mt-2">
+              <button type="text" form="userSignUp" className="w-25 mt-2 btn submit font-weight-bold"
+                id="submit" onClick={this.handleClick}>SUBMIT</button>
+            </div>
+            <div className="d-flex justify-content-center mt-5">
+              <h5 className="text-secondary">Or try one of our suggestions below:</h5>
+            </div>
+            <div className="d-flex justify-content-flex-start">
+              <div className="ml-3">
+                <ul className="foodCategory text-pink pl-0 mt-1">
+                  <div className="categoryList text-left">{listItems}</div>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }

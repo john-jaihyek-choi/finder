@@ -1,5 +1,5 @@
 import React from 'react';
-import IntroPages from './introPages';
+import SignUp from './signUp';
 import Splash from './splash';
 import CardStack from './cardStack';
 import GuestLogIn from './guestLogIn';
@@ -12,6 +12,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userInfo: {},
       view: "login",
       likedRestaurants: [],
       reviewedRestaurants: [],
@@ -19,7 +20,8 @@ export default class App extends React.Component {
       currentQuery: '',
       cardStack: null,
       index: null,
-      location: null
+      location: null,
+      validation: null
     }
     this.setView = this.setView.bind(this);
     this.registerUser = this.registerUser.bind(this);
@@ -31,6 +33,7 @@ export default class App extends React.Component {
     this.setLocation = this.setLocation.bind(this);
     this.postReview = this.postReview.bind(this);
     this.saveCardStackPos = this.saveCardStackPos.bind(this);
+    this.signUp = this.signUp.bind(this);
     this.from = null;
   }
 
@@ -46,6 +49,21 @@ export default class App extends React.Component {
       headers: { 'Content-Type' : 'application/json' }
     })
       .then(result => result.json())
+      .catch(err => console.error(err))
+  }
+
+  signUp(userName) {
+    fetch('/api/signUp', {
+      method: 'POST',
+      headers: { 'Content-Type' : 'application/json' },
+      body: JSON.stringify({ userName: userName })
+    })
+      .then(result => result.json())
+      .then(userInfo => {
+        if(userInfo.err) return this.setState({ validation: userInfo.err});
+        console.log(userInfo)
+        this.setState({ userInfo: userInfo})
+      })
       .catch(err => console.error(err))
   }
 
@@ -130,6 +148,9 @@ export default class App extends React.Component {
     if (this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
+    if (this.state.view === "signUp") {
+      return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation}/>
+    }
     if (this.state.view === "splash") {
       return <Splash setView={this.setView} setLocation={this.setLocation} />;
     }
@@ -151,7 +172,7 @@ export default class App extends React.Component {
       )
     }
     if (this.state.view === "search") {
-      return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} />;
+      return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} location={this.state.location} />;
     }
     if (this.state.view === "writeReview") {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
