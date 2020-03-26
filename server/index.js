@@ -17,6 +17,25 @@ app.use(sessionMiddleware);
 
 app.use(express.json());
 
+app.get('/api/login/:userId', (req, res, next) => {
+  const { userId } = req.params;
+  if (!userId) res.status(400).json({ error: 'missing userId' });
+
+  const text = `
+    select *
+    from   "users"
+    where  "userId" = $1;
+  `;
+  const values = [userId];
+
+  db.query(text, values)
+    .then(res => {
+      if (!res.rows.length) return res.status(404).json({ error: `userId ${} does not exist` });
+      req.session.userInfo = res.rows;
+    })
+    .catch(err => console.error(err));
+});
+
 app.post('/api/users', (req, res, next) => {
   const guestUser = `
     insert into "users" ("distanceRadius")
