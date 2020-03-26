@@ -23,9 +23,8 @@ export default class UserHomepage extends React.Component {
             <div className='d-flex align-items-center' onClick={this.toSwipePage}><i className='fas fa-utensils fa-2x hover gray'></i></div>
           </div>
         </div>
-
-        <div className='w-100 h-100 mb-3 d-flex flex-column align-items-center justify-content-start text-pink'>
-          <h1>FiNdEr_Tim</h1>
+        <div className="flex-row my-5 text-pink">
+          <h1 className="title">FiNdEr_Tim</h1>
         </div>
 
         <div className='w-100 h-100 mb-3'>
