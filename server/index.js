@@ -30,7 +30,7 @@ app.get('/api/login/:userId', (req, res, next) => {
 
   db.query(text, values)
     .then(res => {
-      if (!res.rows.length) return res.status(404).json({ error: `userId ${} does not exist` });
+      if (!res.rows.length) return res.status(404).json({ error: `userId ${userId} does not exist` });
       req.session.userInfo = res.rows;
     })
     .catch(err => console.error(err));
