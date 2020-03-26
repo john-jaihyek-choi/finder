@@ -3,9 +3,22 @@ import React from 'react';
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { users: [{ id: 12, name: 'Blake' }, { id: 400, name: 'Shrimp' }] };
+    this.state = {
+      value: 'Select User',
+      users:
+        [
+          { id: 12, name: 'Blake' },
+          { id: 400, name: 'Shrimp' },
+          { id: 300, name: 'vape' },
+        ]
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({ value: e.target.value});
   }
 
   handleSubmit(e) {
@@ -39,8 +52,8 @@ export default class Login extends React.Component {
           <form className='w-75 mx-auto' id='login' onSubmit={this.handleSubmit}>
             <label htmlFor="username">USERNAME</label>
             <div>
-              <select className='w-100 btn btn-outline-light button-outline font-weight-bold' name="username" id="username" form="login">
-                <option value="none" selected disabled hidden>Select User</option>
+              <select className='w-100 btn btn-outline-light button-outline font-weight-bold' name="username" id="username" form="login" value={this.state.value} onChange={this.handleChange}>
+                <option value='Select User' hidden disabled>Select User</option>
                 {this.renderUsers()}
               </select>
             </div>
