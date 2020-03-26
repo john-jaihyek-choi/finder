@@ -40,6 +40,7 @@ export default class Login extends React.Component {
             <label htmlFor="username">USERNAME</label>
             <div>
               <select className='w-100 btn btn-outline-light button-outline font-weight-bold' name="username" id="username" form="login">
+                <option value="none" selected disabled hidden>Select User</option>
                 {this.renderUsers()}
               </select>
             </div>
