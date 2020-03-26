@@ -7,14 +7,21 @@ export default class Login extends React.Component {
       value: 'Select User',
       users:
         [
-          { id: 12, name: 'Blake' },
-          { id: 400, name: 'Shrimp' },
-          { id: 300, name: 'vape' },
+          { userId: 12, userName: 'Blake' },
+          { userId: 400, userName: 'Shrimp' },
+          { userId: 300, userName: 'vape' },
         ]
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  getUsers() {
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(data => this.setState({ users: data }))
+      .catch(err => console.error(err));
   }
 
   handleChange(e) {
@@ -37,7 +44,7 @@ export default class Login extends React.Component {
   }
 
   renderUsers() {
-    return this.state.users.map(user => <option key={user.id} value={user.id}>{user.name}</option>);
+    return this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.userName}</option>);
   }
 
   render() {
