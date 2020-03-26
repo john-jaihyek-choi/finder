@@ -12,6 +12,11 @@ export default class Login extends React.Component {
     console.log('submitted');
   }
 
+  handleClick(e) {
+    if (e.currentTarget.id === 'guest') return this.guestClick();
+    if (e.currentTarget.id === 'signup') return this.props.setView('signup');
+  }
+
   guestClick(event) {
     event.preventDefault();
     this.props.setView('splash');
