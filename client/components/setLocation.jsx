@@ -5,7 +5,7 @@ export default class SetLocation extends React.Component {
     super(props);
     this.state = {
       locationKeyword: '',
-      distance: 5
+      radius: 5
     };
     this.handleChangeLocation = this.handleChangeLocation.bind(this);
     this.handleChangeDistance = this.handleChangeDistance.bind(this);
@@ -17,13 +17,15 @@ export default class SetLocation extends React.Component {
   }
 
   handleChangeDistance(event) {
-    this.setState({ distance: event.target.value });
+    this.setState({ radius: event.target.value });
   }
 
   handleClick(event) {
-    // if (!this.state.canClick) return;
     if (event.currentTarget.id === 'cancel') return this.props.setView('search');
-    if (event.currentTarget.id === 'submit') return (this.state.locationKeyword)&&(this.state.distance);
+    if (event.currentTarget.id === 'submit') {
+      this.props.setLocation(this.state.locationKeyword, this.state.radius)
+      this.props.setView('search')
+    };
   }
 
   render() {
@@ -50,12 +52,12 @@ export default class SetLocation extends React.Component {
               id="typeinp"
               type="range"
               min="0" max="24"
-              value={this.state.distance}
+              value={this.state.radius}
               onChange={this.handleChangeDistance}
               step="1"
               className="mr-3" />
             <div className="miles pink">
-              {this.state.distance}
+              {this.state.radius}
             </div>
           </label>
         </div>
