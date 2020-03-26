@@ -24,9 +24,22 @@ export default class UserHomepage extends React.Component {
         <div className='w-100 h-100 mb-3 d-flex flex-column align-items-center justify-content-start'>
           <h1>FiNdEr_Tim</h1>
         </div>
+
+
         <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
-          <div className='d-flex align-items-center'><i className='fas fa-map-marker-alt hover gray'></i></div>
-          <div className='d-flex align-items-center'><i className='fas fa-search fa-2x hover gray'></i></div>
+          <button type='button' id='pass' className='stack-button gray btn button-outline shadow' onClick={this.handleClick}>
+            <i className='fas fa-map-marker-alt fa-2x'></i>
+          </button>
+
+          <button type='button' id='like' className='stack-button gray btn button-outline shadow' onClick={this.handleClick}>
+            <i className='fas fa-search fa-2x'></i>
+          </button>
+          {/* <div className='d-flex align-items-center'><i className='fas fa-map-marker-alt hover gray'></i>
+            <p>LOCATION</p>
+          </div> */}
+          {/* <div className='d-flex align-items-center'><i className='fas fa-search fa-2x hover gray'></i>
+            <p>SEARCH</p>
+          </div> */}
         </div>
         <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
           <button
