@@ -5,6 +5,8 @@ export default class Login extends React.Component {
     super(props);
     this.state = { users: [{ id: 12, name: 'Blake' }, { id: 400, name: 'Shrimp' }] };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.guestClick = this.guestClick.bind(this);
   }
 
   handleSubmit(e) {
@@ -14,11 +16,10 @@ export default class Login extends React.Component {
 
   handleClick(e) {
     if (e.currentTarget.id === 'guest') return this.guestClick();
-    if (e.currentTarget.id === 'signup') return this.props.setView('signup');
+    if (e.currentTarget.id === 'signup') return console.log('signup');
   }
 
-  guestClick(event) {
-    event.preventDefault();
+  guestClick() {
     this.props.setView('splash');
     this.props.guestLogIn();
   }
