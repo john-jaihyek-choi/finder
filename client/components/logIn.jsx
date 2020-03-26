@@ -20,6 +20,12 @@ export default class Login extends React.Component {
       .catch(err => console.error(err));
   }
 
+  login(userId) {
+    fetch(`/api/login/${userId}`)
+      .then(res => res.json())
+      .catch(err => console.error(err));
+  }
+
   handleChange(e) {
     this.setState({ value: e.target.value});
   }
