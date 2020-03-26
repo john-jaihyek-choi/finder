@@ -19,7 +19,7 @@ app.use(express.json());
 
 app.get('/api/login/:userId', (req, res, next) => {
   const { userId } = req.params;
-  if (!userId) res.status(400).json({ error: 'missing userId' });
+  if (!userId) return res.status(400).json({ error: 'missing userId' });
 
   const text = `
     select *
@@ -29,9 +29,10 @@ app.get('/api/login/:userId', (req, res, next) => {
   const values = [userId];
 
   db.query(text, values)
-    .then(res => {
-      if (!res.rows.length) return res.status(404).json({ error: `userId ${userId} does not exist` });
-      req.session.userInfo = res.rows;
+    .then(data => {
+      if (!data.rows.length) return res.status(404).json({ error: `userId ${userId} does not exist` });
+      req.session.userInfo = data.rows;
+      res.json(data.rows);
     })
     .catch(err => console.error(err));
 });
