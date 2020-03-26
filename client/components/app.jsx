@@ -123,7 +123,7 @@ export default class App extends React.Component {
   }
 
   saveCardStackPos(restaurants, index) {
-    this.setState( { cardStack: restaurants, index })
+    this.setState({ cardStack: restaurants, index })
   }
 
   render() {
