@@ -7,11 +7,18 @@ export default class SetLocation extends React.Component {
       zipCode: '',
       value: 0
     };
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(event) {
     this.setState({ value: event.target.value });
+  }
+
+  handleClick(event) {
+    // if (!this.state.canClick) return;
+    if (event.currentTarget.id === 'cancel') return this.props.setView('search');
+    // if (event.currentTarget.id === 'submit') return (zip code)&&(radius);
   }
 
   render() {
