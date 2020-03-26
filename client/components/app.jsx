@@ -143,9 +143,12 @@ export default class App extends React.Component {
     this.state.index = index;
   }
 
-  render() { return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation}/>
+  render() {
     if (this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
+    }
+    if (this.state.view === "signUp") {
+      return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation}/>
     }
     if (this.state.view === "splash") {
       return <Splash setView={this.setView} setLocation={this.setLocation} />;
@@ -172,9 +175,6 @@ export default class App extends React.Component {
     }
     if (this.state.view === "writeReview") {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
-    }
-    if (this.state.view === "signUp") {
-      return <SignUp signUp={this.signUp}/>
     }
   }
 }
