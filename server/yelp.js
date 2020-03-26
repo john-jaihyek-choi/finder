@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const apiKey = process.env.YELP_API_KEY;
+const apiKey = "Bearer " + process.env.YELP_API_KEY;
 
 const getRestaurantDetails = function (yelpId){
 
