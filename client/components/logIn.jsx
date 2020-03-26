@@ -3,24 +3,20 @@ import React from 'react';
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: 'Select User',
-      users:
-        [
-          { userId: 12, userName: 'Blake' },
-          { userId: 400, userName: 'Shrimp' },
-          { userId: 300, userName: 'vape' },
-        ]
-    };
+    this.state = { value: 'Select User', users: [] };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    this.getUsers();
+  }
+
   getUsers() {
     fetch('/api/users')
       .then(res => res.json())
-      .then(data => this.setState({ users: data }))
+      .then(data => this.setState({ users: data }, () => console.log('users', this.state.users)))
       .catch(err => console.error(err));
   }
 
