@@ -19,11 +19,10 @@ export default class UserHomepage extends React.Component {
   }
 
   getLocation(event){
-    this.props.setView('locationSettings')
+    this.props.setView('locationSettings')   //to set to location
   }
 
   render() {
-
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className='w-100 h-100 my-3'>
@@ -36,30 +35,37 @@ export default class UserHomepage extends React.Component {
         <div className="flex-row my-5 gray">
           <h1 className="title">FiNdEr_Tim</h1>
         </div>
+
+
         <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
 
 
-            <div className="d-flex flex-column align-items-center">
+            <div className="col-md align-items-center">
               <div>
-                <button type='button' className='stack-button gray btn button-outline shadow m-4 justify-content-center' onClick={this.getLocation}>
+              <button type='button' className='gray btn button-outline shadow m-4 align-items-center' onClick={this.getLocation}>
                   <i className='fas fa-map-marker-alt fa-2x'></i>
                 </button>
               </div>
               <div>
-                <p className='d-flex flex-column m-2 gray font-weight-bold justify-content-center'>LOCATION</p>
+              <p className='d-flex flex-column m-2 gray font-weight-bold align-items-center'>LOCATION</p>
               </div>
             </div>
-            <div className="d-flex flex-column align-items-center justify-content-center">
+
+
+            <div className="col-md align-items-center justify-content-center">
               <div>
-                <button type='button' className='stack-button gray btn button-outline shadow m-4 justify-content-center' onClick={this.swipeToSearch}>
+              <button type='button' className='gray btn button-outline shadow m-4 align-items-center' onClick={this.swipeToSearch}>
                   <i className='fas fa-search fa-2x'></i>
                 </button>
               </div>
               <div>
-                <p className='d-flex flex-column m-2 gray font-weight-bold justify-content-center'>SEARCH</p>
+              <p className='d-flex flex-column m-2 gray font-weight-bold align-items-center'>SEARCH</p>
               </div>
           </div>
         </div>
+
+
+
         <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
           <button
             type='button'
