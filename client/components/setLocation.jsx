@@ -4,8 +4,8 @@ export default class SetLocation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      zipCode: '',
-      distance: 0
+      locationKeyword: '',
+      distance: 5
     };
     this.handleChangeLocation = this.handleChangeLocation.bind(this);
     this.handleChangeDistance = this.handleChangeDistance.bind(this);
@@ -13,7 +13,7 @@ export default class SetLocation extends React.Component {
   }
 
   handleChangeLocation(event) {
-    this.setState({ zipCode: event.target.value });
+    this.setState({ locationKeyword: event.target.value });
   }
 
   handleChangeDistance(event) {
@@ -23,7 +23,7 @@ export default class SetLocation extends React.Component {
   handleClick(event) {
     // if (!this.state.canClick) return;
     if (event.currentTarget.id === 'cancel') return this.props.setView('search');
-    if (event.currentTarget.id === 'submit') return (this.state.zipCode)&&(this.state.distance);
+    if (event.currentTarget.id === 'submit') return (this.state.locationKeyword)&&(this.state.distance);
   }
 
   render() {
@@ -37,7 +37,7 @@ export default class SetLocation extends React.Component {
           <div className="wrapper d-flex mt-3">
             <i className="mag-glass2 fas fa-search fa-2x gray mt-2"></i>
             <input className="search text-secondary shadow w-130 px-1 py-2 justify-content-left" placeholder="Search"
-              value={this.state.zipCode} onChange={this.handleChangeLocation}></input>
+              value={this.state.locationKeyword} onChange={this.handleChangeLocation}></input>
             <i className="fas fa-map-marker-alt fa-3x pink ml-3 mb-2"></i>
           </div>
         </div>
