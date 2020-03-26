@@ -16,13 +16,14 @@ export default class Login extends React.Component {
   getUsers() {
     fetch('/api/users')
       .then(res => res.json())
-      .then(data => this.setState({ users: data }, () => console.log('users', this.state.users)))
+      .then(data => this.setState({ users: data }))
       .catch(err => console.error(err));
   }
 
   login(userId) {
     fetch(`/api/login/${userId}`)
       .then(res => res.json())
+      .then(data => console.log('req sessions userInfo', data))
       .catch(err => console.error(err));
   }
 
@@ -32,7 +33,9 @@ export default class Login extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log('submitted');
+    if (this.state.value === 'Select User') return;
+    this.login(this.state.value);
+    this.props.setView('splash');
   }
 
   handleClick(e) {
