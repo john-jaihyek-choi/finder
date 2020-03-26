@@ -13,12 +13,13 @@ export default class SignUp extends React.Component {
 
     submitUserName(event) {
         event.preventDefault()
-        this.props.registerUser(this.state)
+        this.props.signUp(this.state.userName)
         this.props.setView('splash')
     }
 
     cancelSignUp(event) {
         event.preventDefault();
+        this.setState({userName: ""})
         this.props.setView('login')
     }
 
@@ -40,8 +41,7 @@ export default class SignUp extends React.Component {
                             onChange={this.inputChange}/>
                     </form>
                     <div className="d-flex flex-wrap justify-content-center w-100 h-75">
-                        {/* <h6>The user name already exists</h6> */}
-                        {/* <h6>Please enter a valid username</h6> */}
+                        <h6>{this.state.userName === "" ? "" : this.props.validation}</h6>
                     </div>
                 </div>
                 <div className='w-100 h-100 mb-3 d-flex flex-wrap align-items-center justify-content-center align-content-end'>

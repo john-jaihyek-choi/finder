@@ -36,27 +36,27 @@ app.post('/api/users', (req, res, next) => {
 
 // stretch feature for when we have username. ** note: once we have the username, delete the other post api/users
 app.post('/api/signUp', (req, res, next) => {
-  const user = `
+  const newUser = `
   insert into "users" ("userName", "distanceRadius")
   values ($1, $2)
   on conflict ("userName")
   do nothing
   returning *;
   `
-
   const userName = req.body.userName;
+  const userValue = [userName, 10]
 
   if (userName.length === 0) {
     return res.status(400).json({ err: 'Please enter a userId' });
   }
 
-  const userValue = [userName, 0]
-  db.query(user, userValue)
+  db.query(newUser, userValue)
     .then(user => {
       if (user.rows.length === 0) {
         return res.status(400).json({ err: 'User already exists' })
       }
       const [addedUser] = user.rows
+      req.session.userInfo = addedUser
       return res.status(201).json(addedUser)
     })
     .catch(err => next(err));
