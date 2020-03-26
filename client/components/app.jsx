@@ -1,5 +1,5 @@
 import React from 'react';
-import IntroPages from './introPages';
+import SignUp from './signUp';
 import Splash from './splash';
 import CardStack from './cardStack';
 import GuestLogIn from './guestLogIn';
@@ -125,7 +125,7 @@ export default class App extends React.Component {
     this.state.index = index;
   }
 
-  render() {
+  render() { return <SignUp/>
     if (this.state.view === "login") {
       return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
     }
@@ -154,6 +154,9 @@ export default class App extends React.Component {
     }
     if (this.state.view === "writeReview") {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
+    }
+    if (this.state.view === "signUp") {
+      return <SignUp />
     }
   }
 }

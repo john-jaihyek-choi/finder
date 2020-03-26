@@ -35,7 +35,7 @@ app.post('/api/users', (req, res, next) => {
 })
 
 // stretch feature for when we have username. ** note: once we have the username, delete the other post api/users
-app.post('/api/users', (req, res, next) => {
+app.post('/api/signUp', (req, res, next) => {
   const user = `
   insert into "users" ("userName", "distanceRadius")
   values ($1, $2)
