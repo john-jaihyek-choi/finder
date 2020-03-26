@@ -6,6 +6,7 @@ import GuestLogIn from './guestLogIn';
 import CurrentSearch from './currentSearch';
 import LikedReviewedRestaurants from './likedReviewedRestaurants';
 import WriteReview from './writeReview';
+import SetLocation from './setLocation';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -172,6 +173,9 @@ export default class App extends React.Component {
     }
     if (this.state.view === "search") {
       return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} location={this.state.location} />;
+    }
+    if (this.state.view === "set-search") {
+      return <SetLocation searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} />;
     }
     if (this.state.view === "writeReview") {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;

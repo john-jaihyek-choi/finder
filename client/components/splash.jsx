@@ -8,9 +8,9 @@ export default class Splash extends React.Component {
 
   getLocation() {
     navigator.geolocation.getCurrentPosition((position) => this.props.setLocation(position.coords.latitude, position.coords.longitude));
-    this.props.setView('search')
+    this.props.setView('set-search')
   }
-  
+
   render() {
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column text-white align-items-center justify-content-center gradient'>
