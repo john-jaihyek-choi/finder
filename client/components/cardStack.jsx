@@ -12,7 +12,6 @@ export default class CardStack extends React.Component {
   }
 
   componentDidMount() {
-    console.log('currentQuery', this.props.currentQuery);
     if (!this.state.restaurants) this.getRestaurants();
   }
 
@@ -23,7 +22,9 @@ export default class CardStack extends React.Component {
       body: JSON.stringify({
         term: this.props.currentQuery,
         latitude: this.props.location.lat,
-        longitude: this.props.location.long
+        longitude: this.props.location.long,
+        location: this.props.location.keyword,
+        radius: this.props.location.radius
       })
     })
       .then(res => res.json())
@@ -34,7 +35,6 @@ export default class CardStack extends React.Component {
   getRestaurantDetails(yelpId) {
     fetch(`/api/view/${yelpId}`)
       .then(res => res.json())
-      // .then(data => console.log('rest details', data))
       .then(data => this.setState({ details: data, showDetails: true }))
       .catch(err => console.error(err));
   }
@@ -106,7 +106,6 @@ export default class CardStack extends React.Component {
     const rating = [];
     for (let i = 0; i < Math.floor(this.state.restaurants[this.state.index].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
     if (!Number.isInteger(this.state.restaurants[this.state.index].rating) && this.state.restaurants[this.state.index].rating) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
-
     if (this.state.showDetails) return <Details price={price} rating={rating} restaurant={this.state.details} />;
 
     return (
