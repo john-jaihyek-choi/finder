@@ -30,17 +30,19 @@ export default class UserHomepage extends React.Component {
 
         <div className='w-100 h-100 mb-3'>
           <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
-            <div className="col-md align-items-center">
-              <button type='button' className='stack-button gray btn button-outline shadow justify-content-left' onClick={this.handleClick}>
+            <div className="col-md d-flex align-items-center justify-content-center">
+              <button type='button' className='stack-button gray btn button-outline shadow m-4' onClick={this.handleClick}>
                 <i className='fas fa-map-marker-alt fa-2x'></i>
-                <p>LOCATION</p>
+
+                <p className='w-100 h-100 m-3'>LOCATION</p>
               </button>
             </div>
 
-            <div className="col-md align-items-center">
-              <button type='button' className='stack-button gray btn button-outline shadow' onClick={this.handleClick}>
+            <div className="col-md d-flex align-items-center justify-content-center">
+              <button type='button' className='stack-button gray btn button-outline shadow m-4' onClick={this.handleClick}>
                 <i className='fas fa-search fa-2x'></i>
-                <p clas ='m-4'>SEARCH</p>
+
+                <p className='m-3 text-center'>SEARCH</p>
               </button>
             </div>
 
@@ -50,7 +52,7 @@ export default class UserHomepage extends React.Component {
         <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
           <button
             type='button'
-            className='w-75 btn btn-outline-light button-outline shadow text-pink'
+            className='w-75 btn btn-outline-light button-outline shadow text-pink font-weight-bold'
             onClick={() => props.setView('userHomepage')}>
             LOGOUT
         </button>
