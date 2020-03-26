@@ -122,15 +122,14 @@ export default class App extends React.Component {
   }
 
   saveCardStackPos(restaurants, index) {
-    this.state.cardStack = restaurants;
-    this.state.index = index;
+    this.setState( { cardStack: restaurants, index })
   }
 
   render() {
-    return <Login guestLogIn={this.registerUser} setView={this.setView} />;
     if (this.state.view === "login") {
-      return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
+      return <Login guestLogIn={this.registerUser} setView={this.setView} />;
     }
+
     if (this.state.view === "splash") {
       return <Splash setView={this.setView} setLocation={this.setLocation} />;
     }
