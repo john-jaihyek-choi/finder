@@ -47,7 +47,7 @@ export default class Login extends React.Component {
         </div>
 
         <div className='w-100 h-100 mb-3 d-flex align-items-end justify-content-center'>
-          <div className='text-white btn' style={{ textDecoration: 'underline' }}>CREATE NEW USERNAME</div>
+          <div className='text-white btn' id='signup' onClick={this.handleClick} style={{ textDecoration: 'underline' }}>CREATE NEW USERNAME</div>
         </div>
 
         <div className='w-100 h-100 mb-3 d-flex flex-column align-items-center justify-content-start'>
@@ -60,7 +60,8 @@ export default class Login extends React.Component {
           <button
             type='button'
             className='w-75 btn btn-outline-light button-outline font-weight-bold'
-            onClick={this.guestClick}>
+            id='guest'
+            onClick={this.handleClick}>
             CONTINUE AS GUEST
           </button>
         </div>
