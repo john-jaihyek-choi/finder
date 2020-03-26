@@ -178,7 +178,7 @@ export default class App extends React.Component {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
     }
     if(this.state.view === "userHomepage"){
-      return <UserHomepage />
+      return <UserHomepage setView={this.setView}/>
     }
   }
 }
