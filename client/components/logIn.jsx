@@ -24,7 +24,7 @@ export default class Login extends React.Component {
   }
 
   renderUsers() {
-    return this.state.users.map(user => <option value={user.id}>{user.name}</option>);
+    return this.state.users.map(user => <option key={user.id} value={user.id}>{user.name}</option>);
   }
 
   render() {
