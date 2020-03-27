@@ -67,7 +67,8 @@ export default class CardStack extends React.Component {
     if (e.currentTarget.id === 'pass') return this.setState({ index: (this.state.index + 1) % this.state.restaurants.length, canRewind: true, showDetails: false });
     if (e.currentTarget.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false, showDetails: false });
     if (e.currentTarget.id === 'details') return this.getRestaurantDetails(this.state.restaurants[this.state.index].yelpId);
-    if (e.currentTarget.id === 'search') this.props.setView('search');
+    // if (e.currentTarget.id === 'search') this.props.setView('search');
+    if (e.currentTarget.id === 'user-alt') this.props.setView('profile');
     if (e.currentTarget.id === 'likedRes') this.toLikedRestaurant();
     if (e.currentTarget.id === 'arrow-left') this.toCardStack();
   }
@@ -145,7 +146,7 @@ export default class CardStack extends React.Component {
 
   render() {
     let icon;
-    this.state.showDetails ? icon = 'arrow-left' : icon = 'search';
+    this.state.showDetails ? icon = 'arrow-left' : icon = 'user-alt';
 
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
