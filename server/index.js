@@ -64,7 +64,7 @@ app.post('/api/signUp', (req, res, next) => {
   returning *;
   `
   const userName = req.body.userName;
-  const userValue = [userName, 10]
+  const userValue = [userName, 5]
 
   if (userName.length === 0) {
     return res.status(400).json({ err: 'Please enter a userId' });

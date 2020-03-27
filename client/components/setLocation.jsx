@@ -5,7 +5,7 @@ export default class SetLocation extends React.Component {
     super(props);
     this.state = {
       locationKeyword: '',
-      radius: 5
+      radius: !this.props.location ? 25 : this.props.location.distanceRadius
     };
     this.handleChangeLocation = this.handleChangeLocation.bind(this);
     this.handleChangeDistance = this.handleChangeDistance.bind(this);
@@ -61,13 +61,12 @@ export default class SetLocation extends React.Component {
             <input
               id="typeinp"
               type="range"
-              min="0" max="24"
-              value={this.state.radius}
+              min="1" max="24"
               onChange={this.handleChangeDistance}
               step="1"
               className="mr-3" />
             <div className="miles pink">
-              {this.state.radius}
+              {!this.state.radius ? 25 : this.state.radius}
             </div>
           </label>
         </div>
