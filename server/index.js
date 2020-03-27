@@ -67,7 +67,7 @@ app.post('/api/signUp', (req, res, next) => {
   const userValue = [userName, 5]
 
   if (userName.length === 0) {
-    return res.status(400).json({ err: 'Please enter a userId' });
+    return res.status(400).json({ err: 'Please enter a username' });
   }
 
   db.query(newUser, userValue)
