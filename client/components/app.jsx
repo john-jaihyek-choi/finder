@@ -9,6 +9,8 @@ import WriteReview from './writeReview';
 import Login from './logIn';
 import SignUp from './signUp';
 import SetLocation from './setLocation';
+import UserHomepage from './userHomepage';
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -185,6 +187,9 @@ export default class App extends React.Component {
     }
     if (this.state.view === "writeReview") {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
+    }
+    if(this.state.view === "userHomepage"){
+      return <UserHomepage setView={this.setView}/>
     }
   }
 }
