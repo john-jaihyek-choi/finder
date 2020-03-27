@@ -7,8 +7,7 @@ export default class CurrentSearch extends React.Component {
       food: '',
       catList: [],
       currentQuery: this.props.currentQuery,
-      // loading: null
-      loading: false
+      loading: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -71,8 +70,8 @@ export default class CurrentSearch extends React.Component {
    }
 
    componentDidUpdate() {
-    // if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
-    // if(this.props.location !== null && this.state.loading) this.setState({loading: false});
+    if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
+    if(this.props.location !== null && this.state.loading) this.setState({loading: false});
   }
 
   render() {
