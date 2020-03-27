@@ -7,7 +7,7 @@ export default class CurrentSearch extends React.Component {
       food: '',
       catList: [],
       currentQuery: this.props.currentQuery,
-      loading: null
+      // loading: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -28,6 +28,7 @@ export default class CurrentSearch extends React.Component {
     }
     if (event.target.id === 'cardstack' && !this.state.currentQuery) return;
     if (event.target.id === 'cardstack' && this.state.currentQuery) return this.props.setView('cardstack');
+    if (event.target.id === 'userHomepage') return this.props.setView('userHomepage');
     this.props.searchQuery(event.target.getAttribute('data-cat'));
     this.props.setView('cardstack');
   }
@@ -69,49 +70,49 @@ export default class CurrentSearch extends React.Component {
      this.categories();
    }
 
-   componentDidUpdate() {
-    if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
-    if(this.props.location !== null && this.state.loading) this.setState({loading: false});
-  }
+  //  componentDidUpdate() {
+  //   if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
+  //   if(this.props.location !== null && this.state.loading) this.setState({loading: false});
+  // }
 
   render() {
     const listItems = (this.state.catList.map((restaurant) =>
       <li onClick={this.handleClick} className="hover" key={restaurant} data-cat={restaurant}>{restaurant}</li>
     ));
 
-    if(this.state.loading) {
-      return (
-        <div className='mx-auto vw-100 vh-100 d-flex flex-column text-white align-items-center justify-content-center gradient'>
-          <div className='w-100 h-100 my-3'></div>
-          <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
-            <div className="w-90 h-50 d-flex flex-column">
-              <div className="w-100">
-                <h1 className='text-white font-weight-bold title'>Locating
-                <span className="ml-2 spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
-                <span className="spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
-                <span className="spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
-                </h1>
-              </div>
-              <div className="d-flex justify-content-center">
-                <div className="spinner-border text-white mt-3" role="status" style={ {width: '5rem', height: '5rem'} }>
-                  <span className="sr-only"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex-row my-5">
-          </div>
-          <div className='w-100 h-100 mb-3'></div>
-        </div>
-      );
-    }
+    // if(this.state.loading) {
+    //   return (
+    //     <div className='mx-auto vw-100 vh-100 d-flex flex-column text-white align-items-center justify-content-center gradient'>
+    //       <div className='w-100 h-100 my-3'></div>
+    //       <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
+    //         <div className="w-90 h-50 d-flex flex-column">
+    //           <div className="w-100">
+    //             <h1 className='text-white font-weight-bold title'>Locating
+    //             <span className="ml-2 spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
+    //             <span className="spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
+    //             <span className="spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
+    //             </h1>
+    //           </div>
+    //           <div className="d-flex justify-content-center">
+    //             <div className="spinner-border text-white mt-3" role="status" style={ {width: '5rem', height: '5rem'} }>
+    //               <span className="sr-only"></span>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className="flex-row my-5">
+    //       </div>
+    //       <div className='w-100 h-100 mb-3'></div>
+    //     </div>
+    //   );
+    // }
 
-    if(!this.state.loading) {
+    // if(!this.state.loading) {
       return (
         <div className="container column display-flex">
           <div className="column w-90 my-5 display-flex">
             <div className="display-flex justify-content-left">
-              <i className="fas fa-arrow-left fa-2x gray ml-4 hover" id="cardstack" onClick={this.handleClick}></i>
+              <i className="fas fa-arrow-left fa-2x gray ml-4 hover" id="userHomepage" onClick={this.handleClick}></i>
             </div>
             <div className="my-5">
               <div className="justify-content-left">
@@ -143,6 +144,6 @@ export default class CurrentSearch extends React.Component {
           </div>
         </div>
       );
-    }
+    // }
   }
 }

@@ -6,7 +6,7 @@ import GuestLogIn from './guestLogIn';
 import CurrentSearch from './currentSearch';
 import LikedReviewedRestaurants from './likedReviewedRestaurants';
 import WriteReview from './writeReview';
-import Login from './login';
+import Login from './logIn';
 import SetLocation from './setLocation';
 import UserHomepage from './userHomepage';
 
@@ -64,8 +64,8 @@ export default class App extends React.Component {
     })
       .then(result => result.json())
       .then(userInfo => {
-        if(userInfo.err) return this.setState({ validation: userInfo.err});
         console.log(userInfo)
+        if(userInfo.err) return this.setState({ validation: userInfo.err });
         this.setState({ userInfo: userInfo})
       })
       .catch(err => console.error(err))
@@ -192,7 +192,7 @@ export default class App extends React.Component {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
     }
     if(this.state.view === "userHomepage"){
-      return <UserHomepage setView={this.setView}/>
+      return <UserHomepage setView={this.setView} location={this.state.location}/>
     }
   }
 }
