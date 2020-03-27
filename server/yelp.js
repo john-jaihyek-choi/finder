@@ -10,6 +10,7 @@ const getRestaurantDetails = function (yelpId){
   })
   .then(response => response.json())
   .then(details  => {
+    console.log(details)
     return getReviews(yelpId)
     .then(reviews => {
       details.reviews = reviews
