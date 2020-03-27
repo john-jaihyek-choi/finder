@@ -63,7 +63,7 @@ export default class Details extends React.Component {
   render() {
     return (
       <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '600px' }}>
-        <div className='w-100 h-50'>
+        <div className='w-100 h-50 effect1'>
           <img
             className='rounded hover' onClick={() => this.setState({ photoIndex: (this.state.photoIndex + 1) % this.props.restaurant.photosUrl.length })}
             src={this.props.restaurant.photosUrl[this.state.photoIndex]}
@@ -82,7 +82,7 @@ export default class Details extends React.Component {
           </div>
         </div>
         <div
-          className='w-100 h-75 row mb-2 text-center text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center details-text hover'
+          className='w-100 h-75 row mb-2 text-center text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center details-text hover effect2'
           onClick={() => this.setState({ infoIndex: (this.state.infoIndex + 1) % (this.props.restaurant.reviews.length + 1) })}>
           {this.cycleInfo()}
         </div>

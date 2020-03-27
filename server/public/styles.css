@@ -133,11 +133,6 @@ h1, h3, h5, h6 {
   cursor: pointer;
 }
 
-input[type=range] {
-  -webkit-appearance: none;
-  background: transparent;
-}
-
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   background:  rgb(254,59,115);
@@ -156,4 +151,32 @@ input[type=range]::-webkit-slider-runnable-track {
 
 .miles {
   font-size: 1.5rem;
+}
+
+.effect1:hover {
+  box-shadow: 1px 1px 10px 2px #cccccc;
+}
+
+.effect2:hover {
+  box-shadow: 1px 1px 10px 1px #eeeeee;
+}
+
+.underline {
+  color: #FF3B74;
+  position: relative;
+}
+.underline:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  position: absolute;
+  background: #888888;
+  transition: width 1s ease 0s, left 1s ease 0s;
+  width: 0;
+}
+.underline:hover:after {
+  width: 100%;
+  left: 0;
 }

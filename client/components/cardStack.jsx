@@ -127,7 +127,7 @@ export default class CardStack extends React.Component {
         </div>
         <div className='w-100 h-100'>
           <img
-            className='rounded hover'
+            className='rounded hover effect1'
             id='details'
             src={this.state.restaurants[this.state.index].storeImageUrl}
             alt={this.state.restaurants[this.state.index].restaurantName}
