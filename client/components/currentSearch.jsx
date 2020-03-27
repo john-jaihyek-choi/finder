@@ -28,7 +28,7 @@ export default class CurrentSearch extends React.Component {
     }
     if (event.target.id === 'cardstack' && !this.state.currentQuery) return;
     if (event.target.id === 'cardstack' && this.state.currentQuery) return this.props.setView('cardstack');
-    if (event.target.id === 'userHomepage') return this.props.setView('userHomepage');
+    if (event.target.id === 'profile') return this.props.setView('profile');
     this.props.searchQuery(event.target.getAttribute('data-cat'));
     this.props.setView('cardstack');
   }
@@ -78,7 +78,7 @@ export default class CurrentSearch extends React.Component {
         <div className="container column display-flex">
           <div className="column w-90 my-5 display-flex">
             <div className="display-flex justify-content-left">
-              <i className="fas fa-arrow-left fa-2x gray ml-4 hover" id="userHomepage" onClick={this.handleClick}></i>
+              <i className="fas fa-arrow-left fa-2x gray ml-4 hover" id="profile" onClick={this.handleClick}></i>
             </div>
             <div className="my-5">
               <div className="justify-content-left">
