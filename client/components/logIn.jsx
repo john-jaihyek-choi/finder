@@ -23,10 +23,22 @@ export default class Login extends React.Component {
   login(userId) {
     fetch(`/api/login/${userId}`)
       .then(res => res.json())
-      .then(data => 
+      .then(data =>
         this.props.userIdentification(data)
       )
       .catch(err => console.error(err));
+  }
+
+  guestLogin() {
+    fetch('/api/guest', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(result => result.json())
+      .then(data => this.props.userIdentification(data))
+      .catch(err => console.error(err))
+
+    this.props.setView('splash');
   }
 
   handleChange(e) {
@@ -41,14 +53,14 @@ export default class Login extends React.Component {
   }
 
   handleClick(e) {
-    if (e.currentTarget.id === 'guest') return this.guestClick();
+    if (e.currentTarget.id === 'guest') return this.guestLogin();
     if (e.currentTarget.id === 'signup') return this.props.setView('signup');
   }
 
-  guestClick() {
-    this.props.setView('splash');
-    this.props.guestLogIn();
-  }
+  // guestClick() {
+  //   this.props.setView('splash');
+  //   this.props.guestLogIn();
+  // }
 
   renderUsers() {
     return this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.userName}</option>);
