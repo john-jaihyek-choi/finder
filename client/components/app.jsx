@@ -37,7 +37,7 @@ export default class App extends React.Component {
     this.postReview = this.postReview.bind(this);
     this.saveCardStackPos = this.saveCardStackPos.bind(this);
     this.signUp = this.signUp.bind(this);
-    // this.setManualLocation = this.setManualLocation.bind(this);
+    this.userIdentification = this.userIdentification.bind(this);
     this.from = null;
   }
 
@@ -69,6 +69,12 @@ export default class App extends React.Component {
         this.setState({ userInfo: userInfo})
       })
       .catch(err => console.error(err))
+  }
+
+  userIdentification (userInfoObj) {
+    this.setState({
+      userInfo: userInfoObj
+    })
   }
 
   getLikedRestaurants() {
@@ -140,7 +146,6 @@ export default class App extends React.Component {
   }
 
   setLocation(lat, long, keyword, radius) {
-    // this.setState({ location: { lat, long } });
     const locationObj = {
       lat: lat,
       long: long,
@@ -150,23 +155,13 @@ export default class App extends React.Component {
     this.setState({ location: locationObj})
   }
 
-  // setManualLocation(keyword, radius) {
-  //   const locationObj = {
-  //     lat: this.state.location.lat,
-  //     long: this.state.location.long,
-  //     keyword: keyword,
-  //     radius: radius
-  //   }
-  //   this.setState({ location: locationObj})
-  // }
-
   saveCardStackPos(restaurants, index) {
     this.setState({ cardStack: restaurants, index })
   }
 
   render() {
     if (this.state.view === "login") {
-      return <Login guestLogIn={this.registerUser} setView={this.setView} />;
+      return <Login guestLogIn={this.registerUser} setView={this.setView} userIdentification={this.userIdentification} />;
     }
     if (this.state.view === "signup") {
       return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation} />;
@@ -195,7 +190,7 @@ export default class App extends React.Component {
       return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} location={this.state.location} />;
     }
     if (this.state.view === "locationSettings") {
-      return <SetLocation searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} setLocation={this.setLocation} location={this.state.location}/>;
+      return <SetLocation searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} setLocation={this.setLocation} location={this.state.location} userInfo={this.state.userInfo}/>;
     }
     if (this.state.view === "writeReview") {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;

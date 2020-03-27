@@ -48,7 +48,7 @@ export default class CardStack extends React.Component {
       .then(() => this.setState({ canClick: true }))
       .catch(err => console.error(err));
 
-    fetch('/api/likedRestaurants/', {
+    fetch('/api/likedRestaurants', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ yelpId })
