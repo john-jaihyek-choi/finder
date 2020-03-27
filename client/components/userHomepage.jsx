@@ -6,6 +6,7 @@ export default class UserHomepage extends React.Component {
     this.toSwipePage = this.toSwipePage.bind(this)
     this.swipeToSearch = this.swipeToSearch.bind(this)
     this.getLocation = this.getLocation.bind(this)
+    this.logout = this.logout.bind(this)
   }
 
   toSwipePage(event) {
@@ -18,6 +19,10 @@ export default class UserHomepage extends React.Component {
 
   getLocation(event) {
     this.props.setView('locationSettings')
+  }
+
+  logout() {
+    this.props.setView('login')
   }
 
   render() {
@@ -61,7 +66,7 @@ export default class UserHomepage extends React.Component {
         <button
           type='button'
           className='w-75 btn btn-outline-light button-outline shadow text-pink font-weight-bold'
-          onClick={() => console.log('Logout')}>
+          onClick={this.logout}>
           LOGOUT
         </button>
       </div>
