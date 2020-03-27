@@ -38,8 +38,6 @@ app.get('/api/login/:userId', (req, res, next) => {
 });
 
 app.patch('/api/guest/', (req, res, next) => {
-  let guest = 'tacos';
-
   const sqlUpdate = `
     update "users"
     set "distanceRadius" = 15
@@ -63,7 +61,7 @@ app.patch('/api/guest/', (req, res, next) => {
       if (!data.rows.length) return res.status(404).json({ error: "userName 'Guest' does not exist" });
       req.session.userInfo = data.rows[0];
 
-      const deleteValues = [guest.userId];
+      const deleteValues = [req.session.userInfo.userId];
 
       const sqlDeleteLiked = `
         delete from "likedRestaurants"
@@ -291,7 +289,7 @@ app.patch('/api/reviews', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       const reviewedRestaurantRow = result.rows[0]
-      console.log(reviewedRestaurantRow)
+      // console.log(reviewedRestaurantRow)
       return res.status(200).json(reviewedRestaurantRow)
     })
     .catch( err => next(err))
@@ -387,7 +385,7 @@ app.post('/api/search/', (req, res, next) => {
 
 app.get('/api/view/:yelpId', (req, res, next) => {
   const { yelpId } = req.params;
-  console.log(yelpId)
+  // console.log(yelpId)
   getRestaurantDetails(yelpId)
     .then(newObj => {
       const yelpId = newObj.id
