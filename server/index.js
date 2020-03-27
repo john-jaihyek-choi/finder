@@ -193,6 +193,7 @@ app.get('/api/users', (req, res, next) => {
   const sql = `
   select *
   from "users"
+  where not "userName" = 'Guest';
   `;
   db.query(sql)
     .then(result => {
