@@ -34,7 +34,61 @@ app.get('/api/login/:userId', (req, res, next) => {
       req.session.userInfo = data.rows[0];
       res.json(data.rows[0]);
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
+});
+
+app.patch('/api/guest/', (req, res, next) => {
+  const sqlUpdate = `
+    update "users"
+    set "distanceRadius" = 15
+    where "userName" = 'Guest'
+    returning *;
+  `;
+  db.query(sqlUpdate)
+    .then(data => {
+      if (!data.rows.length) return res.status(404).json({ error: "userName 'Guest' does not exist" });
+      // res.json(data.rows[0]);
+    })
+    .catch(err => next(err));
+
+  const sqlGet = `
+    select *
+    from "users"
+    where "userName" = 'Guest';
+  `;
+  db.query(sqlGet)
+    .then(data => {
+      if (!data.rows.length) return res.status(404).json({ error: "userName 'Guest' does not exist" });
+      req.session.userInfo = data.rows[0];
+
+      const deleteValues = [req.session.userInfo.userId];
+
+      const sqlDeleteLiked = `
+        delete from "likedRestaurants"
+        where "userId" = $1
+      `;
+      db.query(sqlDeleteLiked, deleteValues)
+        .then(data => {
+          console.log('deleted liked');
+          // return res.status(204).json(data.rows[0]);
+        })
+        .catch(err => next(err));
+
+      const sqlDeleteReviewed = `
+        delete from "reviewedRestaurants"
+        where "userId" = $1
+        returning *;
+      `;
+      db.query(sqlDeleteReviewed, deleteValues)
+        .then(data => {
+          console.log('deleted reviewed');
+          // if (!data.rows.length) return res.status(404).json({ error: `reviewedRestaurants data for userId ${guest.userId} does not exist` });
+          return res.json(req.session.userInfo);
+        })
+        .catch(err => next(err));
+      // res.json(data.rows[0]);
+    })
+    .catch(err => next(err));
 });
 
 app.post('/api/users', (req, res, next) => {
@@ -67,7 +121,7 @@ app.post('/api/signUp', (req, res, next) => {
   const userValue = [userName, 5]
 
   if (userName.length === 0) {
-    return res.status(400).json({ err: 'Please enter a userId' });
+    return res.status(400).json({ err: 'Please enter a username' });
   }
 
   db.query(newUser, userValue)
@@ -139,6 +193,7 @@ app.get('/api/users', (req, res, next) => {
   const sql = `
   select *
   from "users"
+  where not "userName" = 'Guest';
   `;
   db.query(sql)
     .then(result => {
@@ -235,7 +290,7 @@ app.patch('/api/reviews', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       const reviewedRestaurantRow = result.rows[0]
-      console.log(reviewedRestaurantRow)
+      // console.log(reviewedRestaurantRow)
       return res.status(200).json(reviewedRestaurantRow)
     })
     .catch( err => next(err))
@@ -331,7 +386,7 @@ app.post('/api/search/', (req, res, next) => {
 
 app.get('/api/view/:yelpId', (req, res, next) => {
   const { yelpId } = req.params;
-  console.log(yelpId)
+  // console.log(yelpId)
   getRestaurantDetails(yelpId)
     .then(newObj => {
       const yelpId = newObj.id

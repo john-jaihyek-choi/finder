@@ -4,8 +4,8 @@ export default class SetLocation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      locationKeyword: this.props.location.location,
-      radius: this.props.location.radius
+      locationKeyword: (!this.props.location) ? "" : this.props.location.keyword,
+      radius: (!this.props.location) ? this.props.userInfo.distanceRadius : this.props.location.radius
     };
     this.handleChangeLocation = this.handleChangeLocation.bind(this);
     this.handleChangeDistance = this.handleChangeDistance.bind(this);
@@ -21,20 +21,20 @@ export default class SetLocation extends React.Component {
   }
 
   handleClick(event) {
-    if (event.currentTarget.id === 'cancel') return this.props.setView('userHomepage');
+    if (event.currentTarget.id === 'cancel') return this.props.setView('profile');
     if (event.currentTarget.id === 'submit') {
       this.props.setLocation(
         !this.props.location ? null : this.props.location.lat,
         !this.props.location ? null : this.props.location.long,
         this.state.locationKeyword,
         this.state.radius)
-      this.props.setView('userHomepage')
+      this.props.setView('profile')
     };
     if (event.target.id === 'currentLocation') {
       navigator.geolocation.getCurrentPosition((position) =>
       this.props.setLocation(position.coords.latitude, position.coords.longitude, '', this.state.radius)
       );
-      return this.props.setView('userHomepage');
+      return this.props.setView('profile');
     }
   }
 
