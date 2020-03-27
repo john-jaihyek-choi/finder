@@ -133,6 +133,11 @@ h1, h3, h5, h6 {
   cursor: pointer;
 }
 
+input[type=range] {
+  -webkit-appearance: none;
+  background: transparent;
+}
+
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   background:  rgb(254,59,115);
@@ -165,6 +170,7 @@ input[type=range]::-webkit-slider-runnable-track {
   color: #FF3B74;
   position: relative;
 }
+
 .underline:after {
   background: none repeat scroll 0 0 transparent;
   bottom: 0;
