@@ -167,7 +167,7 @@ export default class App extends React.Component {
       return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation} />;
     }
     if (this.state.view === "splash") {
-      return <Splash setView={this.setView} setLocation={this.setLocation} />;
+      return <Splash setView={this.setView} setLocation={this.setLocation} userInfo={this.state.userInfo} />;
     }
     if (this.state.view === "cardstack") {
       return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} currentQuery={this.state.currentQuery} index={this.state.index} cardStack={this.state.cardStack} saveCardStackPos={this.saveCardStackPos} />;
@@ -196,7 +196,7 @@ export default class App extends React.Component {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
     }
     if(this.state.view === "userHomepage"){
-      return <UserHomepage setView={this.setView} location={this.state.location} searchQuery={this.searchQuery}/>
+      return <UserHomepage setView={this.setView} location={this.state.location} searchQuery={this.searchQuery} userInfo={this.state.userInfo}/>
     }
   }
 }

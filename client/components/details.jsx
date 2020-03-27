@@ -49,7 +49,7 @@ export default class Details extends React.Component {
   cycleInfo() {
     if (this.state.infoIndex === this.props.restaurant.reviews.length) return this.renderHours();
     if (!this.props.restaurant.reviews.length) return;
-    const rating = this.props.renderRating(this.props.restaurant.reviews);
+    const rating = this.props.renderRating(this.props.restaurant.reviews[this.state.infoIndex]);
 
     return (
       <div className='col-11 d-flex flex-column align-items-center justify-content-center'>
