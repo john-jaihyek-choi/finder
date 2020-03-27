@@ -17,6 +17,7 @@ export default class CardStack extends React.Component {
 
   getRestaurants() {
     if (!this.props.location) return this.setState({ restaurants: [] })
+    this.setState({ canClick: false });
     fetch('/api/search/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -29,7 +30,7 @@ export default class CardStack extends React.Component {
       })
     })
       .then(res => res.json())
-      .then(data => this.setState({ restaurants: data }))
+      .then(data => this.setState({ restaurants: data, canClick: true }))
       .catch(err => console.error(err));
   }
 

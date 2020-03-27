@@ -4,8 +4,8 @@ export default class SetLocation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      locationKeyword: (!this.props.location) ? "" : this.props.location.keyword,
-      radius: (!this.props.location) ? this.props.userInfo.distanceRadius : this.props.location.radius
+      locationKeyword: this.props.location.location || '',
+      radius: this.props.location.radius || 7
     };
     this.handleChangeLocation = this.handleChangeLocation.bind(this);
     this.handleChangeDistance = this.handleChangeDistance.bind(this);
