@@ -84,8 +84,8 @@ app.patch('/api/guest/', (req, res, next) => {
       db.query(sqlDeleteReviewed, deleteValues)
         .then(data => {
           console.log('deleted reviewed');
-          if (!data.rows.length) return res.status(404).json({ error: `reviewedRestaurants data for userId ${guest.userId} does not exist` });
-          return res.status(204).json(data.rows[0]);
+          // if (!data.rows.length) return res.status(404).json({ error: `reviewedRestaurants data for userId ${guest.userId} does not exist` });
+          return res.json(req.session.userInfo);
         })
         .catch(err => next(err));
       // res.json(data.rows[0]);
