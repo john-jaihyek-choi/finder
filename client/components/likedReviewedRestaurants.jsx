@@ -37,6 +37,21 @@ export default class LikedReviewedRestaurants extends React.Component {
     this.setState({ showDetails: false });
   }
 
+  renderPrice(restaurant) {
+    if (!restaurant.price) return <div>No price data</div>;
+    const price = [];
+    for (let i = 0; i < restaurant.price.length; i++) price.push(<i className='fas fa-dollar-sign fa-sm mr-1' key={'price' + i}></i>);
+    return price;
+  }
+
+  renderRating(restaurant) {
+    if (!restaurant.rating) return <div>No rating data</div>;
+    const rating = [];
+    for (let i = 0; i < Math.floor(restaurant.rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
+    if (!Number.isInteger(restaurant.rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
+    return rating;
+  }
+
   renderDetails() {
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
@@ -48,7 +63,7 @@ export default class LikedReviewedRestaurants extends React.Component {
           </div>
         </div>
         <div className='w-100 h-100 mb-3'>
-          <Details restaurant={this.state.details} />
+          <Details restaurant={this.state.details} renderPrice={this.renderPrice} renderRating={this.renderRating} />
         </div>
         <div className='w-100 h-100 mb-3'></div>
       </div>
