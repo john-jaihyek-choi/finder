@@ -37,6 +37,62 @@ app.get('/api/login/:userId', (req, res, next) => {
     .catch(err => console.error(err));
 });
 
+app.patch('/api/guest/', (req, res, next) => {
+  let guest = 'tacos';
+
+  const sqlUpdate = `
+    update "users"
+    set "distanceRadius" = 15
+    where "userName" = 'Guest'
+    returning *;
+  `;
+  db.query(sqlUpdate)
+    .then(data => {
+      if (!data.rows.length) return res.status(404).json({ error: "userName 'Guest' does not exist" });
+      // res.json(data.rows[0]);
+    })
+    .catch(err => console.error(err));
+
+  const sqlGet = `
+    select *
+    from "users"
+    where "userName" = 'Guest';
+  `;
+  db.query(sqlGet)
+    .then(data => {
+      if (!data.rows.length) return res.status(404).json({ error: "userName 'Guest' does not exist" });
+      req.session.userInfo = data.rows[0];
+
+      const deleteValues = [guest.userId];
+
+      const sqlDeleteLiked = `
+        delete from "likedRestaurants"
+        where "userId" = $1
+      `;
+      db.query(sqlDeleteLiked, deleteValues)
+        .then(data => {
+          console.log('deleted liked');
+          // return res.status(204).json(data.rows[0]);
+        })
+        .catch(err => console.error(err));
+
+      const sqlDeleteReviewed = `
+        delete from "reviewedRestaurants"
+        where "userId" = $1
+        returning *;
+      `;
+      db.query(sqlDeleteReviewed, deleteValues)
+        .then(data => {
+          console.log('deleted reviewed');
+          if (!data.rows.length) return res.status(404).json({ error: `reviewedRestaurants data for userId ${guest.userId} does not exist` });
+          return res.status(204).json(data.rows[0]);
+        })
+        .catch(err => console.error(err));
+      // res.json(data.rows[0]);
+    })
+    .catch(err => console.error(err));
+});
+
 app.post('/api/users', (req, res, next) => {
   const guestUser = `
     insert into "users" ("distanceRadius")
