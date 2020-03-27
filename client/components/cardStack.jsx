@@ -119,7 +119,7 @@ export default class CardStack extends React.Component {
     if (this.state.showDetails) return <Details renderPrice={this.renderPrice} renderRating={this.renderRating} restaurant={this.state.details} />;
 
     return (
-      <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
+      <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow font-weight-bold' style={{ height: '450px' }}>
         <div className='w-100 h-100 text-center text-pink d-flex align-items-center justify-content-center'>
           <div className='w-50'>{this.renderRating(this.state.restaurants[this.state.index])}</div> |
           <div className='w-50'>{this.renderPrice(this.state.restaurants[this.state.index])}</div>
