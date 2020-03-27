@@ -135,5 +135,22 @@ h1, h3, h5, h6 {
 }
 
 .effect2:hover {
-  box-shadow: 1px 1px 10px 1px #dddddd;
+  box-shadow: 1px 1px 10px 1px #eeeeee;
+}
+
+.underline {
+  width: 100%;
+  background-color: #888888;
+  border-right: 1px solid white
+}
+
+.underline::before {
+
+}
+
+.underline:hover::before {
+  background-color: #888888;
+  height: 5px;
+  width: 0%;
+  transition: 2s all;
 }
