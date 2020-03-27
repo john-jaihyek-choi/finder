@@ -31,7 +31,7 @@ const getReviews = function (yelpId){
 
 function searchAllRestaurants(lat, long, term, location, radius) {
   if(location) { //this will trigger when user decides to use their location settings on location page
-    return fetch(`https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}&radius=${!radius ? 5 : radius}&limit=30`, {
+    return fetch(`https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}&radius=${radius}&limit=30`, {
       headers: {
         'Authorization': apiKey
       }
