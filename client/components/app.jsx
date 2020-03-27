@@ -27,7 +27,7 @@ export default class App extends React.Component {
       validation: null
     }
     this.setView = this.setView.bind(this);
-    this.registerUser = this.registerUser.bind(this);
+    // this.registerUser = this.registerUser.bind(this);
     this.getLikedRestaurants = this.getLikedRestaurants.bind(this);
     this.getReviewedRestaurants = this.getReviewedRestaurants.bind(this);
     this.deleteRestaurant = this.deleteRestaurant.bind(this);
@@ -47,14 +47,15 @@ export default class App extends React.Component {
     });
   }
 
-  registerUser() {
-    fetch('/api/users', {
-      method: 'POST',
-      headers: { 'Content-Type' : 'application/json' }
-    })
-      .then(result => result.json())
-      .catch(err => console.error(err))
-  }
+  // registerUser() {
+  //   fetch('/api/users', {
+  //     method: 'PATCH',
+  //     headers: { 'Content-Type' : 'application/json' }
+  //   })
+  //     .then(result => result.json())
+  //     .then(data => this.userIdentification(data))
+  //     .catch(err => console.error(err))
+  // }
 
   signUp(userName) {
     fetch('/api/signUp', {
@@ -161,7 +162,7 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.view === "login") {
-      return <Login guestLogIn={this.registerUser} setView={this.setView} userIdentification={this.userIdentification} />;
+      return <Login setView={this.setView} userIdentification={this.userIdentification} />;
     }
     if (this.state.view === "signup") {
       return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation} />;
