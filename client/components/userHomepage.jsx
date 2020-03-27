@@ -13,9 +13,16 @@ export default class UserHomepage extends React.Component {
   }
 
   toSwipePage(event) {
-    if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
-    if(this.props.location !== null && this.state.loading) this.setState({loading: false});
-    this.props.searchQuery('food')
+    if(this.props.location === null && this.state.loading === null) {
+      this.setState({ loading: true });
+    }
+    if(this.props.location !== null && this.state.loading) {
+      this.setState({ loading: false });
+    }
+    if(!this.props.searchQuery) {
+      return this.props.searchQuery('food');
+    }
+    this.props.searchQuery(this.props.currentQuery);
     this.props.setView('cardstack')
   }
 

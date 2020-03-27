@@ -182,6 +182,7 @@ input[type=range]::-webkit-slider-runnable-track {
   transition: width 1s ease 0s, left 1s ease 0s;
   width: 0;
 }
+
 .underline:hover:after {
   width: 100%;
   left: 0;
