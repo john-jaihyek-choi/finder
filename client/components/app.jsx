@@ -37,7 +37,7 @@ export default class App extends React.Component {
     this.postReview = this.postReview.bind(this);
     this.saveCardStackPos = this.saveCardStackPos.bind(this);
     this.signUp = this.signUp.bind(this);
-    this.setManualLocation = this.setManualLocation.bind(this);
+    // this.setManualLocation = this.setManualLocation.bind(this);
     this.from = null;
   }
 
@@ -139,17 +139,26 @@ export default class App extends React.Component {
     this.setState({ currentQuery, index: 0, cardStack: null });
   }
 
-  setLocation(lat, long) {
-    this.setState({ location: { lat, long } });
-  }
-
-  setManualLocation(keyword, radius) {
+  setLocation(lat, long, keyword, radius) {
+    // this.setState({ location: { lat, long } });
     const locationObj = {
+      lat: lat,
+      long: long,
       keyword: keyword,
       radius: radius
     }
     this.setState({ location: locationObj})
   }
+
+  // setManualLocation(keyword, radius) {
+  //   const locationObj = {
+  //     lat: this.state.location.lat,
+  //     long: this.state.location.long,
+  //     keyword: keyword,
+  //     radius: radius
+  //   }
+  //   this.setState({ location: locationObj})
+  // }
 
   saveCardStackPos(restaurants, index) {
     this.setState({ cardStack: restaurants, index })
@@ -186,7 +195,7 @@ export default class App extends React.Component {
       return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} location={this.state.location} />;
     }
     if (this.state.view === "locationSettings") {
-      return <SetLocation searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} setLocation={this.setManualLocation} />;
+      return <SetLocation searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} setLocation={this.setLocation} location={this.state.location}/>;
     }
     if (this.state.view === "writeReview") {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;

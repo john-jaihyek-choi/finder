@@ -330,7 +330,7 @@ app.post('/api/search/', (req, res, next) => {
 
 app.get('/api/view/:yelpId', (req, res, next) => {
   const { yelpId } = req.params;
-
+  console.log(yelpId)
   getRestaurantDetails(yelpId)
     .then(newObj => {
       const yelpId = newObj.id

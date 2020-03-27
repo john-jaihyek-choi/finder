@@ -16,15 +16,16 @@ export default class CardStack extends React.Component {
   }
 
   getRestaurants() {
+    if (!this.props.location) return this.setState({ restaurants: [] })
     fetch('/api/search/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         term: this.props.currentQuery,
-        latitude: this.props.location.lat,
-        longitude: this.props.location.long,
-        location: this.props.location.keyword,
-        radius: this.props.location.radius
+        latitude: (!this.props.location ? null : this.props.location.lat),
+        longitude: (!this.props.location ? null : this.props.location.long),
+        location: (!this.props.location ? "" : this.props.location.keyword),
+        radius: (!this.props.location ? "" : this.props.location.radius)
       })
     })
       .then(res => res.json())

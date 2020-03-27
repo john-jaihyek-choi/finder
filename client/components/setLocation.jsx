@@ -23,9 +23,19 @@ export default class SetLocation extends React.Component {
   handleClick(event) {
     if (event.currentTarget.id === 'cancel') return this.props.setView('userHomepage');
     if (event.currentTarget.id === 'submit') {
-      this.props.setLocation(this.state.locationKeyword, this.state.radius)
-      this.props.setView('search')
+      this.props.setLocation(
+        !this.props.location ? null : this.props.location.lat, 
+        !this.props.location ? null : this.props.location.long, 
+        this.state.locationKeyword, 
+        this.state.radius)
+      this.props.setView('userHomepage')
     };
+    if (event.target.id === 'currentLocation') {
+      navigator.geolocation.getCurrentPosition((position) => 
+      this.props.setLocation(position.coords.latitude, position.coords.longitude, null, this.state.radius)
+      );
+      return this.props.setView('userHomepage');
+    }
   }
 
   render() {
@@ -40,7 +50,7 @@ export default class SetLocation extends React.Component {
             <i className="mag-glass2 fas fa-search fa-2x gray mt-2"></i>
             <input className="search text-secondary shadow w-130 px-1 py-2 justify-content-left" placeholder="Search"
               value={this.state.locationKeyword} onChange={this.handleChangeLocation}></input>
-            <i className="fas fa-map-marker-alt fa-3x pink ml-3 mb-2"></i>
+            <i id={'currentLocation'} className="fas fa-map-marker-alt fa-3x pink ml-3 mb-2" onClick={this.handleClick}></i>
           </div>
         </div>
         <div className="mt-5 pink">
