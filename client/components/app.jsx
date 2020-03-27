@@ -23,8 +23,7 @@ export default class App extends React.Component {
       currentQuery: '',
       cardStack: null,
       index: null,
-      location: null,
-      validation: null
+      location: null
     }
     this.setView = this.setView.bind(this);
     this.registerUser = this.registerUser.bind(this);
@@ -36,7 +35,6 @@ export default class App extends React.Component {
     this.setLocation = this.setLocation.bind(this);
     this.postReview = this.postReview.bind(this);
     this.saveCardStackPos = this.saveCardStackPos.bind(this);
-    this.signUp = this.signUp.bind(this);
     this.userIdentification = this.userIdentification.bind(this);
     this.from = null;
   }
@@ -53,21 +51,6 @@ export default class App extends React.Component {
       headers: { 'Content-Type' : 'application/json' }
     })
       .then(result => result.json())
-      .catch(err => console.error(err))
-  }
-
-  signUp(userName) {
-    fetch('/api/signUp', {
-      method: 'POST',
-      headers: { 'Content-Type' : 'application/json' },
-      body: JSON.stringify({ userName: userName })
-    })
-      .then(result => result.json())
-      .then(userInfo => {
-        console.log(userInfo)
-        if(userInfo.err) return this.setState({ validation: userInfo.err });
-        this.setState({ userInfo: userInfo})
-      })
       .catch(err => console.error(err))
   }
 
@@ -164,7 +147,7 @@ export default class App extends React.Component {
       return <Login guestLogIn={this.registerUser} setView={this.setView} userIdentification={this.userIdentification} />;
     }
     if (this.state.view === "signup") {
-      return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation} />;
+      return <SignUp setView={this.setView} userIdentification={this.userIdentification}/>;
     }
     if (this.state.view === "splash") {
       return <Splash setView={this.setView} setLocation={this.setLocation} userInfo={this.state.userInfo} />;

@@ -4,20 +4,33 @@ export default class SignUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userName: ""
+            userName: "",
+            validation: true,
+            validationMessage: null
         }
         this.inputChange = this.inputChange.bind(this);
         this.submitUserName = this.submitUserName.bind(this);
         this.cancelSignUp = this.cancelSignUp.bind(this);
     }
 
+    signUp(userName) {
+        fetch('/api/signUp', {
+          method: 'POST',
+          headers: { 'Content-Type' : 'application/json' },
+          body: JSON.stringify({ userName: userName })
+        })
+          .then(result => result.json())
+          .then(userInfo => {
+            if(userInfo.err) return this.setState({ validationMessage: userInfo.err });
+            this.props.userIdentification(userInfo);
+            this.props.setView('splash')
+          })
+          .catch(err => console.error(err))
+      }
+
     submitUserName(event) {
         event.preventDefault()
-        this.props.signUp(this.state.userName)
-        console.log(this.props.validation);
-        if(this.props.validation === null) {
-            this.props.setView('splash')
-        }
+        this.signUp(this.state.userName)
     }
 
     cancelSignUp(event) {
@@ -44,7 +57,7 @@ export default class SignUp extends React.Component {
                             onChange={this.inputChange}/>
                     </form>
                     <div className="d-flex flex-wrap justify-content-center w-100 h-75">
-                        <h6>{this.props.validation}</h6>
+                        <h6>{this.state.validationMessage}</h6>
                     </div>
                 </div>
                 <div className='w-100 h-100 mb-3 d-flex flex-wrap align-items-center justify-content-center align-content-end'>
