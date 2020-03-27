@@ -13,6 +13,7 @@ export default class UserHomepage extends React.Component {
   }
 
   toSwipePage(event) {
+    this.props.searchQuery('food')
     this.props.setView('cardstack')
   }
 
