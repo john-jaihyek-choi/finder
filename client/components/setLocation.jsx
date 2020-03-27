@@ -21,7 +21,7 @@ export default class SetLocation extends React.Component {
   }
 
   handleClick(event) {
-    if (event.currentTarget.id === 'cancel') return this.props.setView('search');
+    if (event.currentTarget.id === 'cancel') return this.props.setView('userHomepage');
     if (event.currentTarget.id === 'submit') {
       this.props.setLocation(this.state.locationKeyword, this.state.radius)
       this.props.setView('search')

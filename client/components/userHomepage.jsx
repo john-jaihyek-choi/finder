@@ -3,6 +3,9 @@ import React from "react";
 export default class UserHomepage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: null
+    }
     this.toSwipePage = this.toSwipePage.bind(this)
     this.swipeToSearch = this.swipeToSearch.bind(this)
     this.getLocation = this.getLocation.bind(this)
@@ -25,8 +28,38 @@ export default class UserHomepage extends React.Component {
     this.props.setView('login')
   }
 
-  render() {
+  componentDidUpdate() {
+    if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
+    if(this.props.location !== null && this.state.loading) this.setState({loading: false});
+  }
 
+  render() {
+  if(this.state.loading) {
+    return (
+      <div className='mx-auto vw-100 vh-100 d-flex flex-column text-white align-items-center justify-content-center gradient'>
+        <div className='w-100 h-100 my-3'></div>
+        <div className='w-100 h-100 mb-3 d-flex align-items-center justify-content-center'>
+          <div className="w-90 h-50 d-flex flex-column">
+            <div className="w-100">
+              <h1 className='text-white font-weight-bold title'>Locating
+              <span className="ml-2 spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
+              <span className="spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
+              <span className="spinner-border spinner-grow text-white" role="status" style={ {width: '0.1rem', height: '0.1rem'} }></span>
+              </h1>
+            </div>
+            <div className="d-flex justify-content-center">
+              <div className="spinner-border text-white mt-3" role="status" style={ {width: '5rem', height: '5rem'} }>
+                <span className="sr-only"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex-row my-5">
+        </div>
+        <div className='w-100 h-100 mb-3'></div>
+      </div>
+    );
+  }
   return(
       <div className = 'mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center' >
       <div className='w-100 h-100 my-3'>
