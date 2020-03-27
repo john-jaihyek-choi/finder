@@ -34,7 +34,7 @@ app.get('/api/login/:userId', (req, res, next) => {
       req.session.userInfo = data.rows[0];
       res.json(data.rows[0]);
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 });
 
 app.patch('/api/guest/', (req, res, next) => {
@@ -51,7 +51,7 @@ app.patch('/api/guest/', (req, res, next) => {
       if (!data.rows.length) return res.status(404).json({ error: "userName 'Guest' does not exist" });
       // res.json(data.rows[0]);
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 
   const sqlGet = `
     select *
@@ -74,7 +74,7 @@ app.patch('/api/guest/', (req, res, next) => {
           console.log('deleted liked');
           // return res.status(204).json(data.rows[0]);
         })
-        .catch(err => console.error(err));
+        .catch(err => next(err));
 
       const sqlDeleteReviewed = `
         delete from "reviewedRestaurants"
@@ -87,10 +87,10 @@ app.patch('/api/guest/', (req, res, next) => {
           if (!data.rows.length) return res.status(404).json({ error: `reviewedRestaurants data for userId ${guest.userId} does not exist` });
           return res.status(204).json(data.rows[0]);
         })
-        .catch(err => console.error(err));
+        .catch(err => next(err));
       // res.json(data.rows[0]);
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 });
 
 app.post('/api/users', (req, res, next) => {
