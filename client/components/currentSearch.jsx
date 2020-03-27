@@ -76,7 +76,7 @@ export default class CurrentSearch extends React.Component {
 
   render() {
     const listItems = (this.state.catList.map((restaurant) =>
-      <li onClick={this.handleClick} className="hover" key={restaurant} data-cat={restaurant}>{restaurant}</li>
+      <li onClick={this.handleClick} className="hover underline" key={restaurant} data-cat={restaurant}>{restaurant}</li>
     ));
 
     if(this.state.loading) {

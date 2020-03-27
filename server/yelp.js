@@ -29,8 +29,18 @@ const getReviews = function (yelpId){
     )
 }
 
-function searchAllRestaurants(lat, long, term) {
-
+function searchAllRestaurants(lat, long, term, location, radius) {
+  if(location) { //this will trigger when user decides to use their location settings on location page
+    return fetch(`https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}&radius=${radius}&limit=30`, {
+      headers: {
+        'Authorization': apiKey
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        return data.businesses
+      })
+  } else { // this will trigger when user uses lat and long received through navigator.geolocation
   return fetch(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=${term}&limit=30`, {
     headers: {
       'Authorization': apiKey
@@ -40,7 +50,7 @@ function searchAllRestaurants(lat, long, term) {
     .then(data => {
       return data.businesses
     })
-
+  }
 }
 
 function searchByCategories ( lat, long, categories){

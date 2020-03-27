@@ -6,6 +6,10 @@ import GuestLogIn from './guestLogIn';
 import CurrentSearch from './currentSearch';
 import LikedReviewedRestaurants from './likedReviewedRestaurants';
 import WriteReview from './writeReview';
+import Login from './logIn';
+import SetLocation from './setLocation';
+import UserHomepage from './userHomepage';
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -33,6 +37,7 @@ export default class App extends React.Component {
     this.postReview = this.postReview.bind(this);
     this.saveCardStackPos = this.saveCardStackPos.bind(this);
     this.signUp = this.signUp.bind(this);
+    this.setManualLocation = this.setManualLocation.bind(this);
     this.from = null;
   }
 
@@ -138,17 +143,24 @@ export default class App extends React.Component {
     this.setState({ location: { lat, long } });
   }
 
+  setManualLocation(keyword, radius) {
+    const locationObj = {
+      keyword: keyword,
+      radius: radius
+    }
+    this.setState({ location: locationObj})
+  }
+
   saveCardStackPos(restaurants, index) {
-    this.state.cardStack = restaurants;
-    this.state.index = index;
+    this.setState({ cardStack: restaurants, index })
   }
 
   render() {
     if (this.state.view === "login") {
-      return <GuestLogIn guestLogIn={this.registerUser} setView={this.setView} />;
+      return <Login guestLogIn={this.registerUser} setView={this.setView} />;
     }
-    if (this.state.view === "signUp") {
-      return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation}/>
+    if (this.state.view === "signup") {
+      return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation} />;
     }
     if (this.state.view === "splash") {
       return <Splash setView={this.setView} setLocation={this.setLocation} />;
@@ -173,8 +185,14 @@ export default class App extends React.Component {
     if (this.state.view === "search") {
       return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} location={this.state.location} />;
     }
+    if (this.state.view === "locationSettings") {
+      return <SetLocation searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} setLocation={this.setManualLocation} />;
+    }
     if (this.state.view === "writeReview") {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
+    }
+    if(this.state.view === "userHomepage"){
+      return <UserHomepage setView={this.setView}/>
     }
   }
 }

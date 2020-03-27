@@ -14,7 +14,10 @@ export default class SignUp extends React.Component {
     submitUserName(event) {
         event.preventDefault()
         this.props.signUp(this.state.userName)
-        this.props.setView('splash')
+        console.log(this.props.validation);
+        if(this.props.validation === null) {
+            this.props.setView('splash')
+        }
     }
 
     cancelSignUp(event) {

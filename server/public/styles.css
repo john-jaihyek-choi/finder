@@ -63,6 +63,12 @@ input, .search {
   left: 20px;
 }
 
+.mag-glass2 {
+  position: absolute;
+  top: 6px;
+  left: 20px;
+}
+
 .gradient {
   background: rgb(254,59,115);
   background: linear-gradient(45deg, rgba(254,59,115,1) 30%, rgba(255,104,92,1) 100%);
@@ -130,6 +136,26 @@ h1, h3, h5, h6 {
   cursor: pointer;
 }
 
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background:  rgb(254,59,115);
+  height: 21px;
+  width: 21px;
+  margin-top: -8px;
+  border-radius: 99px;
+  cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 800px;
+  height: 8px;
+  background: #ddd;
+}
+
+.miles {
+  font-size: 1.5rem;
+}
+
 .effect1:hover {
   box-shadow: 1px 1px 10px 2px #cccccc;
 }
@@ -139,18 +165,21 @@ h1, h3, h5, h6 {
 }
 
 .underline {
+  color: #FF3B74;
+  position: relative;
+}
+.underline:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  position: absolute;
+  background: #888888;
+  transition: width 1s ease 0s, left 1s ease 0s;
+  width: 0;
+}
+.underline:hover:after {
   width: 100%;
-  background-color: #888888;
-  border-right: 1px solid white
-}
-
-.underline::before {
-
-}
-
-.underline:hover::before {
-  background-color: #888888;
-  height: 5px;
-  width: 0%;
-  transition: 2s all;
+  left: 0;
 }

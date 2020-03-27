@@ -17,6 +17,26 @@ app.use(sessionMiddleware);
 
 app.use(express.json());
 
+app.get('/api/login/:userId', (req, res, next) => {
+  const { userId } = req.params;
+  if (!userId) return res.status(400).json({ error: 'missing userId' });
+
+  const text = `
+    select *
+    from   "users"
+    where  "userId" = $1;
+  `;
+  const values = [userId];
+
+  db.query(text, values)
+    .then(data => {
+      if (!data.rows.length) return res.status(404).json({ error: `userId ${userId} does not exist` });
+      req.session.userInfo = data.rows;
+      res.json(data.rows);
+    })
+    .catch(err => console.error(err));
+});
+
 app.post('/api/users', (req, res, next) => {
   const guestUser = `
     insert into "users" ("distanceRadius")
@@ -260,9 +280,11 @@ app.get('/api/reviews/:yelpId', (req, res, next) => {
 app.post('/api/search/', (req, res, next) => {
   const latitude = req.body.latitude
   const longitude = req.body.longitude
+  const location = (req.body.location || null)
   const term = req.body.term
+  const radius = req.body.radius * 1609
 
-  searchAllRestaurants(latitude, longitude, term)
+  searchAllRestaurants(latitude, longitude, term, location, radius)
 
   .then(allRestaurants => {
     const insertPromises =[];
