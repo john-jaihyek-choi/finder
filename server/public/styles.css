@@ -133,6 +133,11 @@ h1, h3, h5, h6 {
   cursor: pointer;
 }
 
+input[type=range] {
+  -webkit-appearance: none;
+  background: transparent;
+}
+
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   background:  rgb(254,59,115);
