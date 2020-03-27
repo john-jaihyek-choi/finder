@@ -4,8 +4,8 @@ export default class SetLocation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      locationKeyword: '',
-      radius: 5
+      locationKeyword: this.props.location.location,
+      radius: this.props.location.radius
     };
     this.handleChangeLocation = this.handleChangeLocation.bind(this);
     this.handleChangeDistance = this.handleChangeDistance.bind(this);
@@ -21,11 +21,21 @@ export default class SetLocation extends React.Component {
   }
 
   handleClick(event) {
-    if (event.currentTarget.id === 'cancel') return this.props.setView('search');
+    if (event.currentTarget.id === 'cancel') return this.props.setView('userHomepage');
     if (event.currentTarget.id === 'submit') {
-      this.props.setLocation(this.state.locationKeyword, this.state.radius)
-      this.props.setView('search')
+      this.props.setLocation(
+        !this.props.location ? null : this.props.location.lat,
+        !this.props.location ? null : this.props.location.long,
+        this.state.locationKeyword,
+        this.state.radius)
+      this.props.setView('userHomepage')
     };
+    if (event.target.id === 'currentLocation') {
+      navigator.geolocation.getCurrentPosition((position) =>
+      this.props.setLocation(position.coords.latitude, position.coords.longitude, '', this.state.radius)
+      );
+      return this.props.setView('userHomepage');
+    }
   }
 
   render() {
@@ -40,26 +50,26 @@ export default class SetLocation extends React.Component {
             <i className="mag-glass2 fas fa-search fa-2x gray mt-2"></i>
             <input className="search text-secondary shadow w-130 px-1 py-2 justify-content-left" placeholder="Search"
               value={this.state.locationKeyword} onChange={this.handleChangeLocation}></input>
-            <i className="fas fa-map-marker-alt fa-3x pink ml-3 mb-2"></i>
+            <i id={'currentLocation'} className="fas fa-map-marker-alt fa-3x text-pink ml-3 mb-2" onClick={this.handleClick}></i>
           </div>
         </div>
-        <div className="mt-5 pink">
+        <div className="mt-5 text-pink">
           <h4>Distance Radius(mi.)</h4>
         </div>
         <div className="d-flex justify-content-center mt-3">
-          <label className="d-flex align-items-center">
+          <label className="d-flex mb-0 align-items-center">
             <input
               id="typeinp"
               type="range"
-              min="0" max="24"
+              min="1" max="24"
               value={this.state.radius}
               onChange={this.handleChangeDistance}
               step="1"
               className="mr-3" />
-            <div className="miles pink">
-              {this.state.radius}
-            </div>
           </label>
+          <div className="miles text-pink" style={{ width: '50px'}}>
+            {this.state.radius}
+          </div>
         </div>
         <div className="d-flex justify-content-center mt-2">
           <button type="text" form="userSignUp" className="w-125 mt-2 mx-3 btn submit font-weight-bold"

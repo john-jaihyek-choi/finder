@@ -1,11 +1,8 @@
-html, body {
-    height: 100%;
+body {
+    height: 100vh;
     margin: 0;
     padding: 0;
-}
-
-body {
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 /* lets use this block of css rule for consistency. I have included button-outline to be styled with below code as well. */

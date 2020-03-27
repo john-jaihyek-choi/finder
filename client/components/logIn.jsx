@@ -23,7 +23,9 @@ export default class Login extends React.Component {
   login(userId) {
     fetch(`/api/login/${userId}`)
       .then(res => res.json())
-      .then(data => console.log('req sessions userInfo', data))
+      .then(data => 
+        this.props.userIdentification(data)
+      )
       .catch(err => console.error(err));
   }
 

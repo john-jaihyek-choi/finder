@@ -82,7 +82,7 @@ export default class LikedReviewedCards extends React.Component {
         price.push(<i className='fas fa-dollar-sign fa-sm' key={'price' + i}></i>);
         }
 
-        const rating = [];
+        const rating = []
         for (let i = 0; i < Math.floor(this.props.restaurant.rating); i++) {
         rating.push(<i className='fas fa-star fa-xs' key={'rating' + i}></i>);
         }

@@ -31,8 +31,8 @@ app.get('/api/login/:userId', (req, res, next) => {
   db.query(text, values)
     .then(data => {
       if (!data.rows.length) return res.status(404).json({ error: `userId ${userId} does not exist` });
-      req.session.userInfo = data.rows;
-      res.json(data.rows);
+      req.session.userInfo = data.rows[0];
+      res.json(data.rows[0]);
     })
     .catch(err => console.error(err));
 });
@@ -64,7 +64,7 @@ app.post('/api/signUp', (req, res, next) => {
   returning *;
   `
   const userName = req.body.userName;
-  const userValue = [userName, 10]
+  const userValue = [userName, 5]
 
   if (userName.length === 0) {
     return res.status(400).json({ err: 'Please enter a userId' });
@@ -111,9 +111,10 @@ app.post('/api/likedRestaurants', (req, res, next) => {
     returning   *;
   `;
   const values = [req.session.userInfo.userId, yelpId];
-
   db.query(text, values)
-    .then(data => res.status(201).json(data.rows[0]))
+    .then(data => {
+      return res.status(201).json(data.rows[0])
+    })
     .catch(err => next(err));
 });
 
@@ -330,7 +331,7 @@ app.post('/api/search/', (req, res, next) => {
 
 app.get('/api/view/:yelpId', (req, res, next) => {
   const { yelpId } = req.params;
-
+  console.log(yelpId)
   getRestaurantDetails(yelpId)
     .then(newObj => {
       const yelpId = newObj.id

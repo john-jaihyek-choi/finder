@@ -6,7 +6,7 @@ import GuestLogIn from './guestLogIn';
 import CurrentSearch from './currentSearch';
 import LikedReviewedRestaurants from './likedReviewedRestaurants';
 import WriteReview from './writeReview';
-import Login from './logIn';
+import Login from './login';
 import SetLocation from './setLocation';
 import UserHomepage from './userHomepage';
 
@@ -37,7 +37,7 @@ export default class App extends React.Component {
     this.postReview = this.postReview.bind(this);
     this.saveCardStackPos = this.saveCardStackPos.bind(this);
     this.signUp = this.signUp.bind(this);
-    this.setManualLocation = this.setManualLocation.bind(this);
+    this.userIdentification = this.userIdentification.bind(this);
     this.from = null;
   }
 
@@ -64,11 +64,17 @@ export default class App extends React.Component {
     })
       .then(result => result.json())
       .then(userInfo => {
-        if(userInfo.err) return this.setState({ validation: userInfo.err});
         console.log(userInfo)
+        if(userInfo.err) return this.setState({ validation: userInfo.err });
         this.setState({ userInfo: userInfo})
       })
       .catch(err => console.error(err))
+  }
+
+  userIdentification (userInfoObj) {
+    this.setState({
+      userInfo: userInfoObj
+    })
   }
 
   getLikedRestaurants() {
@@ -139,12 +145,10 @@ export default class App extends React.Component {
     this.setState({ currentQuery, index: 0, cardStack: null });
   }
 
-  setLocation(lat, long) {
-    this.setState({ location: { lat, long } });
-  }
-
-  setManualLocation(keyword, radius) {
+  setLocation(lat, long, keyword, radius) {
     const locationObj = {
+      lat: lat,
+      long: long,
       keyword: keyword,
       radius: radius
     }
@@ -157,13 +161,13 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.view === "login") {
-      return <Login guestLogIn={this.registerUser} setView={this.setView} />;
+      return <Login guestLogIn={this.registerUser} setView={this.setView} userIdentification={this.userIdentification} />;
     }
     if (this.state.view === "signup") {
       return <SignUp signUp={this.signUp} setView={this.setView} validation={this.state.validation} />;
     }
     if (this.state.view === "splash") {
-      return <Splash setView={this.setView} setLocation={this.setLocation} />;
+      return <Splash setView={this.setView} setLocation={this.setLocation} userInfo={this.state.userInfo} />;
     }
     if (this.state.view === "cardstack") {
       return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} currentQuery={this.state.currentQuery} index={this.state.index} cardStack={this.state.cardStack} saveCardStackPos={this.saveCardStackPos} />;
@@ -186,13 +190,13 @@ export default class App extends React.Component {
       return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} location={this.state.location} />;
     }
     if (this.state.view === "locationSettings") {
-      return <SetLocation searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} setLocation={this.setManualLocation} />;
+      return <SetLocation searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} setLocation={this.setLocation} location={this.state.location} userInfo={this.state.userInfo}/>;
     }
     if (this.state.view === "writeReview") {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
     }
     if(this.state.view === "userHomepage"){
-      return <UserHomepage setView={this.setView}/>
+      return <UserHomepage setView={this.setView} location={this.state.location} searchQuery={this.searchQuery} userInfo={this.state.userInfo}/>
     }
   }
 }
