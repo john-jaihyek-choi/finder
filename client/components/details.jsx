@@ -46,27 +46,10 @@ export default class Details extends React.Component {
     });
   }
 
-  renderPrice() {
-    if (!this.props.restaurant.price) return <div>No price data</div>;
-    const price = [];
-    for (let i = 0; i < this.props.restaurant.price.length; i++) price.push(<i className='fas fa-dollar-sign fa-sm mr-1' key={'price' + i}></i>);
-    return price;
-  }
-
-  renderRating() {
-    if (!this.props.restaurant.rating) return <div>No rating data</div>;
-    const rating = [];
-    for (let i = 0; i < Math.floor(this.props.restaurant.rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
-    if (!Number.isInteger(this.props.restaurant.rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
-    return rating;
-  }
-
   cycleInfo() {
     if (this.state.infoIndex === this.props.restaurant.reviews.length) return this.renderHours();
     if (!this.props.restaurant.reviews.length) return;
-    const rating = [];
-    for (let i = 0; i < Math.floor(this.props.restaurant.reviews[this.state.infoIndex].rating); i++) rating.push(<i className='fas fa-star fa-sm' key={'rating' + i}></i>);
-    if (!Number.isInteger(this.props.restaurant.reviews[this.state.infoIndex].rating)) rating.push(<i className='fas fa-star-half fa-sm' key={'rating' + rating.length}></i>);
+    const rating = this.props.renderRating(this.props.restaurant.reviews);
 
     return (
       <div className='col-11 d-flex flex-column align-items-center justify-content-center'>
@@ -87,14 +70,14 @@ export default class Details extends React.Component {
             alt={this.props.restaurant.restaurantName}
             style={{ objectFit: 'cover', objectPosition: 'center bottom', height: '200px', width: '100%' }} />
         </div>
-        <div className='w-100 h-25 mt-2 d-flex flex-column details-text hover'>
+        <div className='w-100 h-25 mt-2 d-flex flex-column details-text'>
           <div className='w-100 h-100 text-pink font-weight-bold d-flex flex-column align-items-center justify-content-center'>
             <div className=''>{this.props.restaurant.restaurantName}</div>
             <div className=''>{this.props.restaurant.location.city}, {this.props.restaurant.location.state}</div>
           </div>
           <div className='w-100 h-25 text-center text-pink font-weight-bold d-flex align-items-center justify-content-center'>
-            <div className='w-100'>{this.renderRating()}</div> |
-            <div className='w-100'>{this.renderPrice()}</div> |
+            <div className='w-100'>{this.props.renderRating(this.props.restaurant)}</div> |
+            <div className='w-100'>{this.props.renderPrice(this.props.restaurant)}</div> |
             <div className='w-100'><i className="fas fa-map-marker-alt mr-2"></i>{(this.props.restaurant.distance * 0.000621371).toFixed(1)} mi</div>
           </div>
         </div>

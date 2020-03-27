@@ -6,7 +6,7 @@ import GuestLogIn from './guestLogIn';
 import CurrentSearch from './currentSearch';
 import LikedReviewedRestaurants from './likedReviewedRestaurants';
 import WriteReview from './writeReview';
-import Login from './logIn';
+import Login from './login';
 import SetLocation from './setLocation';
 import UserHomepage from './userHomepage';
 
