@@ -5,7 +5,7 @@ import restaurantData from '../../database/restaurants.json';
 export default class CardStack extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { restaurants: this.props.cardStack, details: null, index: this.props.index, canRewind: false, canClick: false, showDetails: false };
+    this.state = { restaurants: this.props.cardStack, details: null, index: this.props.index, canRewind: false, canClick: true, showDetails: false };
     this.handleClick = this.handleClick.bind(this);
     this.toLikedRestaurant = this.toLikedRestaurant.bind(this);
     this.toCardStack = this.toCardStack.bind(this);
@@ -17,6 +17,7 @@ export default class CardStack extends React.Component {
 
   getRestaurants() {
     if (!this.props.location) return this.setState({ restaurants: [] })
+    this.setState({ canClick: false });
     fetch('/api/search/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
