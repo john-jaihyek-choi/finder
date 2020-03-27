@@ -30,7 +30,7 @@ export default class Login extends React.Component {
   }
 
   guestLogin() {
-    fetch('/api/guest', {
+    fetch('/api/guest/', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' }
     })
