@@ -72,11 +72,11 @@ export default class UserHomepage extends React.Component {
   }
   return(
       <div className = 'mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center' >
-      <div className='w-100 h-100 my-3'>
-        <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
-          <div className='d-flex align-items-center'></div>
-          <div className='d-flex align-items-center'><i className='fas fa-user-alt fa-2x text-pink'></i></div>
-          <div className='d-flex align-items-center' onClick={this.toSwipePage}><i className='fas fa-utensils fa-2x hover gray'></i></div>
+      <div className='container my-3'>
+        <div className='row h-100 mt-4 d-flex align-items-start justify-content-around'>
+            <div className='d-flex align-items-center'></div>
+            <div className='d-flex align-items-center'><i className='fas fa-user-alt fa-2x text-pink'></i></div>
+            <div className='d-flex align-items-center' onClick={this.toSwipePage}><i className='fas fa-utensils fa-2x hover gray'></i></div>
         </div>
       </div>
       <div className="flex-row my-5 gray">
