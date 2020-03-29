@@ -81,9 +81,9 @@ export default class LikedReviewedRestaurants extends React.Component {
     }
 
     return (
-      <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
+      <div className='mx-auto vw-100 d-flex flex-column align-items-center justify-content-center'>
         <div className='w-100 sticky-top navTop' style={{ background: 'white' }}>
-          <div className='h-25 mt-2 d-flex align-items-start justify-content-around'>
+          <div className='h-25 mt-4 d-flex align-items-start justify-content-around'>
             <div className='d-flex align-items-center gray hover' onClick={this.toSwipePage}><i className='fas fa-utensils fa-2x'></i></div>
             <div className='d-flex align-items-center text-pink'><i className='fas fa-heart fa-2x'></i></div>
             <div className='d-flex align-items-center text-white'><i className='fas fa-heart fa-2x'></i></div>
@@ -93,9 +93,10 @@ export default class LikedReviewedRestaurants extends React.Component {
             <span className={`mx-auto hover ${this.props.viewState === "likedRestaurants" ? 'text-secondary h4' : 'text-pink h3'}`} onClick={this.toReviewedPage}>Reviewed</span>
           </div>
         </div>
-        <div className='w-100 h-75'>
+        <div className='w-100'>
           {restaurantsArr < 1
             ? <div className='h-100 text-center mt-4 pt-4'>
+              <div className="mt-4"></div>
               <i className='fas fa-heart fa-10x text-light mt-4 pt-4'></i>
               <br />
               <h5 className="text-secondary align-bottom">There are no {this.props.viewState === "likedRestaurants" ? "liked" : "reviewed"} restaurants</h5>
