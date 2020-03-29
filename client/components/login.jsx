@@ -70,11 +70,11 @@ export default class Login extends React.Component {
     return (
       <div className='mx-auto vw-100 vh-100 d-flex flex-column text-white align-items-center justify-content-center gradient'>
 
-        <div className='w-100 h-100 my-3 d-flex align-items-end justify-content-center'>
+        <div className='w-100 h-25 my-3 d-flex align-items-end justify-content-center'>
           <h1 className="title">finder<i className="fas fa-utensils text-white mx-2"></i></h1>
         </div>
 
-        <div className='w-100 h-100 mb-3 d-flex align-items-end '>
+        <div className='w-100 h-25 mb-3 d-flex align-items-end '>
           <form className='w-75 mx-auto' id='login' onSubmit={this.handleSubmit}>
             <label htmlFor="username">USERNAME</label>
             <div>
@@ -86,11 +86,11 @@ export default class Login extends React.Component {
           </form>
         </div>
 
-        <div className='w-100 h-100 mb-3 d-flex align-items-end justify-content-center'>
+        <div className='w-100 h-25 mb-3 d-flex align-items-end justify-content-center'>
           <div className='text-white btn' id='signup' onClick={this.handleClick} style={{ textDecoration: 'underline' }}>CREATE NEW USERNAME</div>
         </div>
 
-        <div className='w-100 h-100 mb-3 d-flex flex-column align-items-center justify-content-start'>
+        <div className='w-100 h-25 mb-3 d-flex flex-column align-items-center justify-content-start'>
           <button
             type='submit'
             form='login'
