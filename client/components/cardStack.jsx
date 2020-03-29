@@ -150,30 +150,35 @@ export default class CardStack extends React.Component {
     this.state.showDetails ? icon = 'arrow-left' : icon = 'user-alt';
 
     return (
-      <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
-        <div className='w-100 h-100 my-3'>
-          <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
-            <div className='d-flex align-items-center' id={icon} onClick={this.handleClick}><i className={`fas fa-${icon} fa-2x gray hover`}></i></div>
-            <div className='d-flex align-items-center'><i className='fas fa-utensils fa-2x text-pink'></i></div>
-            <div className='d-flex align-items-center' id='likedRes' onClick={this.handleClick}><i className='fas fa-heart fa-2x hover gray'></i></div>
+      <div className='mx-auto vh-100 d-flex flex-column align-items-center'>
+        <div className="container">
+          <div className='flex-row my-5'>
+            <div className='h-100 mt-4 d-flex align-items-start justify-content-around'>
+              <div className='d-flex align-items-center' id={icon} onClick={this.handleClick}><i className={`fas fa-${icon} fa-2x gray hover`}></i></div>
+              <div className='d-flex align-items-center'><i className='fas fa-utensils fa-2x text-pink'></i></div>
+              <div className='d-flex align-items-center' id='likedRes' onClick={this.handleClick}><i className='fas fa-heart fa-2x hover gray'></i></div>
+            </div>
           </div>
         </div>
-        <div className='w-100 h-100 mb-3'>
+        <div className='mb-5'>
           {this.renderCard()}
         </div>
-        <div className='w-100 h-100 mb-3'>
-          <div className='h-100 pb-4 d-flex align-items-end justify-content-around'>
-            <button type='button' id='pass' className='stack-button pink btn button-outline shadow' onClick={this.handleClick}>
-              <i className='fas fa-times fa-lg'></i>
-            </button>
-            <button type='button' id='rewind' className='stack-button yellow btn button-outline shadow' onClick={this.handleClick}>
-              <i className='fas fa-undo fa-lg'></i>
-            </button>
-            <button type='button' id='like' className='stack-button green btn button-outline shadow' onClick={this.handleClick}>
-              <i className='fas fa-heart fa-lg'></i>
-            </button>
+        <div className='container'>
+          <div className='flex-row mb-3'>
+            <div className='h-100 pb-4 d-flex align-items-end justify-content-around'>
+              <button type='button' id='pass' className='stack-button pink btn button-outline shadow' onClick={this.handleClick}>
+                <i className='fas fa-times fa-lg'></i>
+              </button>
+              <button type='button' id='rewind' className='stack-button yellow btn button-outline shadow' onClick={this.handleClick}>
+                <i className='fas fa-undo fa-lg'></i>
+              </button>
+              <button type='button' id='like' className='stack-button green btn button-outline shadow' onClick={this.handleClick}>
+                <i className='fas fa-heart fa-lg'></i>
+              </button>
+            </div>
           </div>
         </div>
+
       </div>
     );
   }
