@@ -48,9 +48,9 @@ export default class SignUp extends React.Component {
     render() {
         return (
             <div
-            className='mx-auto vw-100 vh-100 d-flex flex-column text-white align-items-center justify-content-center gradient'>
-                <div className='w-100 h-100 my-3'></div>
-                <div className='w-100 h-100 mb-3'>
+            className='mx-auto w-100 vh-100 d-flex flex-column text-white align-items-center justify-content-center gradient'>
+                <div className='w-100 h-25 my-3'></div>
+                <div className='w-100 h-25 mb-3'>
                     <form id="userSignUp" className="d-flex flex-wrap justify-content-center w-100 h-75" onSubmit={this.submitUserName} onReset={this.cancelSignUp}>
                         <label htmlFor="signUpUserName" className="text-white font-weight-bold w-75 mt-4 ml-4">CREATE USERNAME</label>
                         <input id="signUpUserName" type="text" className="w-75 h-50 text-center text-white font-weight-bold text-"
@@ -60,11 +60,11 @@ export default class SignUp extends React.Component {
                         <h6>{this.state.validationMessage}</h6>
                     </div>
                 </div>
-                <div className='w-100 h-100 mb-3 d-flex flex-wrap align-items-center justify-content-center align-content-end'>
+                <div className='w-100 h-25 mb-3 d-flex flex-wrap align-items-center justify-content-center align-content-end'>
                     <button type="submit" form="userSignUp" className="w-75 h-25 btn btn-outline-light button-outline font-weight-bold">SUBMIT</button>
                     <button type="reset" form="userSignUp" className="w-75 h-25 my-3 btn btn-outline-light button-outline font-weight-bold">CANCEL</button>
                 </div>
-                <div className="w-100 h-100 mb-3 d-flex flex-wrap align-items-center justify-content-center align-content-start">
+                <div className="w-100 h-25 mb-3 d-flex flex-wrap align-items-center justify-content-center align-content-start">
                 </div>
             </div>
         )
