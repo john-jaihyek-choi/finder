@@ -4,7 +4,6 @@ const { getRestaurantDetails } = require('./yelp')
 const { searchByCategories } = require('./yelp')
 const { searchAllRestaurants } = require('./yelp')
 
-
 const db = require('./database');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
@@ -246,7 +245,6 @@ app.get('/api/reviewedRestaurants', (req, res, next) => {
     .catch(err => next(err))
 })
 
-
 app.get('/api/reviews', (req, res, next) => {
   const reviews = `
     select "rR".*,
@@ -426,8 +424,6 @@ app.get('/api/view/:yelpId', (req, res, next) => {
 
 // User Can Navigate to Swiped Page with Suggested Keywords  -----------------------------
 app.post('/api/category', (req, res, next) => {
-// The category filter can be a list of comma delimited categories.For example, "bars,french" will filter by Bars OR French.
-// The category identifier should be used(for example "discgolf", not "Disc Golf").
   const latitude = req.body.latitude
   const longitude = req.body.longitude
   const categories = req.body.categories
