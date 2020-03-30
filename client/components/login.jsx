@@ -57,11 +57,6 @@ export default class Login extends React.Component {
     if (e.currentTarget.id === 'signup') return this.props.setView('signup');
   }
 
-  // guestClick() {
-  //   this.props.setView('splash');
-  //   this.props.guestLogIn();
-  // }
-
   renderUsers() {
     return this.state.users.map(user => <option key={user.userId} value={user.userId}>{user.userName}</option>);
   }

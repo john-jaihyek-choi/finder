@@ -26,7 +26,6 @@ export default class App extends React.Component {
       location: null
     }
     this.setView = this.setView.bind(this);
-    // this.registerUser = this.registerUser.bind(this);
     this.getLikedRestaurants = this.getLikedRestaurants.bind(this);
     this.getReviewedRestaurants = this.getReviewedRestaurants.bind(this);
     this.deleteRestaurant = this.deleteRestaurant.bind(this);
@@ -44,16 +43,6 @@ export default class App extends React.Component {
       view: viewMode
     });
   }
-
-  // registerUser() {
-  //   fetch('/api/users', {
-  //     method: 'PATCH',
-  //     headers: { 'Content-Type' : 'application/json' }
-  //   })
-  //     .then(result => result.json())
-  //     .then(data => this.userIdentification(data))
-  //     .catch(err => console.error(err))
-  // }
 
   userIdentification (userInfoObj) {
     this.setState({

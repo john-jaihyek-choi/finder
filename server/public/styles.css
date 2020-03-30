@@ -5,8 +5,6 @@ body {
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
-/* lets use this block of css rule for consistency. I have included button-outline to be styled with below code as well. */
-
 button, .button-outline, input {
   border-radius: 30px;
   background-color: transparent;
@@ -188,18 +186,3 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   left: 0;
 }
-
-/*
-####################################################
-              M E D I A  Q U E R I E S
-####################################################
-*/
-
-/* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {}
-
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {}
-
-/* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {}

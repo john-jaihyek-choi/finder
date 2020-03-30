@@ -36,6 +36,64 @@ app.get('/api/login/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/users', (req, res, next) => {
+  const guestUser = `
+    insert into "users" ("distanceRadius")
+    values ($1)
+    returning *
+  `
+  const guestUsersValue = [10]
+
+  db.query(guestUser, guestUsersValue)
+    .then(result => {
+      const [guestUserInfo] = result.rows
+      req.session.userInfo = guestUserInfo
+      return res.status(201).json(guestUserInfo)
+    })
+    .catch(err => next(err))
+})
+
+app.get('/api/users', (req, res, next) => {
+  const sql = `
+  select *
+  from "users"
+  where not "userName" = 'Guest';
+  `;
+  db.query(sql)
+    .then(result => {
+      const users = result.rows;
+      if (!result) {
+        res.status(404).json({ error: 'Cannot be found' })
+      }
+      res.status(200).json(users)
+    })
+    .catch(err => next(err));
+})
+
+app.get('/api/users/:userId', (req, res, next) => {
+  const { userId } = req.params;
+  if (!parseInt(userId, 10)) {
+    return res.status(400).json({ error: '"userId" must be a positive integer' })
+  }
+  const sql = `
+  select *
+  from "users"
+  where "userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const user = result.rows[0]
+      if (!user) {
+        res.status(404).json({ error: `Cannot find user with "userId" ${userId}` })
+      }
+      else {
+        res.status(200).json(user)
+      }
+    })
+    .catch(err => next(err))
+})
+
 app.patch('/api/guest/', (req, res, next) => {
   const sqlUpdate = `
     update "users"
@@ -46,7 +104,6 @@ app.patch('/api/guest/', (req, res, next) => {
   db.query(sqlUpdate)
     .then(data => {
       if (!data.rows.length) return res.status(404).json({ error: "userName 'Guest' does not exist" });
-      // res.json(data.rows[0]);
     })
     .catch(err => next(err));
 
@@ -67,10 +124,6 @@ app.patch('/api/guest/', (req, res, next) => {
         where "userId" = $1
       `;
       db.query(sqlDeleteLiked, deleteValues)
-        .then(data => {
-          console.log('deleted liked');
-          // return res.status(204).json(data.rows[0]);
-        })
         .catch(err => next(err));
 
       const sqlDeleteReviewed = `
@@ -79,35 +132,12 @@ app.patch('/api/guest/', (req, res, next) => {
         returning *;
       `;
       db.query(sqlDeleteReviewed, deleteValues)
-        .then(data => {
-          console.log('deleted reviewed');
-          // if (!data.rows.length) return res.status(404).json({ error: `reviewedRestaurants data for userId ${guest.userId} does not exist` });
-          return res.json(req.session.userInfo);
-        })
+        .then(data => res.json(req.session.userInfo))
         .catch(err => next(err));
-      // res.json(data.rows[0]);
     })
     .catch(err => next(err));
 });
 
-app.post('/api/users', (req, res, next) => {
-  const guestUser = `
-    insert into "users" ("distanceRadius")
-    values ($1)
-    returning *
-  `
-  const guestUsersValue = [10]
-
-  db.query(guestUser, guestUsersValue)
-    .then(result => {
-      const [guestUserInfo] = result.rows
-      req.session.userInfo = guestUserInfo
-      return res.status(201).json(guestUserInfo)
-    })
-    .catch(err => next(err))
-})
-
-// stretch feature for when we have username. ** note: once we have the username, delete the other post api/users
 app.post('/api/signUp', (req, res, next) => {
   const newUser = `
   insert into "users" ("userName", "distanceRadius")
@@ -187,64 +217,6 @@ app.delete('/api/likedReviewedRestaurants', (req, res, next) => {
     .catch(err => next(err));
 })
 
-// another stretch feature for users
-app.get('/api/users', (req, res, next) => {
-  const sql = `
-  select *
-  from "users"
-  where not "userName" = 'Guest';
-  `;
-  db.query(sql)
-    .then(result => {
-      const users = result.rows;
-      if (!result) {
-        res.status(404).json({ error: 'Cannot be found' })
-      }
-      res.status(200).json(users)
-    })
-    .catch(err => next(err));
-})
-
-//yet another stretch feature for user (to sign up)
-app.get('/api/users/:userId', (req, res, next) => {
-  const { userId } = req.params;
-  if (!parseInt(userId, 10)) {
-    return res.status(400).json({ error: '"userId" must be a positive integer' })
-  }
-  const sql = `
-  select *
-  from "users"
-  where "userId" = $1
-  `;
-  const params = [userId];
-  db.query(sql, params)
-    .then(result => {
-      const user = result.rows[0]
-      if (!user) {
-        res.status(404).json({ error: `Cannot find user with "userId" ${userId}` })
-      }
-      else {
-        res.status(200).json(user)
-      }
-    })
-    .catch(err => next(err))
-})
-
-app.get('/api/reviewedRestaurants', (req, res, next) => {
-  const reviewedRestaurants = `
-    select "r".* as "details",
-      "rR".* as "reviews"
-    from "restaurants" as "r"
-    join "reviewedRestaurants" as "rR" using ("yelpId")
-    where "rR"."userId" = $1
-  `
-  const currentUser = [req.session.userInfo.userId]
-
-  db.query(reviewedRestaurants, currentUser)
-    .then(result => res.json(result.rows))
-    .catch(err => next(err))
-})
-
 app.get('/api/reviews', (req, res, next) => {
   const reviews = `
     select "rR".*,
@@ -269,45 +241,19 @@ app.get('/api/reviews', (req, res, next) => {
     .catch(err => next(err))
 })
 
-//when its the first time the user makes review
-app.patch('/api/reviews', (req, res, next) => {
-  const sql = `
-  update "reviewedRestaurants"
-  set "thumbsRate" = $2,
-      "note" = $3
-  where "userId"=$1 AND "yelpId"=$4
-  returning *
-  `;
-  const thumbsRate = req.body.thumbsRate;
-  const note = req.body.note;
-  const yelpId = req.body.yelpId;
-  const userId = req.session.userInfo.userId
-
-  const params = [userId, thumbsRate, note, yelpId];
-
-  db.query(sql, params)
-    .then(result => {
-      const reviewedRestaurantRow = result.rows[0]
-      // console.log(reviewedRestaurantRow)
-      return res.status(200).json(reviewedRestaurantRow)
-    })
-    .catch( err => next(err))
-})
-
-app.post('/api/reviews', (req, res, next) => {
-  const reviews = `
-    insert into "reviewedRestaurants" ("userId", "yelpId","thumbsRate", "note", "timeCreated")
-    values ($1, $2, $3, $4, NOW())
-    returning *
+app.get('/api/reviewedRestaurants', (req, res, next) => {
+  const reviewedRestaurants = `
+    select "r".* as "details",
+      "rR".* as "reviews"
+    from "restaurants" as "r"
+    join "reviewedRestaurants" as "rR" using ("yelpId")
+    where "rR"."userId" = $1
   `
-  const params = [req.session.userInfo.userId, req.body.yelpId, req.body.thumbsRate, req.body.note]
+  const currentUser = [req.session.userInfo.userId]
 
-  db.query(reviews, params)
-    .then(result => {
-      const [newReview] = result.rows;
-      return res.status(200).json(newReview)
-    })
-    .catch(err => next(err));
+  db.query(reviewedRestaurants, currentUser)
+    .then(result => res.json(result.rows))
+    .catch(err => next(err))
 })
 
 app.get('/api/reviews/:yelpId', (req, res, next) => {
@@ -330,6 +276,84 @@ app.get('/api/reviews/:yelpId', (req, res, next) => {
     })
     .catch(err => next(err))
 })
+
+app.post('/api/reviews', (req, res, next) => {
+  const reviews = `
+    insert into "reviewedRestaurants" ("userId", "yelpId","thumbsRate", "note", "timeCreated")
+    values ($1, $2, $3, $4, NOW())
+    returning *
+  `
+  const params = [req.session.userInfo.userId, req.body.yelpId, req.body.thumbsRate, req.body.note]
+
+  db.query(reviews, params)
+    .then(result => {
+      const [newReview] = result.rows;
+      return res.status(200).json(newReview)
+    })
+    .catch(err => next(err));
+})
+
+app.patch('/api/reviews', (req, res, next) => {
+  const sql = `
+  update "reviewedRestaurants"
+  set "thumbsRate" = $2,
+      "note" = $3
+  where "userId"=$1 AND "yelpId"=$4
+  returning *
+  `;
+  const thumbsRate = req.body.thumbsRate;
+  const note = req.body.note;
+  const yelpId = req.body.yelpId;
+  const userId = req.session.userInfo.userId
+
+  const params = [userId, thumbsRate, note, yelpId];
+
+  db.query(sql, params)
+    .then(result => {
+      const reviewedRestaurantRow = result.rows[0]
+      return res.status(200).json(reviewedRestaurantRow)
+    })
+    .catch( err => next(err))
+})
+
+app.get('/api/view/:yelpId', (req, res, next) => {
+  const { yelpId } = req.params;
+  getRestaurantDetails(yelpId)
+    .then(newObj => {
+      const yelpId = newObj.id
+      const photosUrl = JSON.stringify(newObj.photos || [])
+      const hours = JSON.stringify(newObj.hours || [{ open: [] }])
+      const reviews = JSON.stringify(newObj.reviews || [])
+      const rating = newObj.rating
+
+      const sql = `
+      update "restaurants"
+      set
+      "photosUrl" = $2,
+      "hours" = $3,
+      "reviews" = $4,
+      "rating" = $5
+      where "yelpId" = $1;
+      `
+      const restaurantRow = [yelpId, photosUrl, hours, reviews, rating]
+
+      db.query(sql, restaurantRow)
+        .then(result => {
+          const sql = `
+        select *
+        from "restaurants"
+        where "yelpId" = $1;
+        `
+          const value = [yelpId]
+          return db.query(sql, value)
+            .then(wholeRow => {
+              const row = wholeRow.rows[0]
+              res.status(200).json(row)
+            })
+        })
+        .catch(err => next(err))
+    })
+});
 
 app.post('/api/search/', (req, res, next) => {
   const latitude = req.body.latitude
@@ -382,47 +406,6 @@ app.post('/api/search/', (req, res, next) => {
 
 })
 
-app.get('/api/view/:yelpId', (req, res, next) => {
-  const { yelpId } = req.params;
-  // console.log(yelpId)
-  getRestaurantDetails(yelpId)
-    .then(newObj => {
-      const yelpId = newObj.id
-      const photosUrl = JSON.stringify(newObj.photos || [])
-      const hours = JSON.stringify(newObj.hours || [{ open: [] }])
-      const reviews = JSON.stringify(newObj.reviews || [])
-      const rating = newObj.rating
-
-      const sql = `
-      update "restaurants"
-      set
-      "photosUrl" = $2,
-      "hours" = $3,
-      "reviews" = $4,
-      "rating" = $5
-      where "yelpId" = $1;
-      `
-      const restaurantRow = [yelpId, photosUrl, hours, reviews, rating]
-
-      db.query(sql, restaurantRow)
-        .then(result => {
-          const sql = `
-        select *
-        from "restaurants"
-        where "yelpId" = $1;
-        `
-          const value = [yelpId]
-          return db.query(sql, value)
-            .then(wholeRow => {
-              const row = wholeRow.rows[0]
-              res.status(200).json(row)
-            })
-        })
-        .catch(err => next(err))
-    })
-});
-
-// User Can Navigate to Swiped Page with Suggested Keywords  -----------------------------
 app.post('/api/category', (req, res, next) => {
   const latitude = req.body.latitude
   const longitude = req.body.longitude

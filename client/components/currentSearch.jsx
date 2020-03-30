@@ -6,8 +6,7 @@ export default class CurrentSearch extends React.Component {
     this.state = {
       food: '',
       catList: [],
-      currentQuery: this.props.currentQuery,
-      // loading: null
+      currentQuery: this.props.currentQuery
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);

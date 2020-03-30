@@ -1,4 +1,3 @@
-//es
 import React from 'react';
 import LogIn from './logIn';
 import SignUp from './signUp';
