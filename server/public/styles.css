@@ -1,11 +1,12 @@
 body {
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 /* lets use this block of css rule for consistency. I have included button-outline to be styled with below code as well. */
+
 button, .button-outline, input {
   border-radius: 30px;
   background-color: transparent;
@@ -14,7 +15,7 @@ button, .button-outline, input {
 }
 
 button, .submit {
-  background-color: rgb(254,59,115);
+  background-color: rgb(254, 59, 115);
   border-radius: 30px;
   width: 90px;
   height: 40px;
@@ -31,8 +32,8 @@ button, .submit {
   height: 50px;
   border-radius: 30px;
   background-color: white;
-  border: 2px solid rgb(254,59,115);
-  color: rgb(254,59,115);
+  border: 2px solid rgb(254, 59, 115);
+  color: rgb(254, 59, 115);
   text-align: center;
 }
 
@@ -67,12 +68,12 @@ input, .search {
 }
 
 .gradient {
-  background: rgb(254,59,115);
-  background: linear-gradient(45deg, rgba(254,59,115,1) 30%, rgba(255,104,92,1) 100%);
+  background: rgb(254, 59, 115);
+  background: linear-gradient(45deg, rgba(254, 59, 115, 1) 30%, rgba(255, 104, 92, 1) 100%);
 }
 
 .text-pink {
-  color: rgb(254,59,115);
+  color: rgb(254, 59, 115);
 }
 
 .yellow {
@@ -140,7 +141,7 @@ input[type=range] {
 
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  background:  rgb(254,59,115);
+  background: rgb(254, 59, 115);
   height: 21px;
   width: 21px;
   margin-top: -8px;
@@ -187,3 +188,18 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   left: 0;
 }
+
+/*
+####################################################
+              M E D I A  Q U E R I E S
+####################################################
+*/
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {}
