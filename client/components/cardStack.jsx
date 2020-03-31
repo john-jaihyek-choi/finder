@@ -69,7 +69,7 @@ export default class CardStack extends React.Component {
     if (e.currentTarget.id === 'rewind' && this.state.canRewind) return this.setState({ index: (this.state.index + this.state.restaurants.length - 1) % this.state.restaurants.length, canRewind: false, showDetails: false });
     if (e.currentTarget.id === 'details') return this.getRestaurantDetails(this.state.restaurants[this.state.index].yelpId);
     if (e.currentTarget.id === 'search') return this.props.setView('search');
-    if (e.currentTarget.id === 'user-alt') return this.props.setView('profile');
+    if (e.currentTarget.id === 'user-alt') return this.toProfile();
     if (e.currentTarget.id === 'likedRes') return this.toLikedRestaurant();
     if (e.currentTarget.id === 'arrow-left') return this.toCardStack();
   }
@@ -82,6 +82,11 @@ export default class CardStack extends React.Component {
 
   toCardStack() {
     this.setState({ showDetails: false });
+  }
+
+  toProfile() {
+    this.props.saveCardStackPos(this.state.restaurants, this.state.index);
+    this.props.setView('profile');
   }
 
   renderPrice(restaurant) {
