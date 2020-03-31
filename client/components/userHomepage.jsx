@@ -19,10 +19,10 @@ export default class UserHomepage extends React.Component {
     if(this.props.location !== null && this.state.loading) {
       this.setState({ loading: false });
     }
-    if(!this.props.searchQuery) {
+    if(!this.props.currentQuery) {
       return this.props.searchQuery('food');
     }
-    this.props.searchQuery(this.props.currentQuery);
+    // this.props.searchQuery(this.props.currentQuery);
     this.props.setView('cardstack')
   }
 
