@@ -20,7 +20,7 @@ export default class Details extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.restaurant !== this.props.restaurant) this.setState({ infoIndex: 3, photoIndex: 0 });
+    if (prevProps.restaurant !== this.props.restaurant) this.setState({ infoIndex: this.props.restaurant.reviews.length, photoIndex: 0 });
   }
 
   calculateTime(time) {
