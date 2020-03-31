@@ -1,6 +1,5 @@
 import React from 'react';
 import Details from './details';
-import restaurantData from '../../database/restaurants.json';
 
 export default class CardStack extends React.Component {
   constructor(props) {
