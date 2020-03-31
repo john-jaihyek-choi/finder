@@ -4,7 +4,7 @@ const apiKey = "Bearer " + process.env.YELP_API_KEY;
 function searchAllRestaurants(lat, long, term, location, radius) {
   return fetch((location
       ? `https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}&radius=${radius}&limit=30`
-      : `https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=${term}&limit=30`), {
+    : `https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&radius=${radius}&term=${term}&limit=30`), {
     headers: {
       'Authorization': apiKey
     }
