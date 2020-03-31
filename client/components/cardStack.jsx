@@ -23,10 +23,10 @@ export default class CardStack extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         term: this.props.currentQuery,
-        latitude: (!this.props.location ? null : this.props.location.lat),
-        longitude: (!this.props.location ? null : this.props.location.long),
-        location: (!this.props.location ? "" : this.props.location.keyword),
-        radius: (!this.props.location ? "" : this.props.location.radius)
+        latitude: (this.props.location.lat || null),
+        longitude: (this.props.location.long || null),
+        location: (this.props.location.keyword || ''),
+        radius: (this.props.location.radius || '')
       })
     })
       .then(res => res.json())
