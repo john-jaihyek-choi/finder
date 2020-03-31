@@ -177,8 +177,8 @@ input[type=range]::-webkit-slider-runnable-track {
   display: block;
   height: 2px;
   position: absolute;
-  background: #888888;
-  transition: width 1s ease 0s, left 1s ease 0s;
+  background: linear-gradient(90deg, rgba(150,150,150,1) 0%, rgba(0,25,57,0) 100%);;
+  transition: 1s ease 0s, left 1s ease 0s;
   width: 0;
 }
 
