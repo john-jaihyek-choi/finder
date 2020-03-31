@@ -125,7 +125,7 @@ export default class App extends React.Component {
       keyword: keyword,
       radius: radius
     }
-    this.setState({ location: locationObj})
+    this.setState({ location: locationObj, index: 0, cardStack: null })
   }
 
   saveCardStackPos(restaurants, index) {
