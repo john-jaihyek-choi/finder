@@ -50,7 +50,10 @@ export default class SetLocation extends React.Component {
             <i className="mag-glass2 fas fa-search fa-2x gray mt-2"></i>
             <input className="search text-secondary shadow w-130 px-1 py-2 justify-content-left" placeholder="Search"
               value={this.state.locationKeyword} onChange={this.handleChangeLocation}></input>
-            <i id={'currentLocation'} className="fas fa-map-marker-alt fa-3x text-pink ml-3 mb-2" onClick={this.handleClick}></i>
+            {this.props.locationPermission === 'denied'
+              ? <i></i>
+              : <i id={'currentLocation'} className="fas fa-map-marker-alt fa-3x text-pink ml-3 mb-2" onClick={this.handleClick}></i>
+            }
           </div>
         </div>
         <div className="mt-5 text-pink">
