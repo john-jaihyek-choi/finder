@@ -37,8 +37,12 @@ export default class UserHomepage extends React.Component {
     this.props.setView('login')
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
+  }
+
+  componentDidUpdate() {
+    // if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
     if(this.props.location !== null && this.state.loading) this.setState({loading: false});
   }
 
