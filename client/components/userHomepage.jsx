@@ -38,6 +38,7 @@ export default class UserHomepage extends React.Component {
   }
 
   componentDidMount() {
+    if(this.props.locationPermission === "denied") return this.setState({loading: false});
     if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
   }
 

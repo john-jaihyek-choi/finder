@@ -11,7 +11,13 @@ export default class Splash extends React.Component {
   }
 
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition((position) => this.props.setLocation(position.coords.latitude, position.coords.longitude, '', this.props.userInfo.distanceRadius));
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.props.setLocation(position.coords.latitude, position.coords.longitude, '', this.props.userInfo.distanceRadius)
+      navigator.permissions.query({name: 'geolocation'})
+        .then(result => this.props.locationPrompt(result.state))}
+      ,
+      () => navigator.permissions.query({name: 'geolocation'})
+        .then(result => this.props.locationPrompt(result.state)));
   }
 
   render() {

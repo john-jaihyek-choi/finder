@@ -23,7 +23,8 @@ export default class App extends React.Component {
       currentQuery: '',
       cardStack: null,
       index: null,
-      location: null
+      location: null,
+      locationPermission: null
     }
     this.setView = this.setView.bind(this);
     this.getLikedRestaurants = this.getLikedRestaurants.bind(this);
@@ -35,6 +36,7 @@ export default class App extends React.Component {
     this.postReview = this.postReview.bind(this);
     this.saveCardStackPos = this.saveCardStackPos.bind(this);
     this.userIdentification = this.userIdentification.bind(this);
+    this.locationPrompt = this.locationPrompt.bind(this);
     this.from = null;
   }
 
@@ -128,6 +130,10 @@ export default class App extends React.Component {
     this.setState({ location: locationObj, index: 0, cardStack: null })
   }
 
+  locationPrompt(promptStatus) {
+    this.setState({ locationPermission: promptStatus })
+  }
+
   saveCardStackPos(restaurants, index) {
     this.setState({ cardStack: restaurants, index })
   }
@@ -140,7 +146,7 @@ export default class App extends React.Component {
       return <SignUp setView={this.setView} userIdentification={this.userIdentification}/>;
     }
     if (this.state.view === "splash") {
-      return <Splash setView={this.setView} setLocation={this.setLocation} userInfo={this.state.userInfo} />;
+      return <Splash setView={this.setView} setLocation={this.setLocation} userInfo={this.state.userInfo} locationPrompt={this.locationPrompt}/>;
     }
     if (this.state.view === "cardstack") {
       return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} currentQuery={this.state.currentQuery} index={this.state.index} cardStack={this.state.cardStack} saveCardStackPos={this.saveCardStackPos} />;
@@ -169,7 +175,7 @@ export default class App extends React.Component {
       return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
     }
     if (this.state.view === "profile"){
-      return <UserHomepage setView={this.setView} location={this.state.location} searchQuery={this.searchQuery} currentQuery={this.state.currentQuery} userInfo={this.state.userInfo}/>
+      return <UserHomepage setView={this.setView} location={this.state.location} searchQuery={this.searchQuery} currentQuery={this.state.currentQuery} userInfo={this.state.userInfo} locationPermission={this.state.locationPermission}/>
     }
   }
 }
