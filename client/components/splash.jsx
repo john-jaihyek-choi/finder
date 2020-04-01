@@ -24,6 +24,10 @@ export default class Splash extends React.Component {
         .then(result => this.props.locationPrompt(result.state)));
   }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.locationPermission === "denied" && this.state.promptCheck && prevProps.userInfo.userId) return this.setState({promptCheck: false})
+  }
+
   render() {
 
     if(this.state.promptCheck) {
