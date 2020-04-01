@@ -43,7 +43,7 @@ export default class UserHomepage extends React.Component {
   }
 
   componentDidUpdate() {
-    // if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
+    if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
     if(this.props.location !== null && this.state.loading) this.setState({loading: false});
   }
 
