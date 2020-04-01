@@ -26,7 +26,7 @@ export default class SetLocation extends React.Component {
       this.props.setLocation(
         !this.props.location ? null : this.props.location.lat,
         !this.props.location ? null : this.props.location.long,
-        this.state.locationKeyword,
+        !this.state.locationKeyword ? null : this.state.locationKeyword,
         this.state.radius)
       this.props.setView('profile')
     };

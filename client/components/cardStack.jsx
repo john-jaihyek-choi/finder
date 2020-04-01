@@ -130,7 +130,7 @@ export default class CardStack extends React.Component {
     if (!this.state.restaurants.length) {
       return (
         <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
-          {(this.props.locationPermission === "denied" && !this.props.location)
+          {(this.props.locationPermission === "denied" && (!this.props.location || !this.props.location.keyword))
             ? <>
               <span className="text-pink text-center font-weight-bold">Location is currently invalid</span>
               <span className="text-pink text-center font-weight-bold">Please set a valid location</span>
