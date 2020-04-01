@@ -61,11 +61,12 @@ export default class CardStack extends React.Component {
       body: JSON.stringify({ yelpId })
     })
       .then(res => res.json())
+      .then(() => {
+        const newArr = Array.from(this.state.restaurants);
+        newArr.splice(index, 1);
+        return this.setState({ restaurants: newArr, index: this.state.index % newArr.length, canRewind: false, showDetails: false });
+      })
       .catch(err => console.error(err));
-
-    const newArr = Array.from(this.state.restaurants);
-    newArr.splice(index, 1);
-    return this.setState({ restaurants: newArr, index: this.state.index % newArr.length, canRewind: false, showDetails: false });
   }
 
   handleClick(e) {
