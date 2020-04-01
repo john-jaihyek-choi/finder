@@ -44,7 +44,7 @@ export default class SetLocation extends React.Component {
       <div className='mx-auto vw-100 vh-100 d-flex flex-column align-items-center justify-content-center'>
         <div className="my-2">
           <div className="justify-content-left">
-            <h4 className="text-pink ml-3">Location (Zip Code)</h4>
+            <h4 className="text-pink ml-3">Location</h4>
           </div>
           <div className="wrapper d-flex mt-3">
             <i className="mag-glass2 fas fa-search fa-2x gray mt-2"></i>
