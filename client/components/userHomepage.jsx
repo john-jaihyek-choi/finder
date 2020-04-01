@@ -43,6 +43,7 @@ export default class UserHomepage extends React.Component {
   }
 
   componentDidUpdate() {
+    if(this.props.locationPermission === "denied" && this.state.loading) return this.props.setView('splash');
     if(this.props.location === null && this.state.loading === null) this.setState({loading: true});
     if(this.props.location !== null && this.state.loading) this.setState({loading: false});
   }

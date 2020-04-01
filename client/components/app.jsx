@@ -146,7 +146,7 @@ export default class App extends React.Component {
       return <SignUp setView={this.setView} userIdentification={this.userIdentification}/>;
     }
     if (this.state.view === "splash") {
-      return <Splash setView={this.setView} setLocation={this.setLocation} userInfo={this.state.userInfo} locationPrompt={this.locationPrompt}/>;
+      return <Splash setView={this.setView} setLocation={this.setLocation} userInfo={this.state.userInfo} locationPrompt={this.locationPrompt} locationPermission={this.state.locationPermission}/>;
     }
     if (this.state.view === "cardstack") {
       return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} currentQuery={this.state.currentQuery} index={this.state.index} cardStack={this.state.cardStack} saveCardStackPos={this.saveCardStackPos} />;
