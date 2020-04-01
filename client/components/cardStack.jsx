@@ -22,7 +22,7 @@ export default class CardStack extends React.Component {
   }
 
   getRestaurants() {
-    if (!this.props.location) return this.setState({ restaurants: [] })
+    if (!this.props.location) return this.setState({ restaurants: [] });
     this.setState({ canClick: false });
     fetch('/api/search/', {
       method: 'POST',
