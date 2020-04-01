@@ -15,6 +15,7 @@ export default class CardStack extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.toLikedRestaurant = this.toLikedRestaurant.bind(this);
     this.toCardStack = this.toCardStack.bind(this);
+    this.toLocationSetting = this.toLocationSetting.bind(this);
   }
 
   componentDidMount() {
@@ -95,6 +96,10 @@ export default class CardStack extends React.Component {
     this.props.setView('profile');
   }
 
+  toLocationSetting(event) {
+    this.props.setView('locationSettings')
+  }
+
   renderPrice(restaurant) {
     if (!restaurant.price) return <div>No price data</div>;
     const price = [];
@@ -125,7 +130,15 @@ export default class CardStack extends React.Component {
     if (!this.state.restaurants.length) {
       return (
         <div className='w-75 mx-auto d-flex flex-column align-items-center justify-content-center card rounded shadow' style={{ height: '450px' }}>
-          <h1 className='text-pink text-center font-weight-bold'>No matches found</h1>
+          {(this.props.locationPermission === "denied" && (!this.props.location || !this.props.location.keyword))
+            ? <>
+              <span className="text-pink text-center font-weight-bold">Location is currently invalid</span>
+              <span className="text-pink text-center font-weight-bold">Please set a valid location</span>
+              <br/>
+              <button onClick={this.toLocationSetting} className="w-75 shadow"><span className="text-white text-center font-weight-bold">Location Settings</span></button>
+              </>
+            : <h1 className='text-pink text-center font-weight-bold'>No matches found</h1>
+          }
         </div>
       );
     }
@@ -171,7 +184,7 @@ export default class CardStack extends React.Component {
             </div>
           </div>
         </div>
-        <div className='mb-5'>
+        <div className='mb-5 w-100'>
           {this.renderCard()}
         </div>
         <div className='container'>
