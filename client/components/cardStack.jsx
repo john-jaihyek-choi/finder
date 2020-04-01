@@ -4,7 +4,14 @@ import Details from './details';
 export default class CardStack extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { restaurants: this.props.cardStack, details: null, index: this.props.index, canRewind: false, canClick: true, showDetails: false };
+    this.state = {
+      restaurants: this.props.cardStack,
+      details: null,
+      index: this.props.index,
+      canRewind: false,
+      canClick: true,
+      showDetails: false
+    };
     this.handleClick = this.handleClick.bind(this);
     this.toLikedRestaurant = this.toLikedRestaurant.bind(this);
     this.toCardStack = this.toCardStack.bind(this);
