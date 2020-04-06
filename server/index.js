@@ -405,53 +405,6 @@ app.post('/api/search/', (req, res, next) => {
 
 })
 
-// app.post('/api/category', (req, res, next) => {
-//   const latitude = req.body.latitude
-//   const longitude = req.body.longitude
-//   const categories = req.body.categories
-
-//   searchByCategories(latitude, longitude, categories)
-//     .then(result => {
-//       const insertPromises = [];
-//       for (let i = 0; i < result.length; i++) {
-//         const info = result[i]
-
-//         const yelpId = info.id
-//         const restaurantName = (info.name || "")
-//         const yelpUrl = info.url
-//         const storeImageUrl = info.image_url
-//         const distance = info.distance
-//         const photosUrl = []
-//         const hours = []
-//         const location = info.location
-//         const categories = info.categories
-//         const coordinates = info.coordinates
-//         const reviews = []
-//         const price = (info.price || "")
-//         const rating = info.rating
-
-//         const sql = `
-//       insert into  "restaurants" ("yelpId", "restaurantName", "yelpUrl", "storeImageUrl", "distance", "photosUrl", "hours", "location", "categories", "coordinates", "reviews", "price", "rating")
-//         values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-//       on conflict("yelpId")
-//       do nothing
-//       `
-//         const val = [yelpId, restaurantName, yelpUrl, storeImageUrl, distance, JSON.stringify(photosUrl), JSON.stringify(hours), JSON.stringify(location),
-//           JSON.stringify(categories), JSON.stringify(coordinates), JSON.stringify(reviews), price, rating]
-
-//         const infoPromise = db.query(sql, val)
-//           .then(() => {
-//             return { yelpId, restaurantName, yelpUrl, storeImageUrl, distance, photosUrl, hours, location, categories, coordinates, reviews, price, rating }
-//           })
-//         insertPromises.push(infoPromise)
-//       }
-
-//       return Promise.all(insertPromises)
-//     })
-//     .then(categories => res.status(200).json(categories))
-//     .catch(err => next(err))
-// })
-
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
