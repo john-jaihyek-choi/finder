@@ -16,6 +16,10 @@ Finder is a web application which allows its users to search for food around the
 - Bootstrap
 - APIs
 
+## Live Demo
+
+Try the application live at (link)
+
 ## Features
 
 -   User can log-in with user name
@@ -32,3 +36,7 @@ Finder is a web application which allows its users to search for food around the
 -   User can view "liked" restaurants
 -   User can view "reviewed" restaurants
 -   User can write review from the list of liked restaurants
+
+## Preview
+
+![](server/public/images/finder.gif)
