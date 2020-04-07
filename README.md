@@ -18,7 +18,7 @@ Finder is a web application which allows its users to search for food around the
 
 ## Live Demo
 
-Try the application live at [https://finder.johnjhc.com/] (https://finder.johnjhc.com/)
+Try the application live at [https://finder.johnjhc.com/](finder.com)
 
 ## Features
 
