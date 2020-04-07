@@ -41,16 +41,6 @@ Try the application live at [finder.com](https://finder.johnjhc.com/)
 
 ![](server/public/images/finder.gif)
 
-#### System Requirements
-|  Requirement  |     Version    |
-|---------------|---------------:|
-| Nginx         | 1.10 or higher |
-| Node          | 10 or higher   |
-| NPM           | 6 or higher    |
-| PM2           | 4 or higher    |
-| PostgreSQL    | 10 or higher   |
-| Ubuntu Server | 18.04 LTS      |
-
 #### Getting Started
 1. Clone the repo
   ```shell
@@ -76,40 +66,13 @@ Try the application live at [finder.com](https://finder.johnjhc.com/)
   ```shell
   npm run db:import
   ```
-7. Edit your nginx default site configuration to reverse proxy the Express.js server
+7. Access the finder Postgresql database server using pgweb in your default web browser
   ```shell
-  cd /etc/nginx/sites-available
-  sudo nano default
+  pgweb --db=finder
   ```
-   - In the "server" code block, add this underneath the first location definition:
-  ```shell
-  location /api {
-    proxy_pass http://127.0.0.1:3001;
-  }
 
-  location /socket.io {
-    proxy_pass http://127.0.0.1:3001;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-    proxy_set_header Host $host;
-  }
-  ```
-   - Save your changes and exit
-   - Link your default site to the sites-enabled directory (if not already done):
+8. Start the project
   ```shell
-  sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+  npm run dev
   ```
-8. Start nginx
-  ```shell
-  sudo service nginx start
-  ```
-9. Transpile React components using Webpack
-  ```shell
-  npm run build
-  ```
-10. Start the Express.js server using the pm2 module
-  ```shell
-  sudo pm2 --name "finder" start "npm run start"
-  ```
-11. Open your default web browser and navigate to http://localhost:3000/ to see the result!
+9. Open your default web browser and navigate to http://localhost:3000/ to see the result!
