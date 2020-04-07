@@ -18,7 +18,7 @@ Finder is a web application which allows its users to search for food around the
 
 ## Live Demo
 
-Try the application live at (link)
+Try the application live at [https://finder.johnjhc.com/] (https://finder.johnjhc.com/)
 
 ## Features
 
@@ -40,3 +40,66 @@ Try the application live at (link)
 ## Preview
 
 ![](server/public/images/finder.gif)
+
+#### Getting Started
+1. Clone the repo
+  ```shell
+  git clone https://github.com/john-jaihyek-choi/finder.git
+  ```
+2. Change directory to cloned folder
+  ```shell
+  cd finder/
+  ```
+3. Install all dependencies with NPM
+  ```shell
+  npm install
+  ```
+4. Start PostgreSQL database server
+  ```shell
+  sudo service postgresql start
+  ```
+5. Create the database
+  ```shell
+  createdb finder
+  ```
+6. Import the schema and dummy data
+  ```shell
+  npm run db:import
+  ```
+7. Edit your nginx default site configuration to reverse proxy the Express.js server
+  ```shell
+  cd /etc/nginx/sites-available
+  sudo nano default
+  ```
+   - In the "server" code block, add this underneath the first location definition:
+  ```shell
+  location /api {
+    proxy_pass http://127.0.0.1:3001;
+  }
+
+  location /socket.io {
+    proxy_pass http://127.0.0.1:3001;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+  }
+  ```
+   - Save your changes and exit
+   - Link your default site to the sites-enabled directory (if not already done):
+  ```shell
+  sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+  ```
+8. Start nginx
+  ```shell
+  sudo service nginx start
+  ```
+9. Transpile React components using Webpack
+  ```shell
+  npm run build
+  ```
+10. Start the Express.js server using the pm2 module
+  ```shell
+  sudo pm2 --name "finder" start "npm run start"
+  ```
+11. Open your default web browser and navigate to http://localhost:3000/ to see the result!
