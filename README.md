@@ -41,6 +41,16 @@ Try the application live at [finder.com](https://finder.johnjhc.com/)
 
 ![](server/public/images/finder.gif)
 
+#### System Requirements
+|  Requirement  |     Version    |
+|---------------|---------------:|
+| Nginx         | 1.10 or higher |
+| Node          | 10 or higher   |
+| NPM           | 6 or higher    |
+| PM2           | 4 or higher    |
+| PostgreSQL    | 10 or higher   |
+| Ubuntu Server | 18.04 LTS      |
+
 #### Getting Started
 1. Clone the repo
   ```shell
