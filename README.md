@@ -1,6 +1,10 @@
 # Finder
 
-Finder is a web application which allows its users to search for food around their locations.
+Finder is a dynamic web application for hungry people where the user can search for food around their locations.
+
+## Live Demo
+
+Try the application live at [finder.com](https://finder.johnjhc.com/)
 
 ## Technologies To Be Used
 
@@ -15,10 +19,6 @@ Finder is a web application which allows its users to search for food around the
 - Media Queries
 - Bootstrap
 - APIs
-
-## Live Demo
-
-Try the application live at [finder.com](https://finder.johnjhc.com/)
 
 ## Features
 
