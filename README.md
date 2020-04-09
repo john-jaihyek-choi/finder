@@ -1,6 +1,10 @@
 # Finder
 
-Finder is a web application which allows its users to search for food around their locations.
+Finder is a dynamic web application for hungry people where the user can search for food around their locations.
+
+## Live Demo
+
+Try the application live at [finder.com](https://finder.johnjhc.com/)
 
 ## Technologies To Be Used
 
@@ -32,3 +36,43 @@ Finder is a web application which allows its users to search for food around the
 -   User can view "liked" restaurants
 -   User can view "reviewed" restaurants
 -   User can write review from the list of liked restaurants
+
+## Preview
+
+![](server/public/images/finder.gif)
+
+#### Getting Started
+1. Clone the repo
+  ```shell
+  git clone https://github.com/john-jaihyek-choi/finder.git
+  ```
+2. Change directory to cloned folder
+  ```shell
+  cd finder/
+  ```
+3. Install all dependencies with NPM
+  ```shell
+  npm install
+  ```
+4. Start PostgreSQL database server
+  ```shell
+  sudo service postgresql start
+  ```
+5. Create the database
+  ```shell
+  createdb finder
+  ```
+6. Import the schema and dummy data
+  ```shell
+  npm run db:import
+  ```
+7. Access the finder Postgresql database server using pgweb in your default web browser
+  ```shell
+  pgweb --db=finder
+  ```
+
+8. Start the project
+  ```shell
+  npm run dev
+  ```
+9. Open your default web browser and navigate to http://localhost:3000/ to see the result!
