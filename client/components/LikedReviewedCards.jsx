@@ -101,7 +101,7 @@ export default class LikedReviewedCards extends React.Component {
             <div className="col-12 p-1 h-25 text-dark pb-4">
                 <h6>{this.props.restaurant.restaurantName}</h6>
             </div>
-                <div className={`d-flex flex-wrap ${this.props.viewState === "likedRestaurants" ? "mt-4" : "mt-2"} mb-4 text-pink`}>
+                <div className={`d-flex flex-wrap ${this.props.viewState === "likedRestaurants" ? "mt-4" : "mt-2"} mb-4 text-pink text-center`}>
                     <div className={`w-50 text-center ${this.props.viewState === "likedRestaurants" ? "col-7 p-0 pr-0" : "col-6"}`}>
                         {this.props.viewState === "likedRestaurants"
                             ? rating
@@ -122,7 +122,7 @@ export default class LikedReviewedCards extends React.Component {
                                 className={`fa-2x ${this.props.restaurant.thumbsRate === false ? "fas fa-thumbs-down" : "far fa-thumbs-down"}`}></i>}
                     </div>
                     </div>
-                    <div id="edit_row" className='d-flex flex-wrap mt-4 pt-2 text-pink'>
+                    <div id="edit_row" className='d-flex flex-wrap mt-4 pt-2 text-pink text-center'>
                         {this.props.viewState === "likedRestaurants"
                             ? <><i onClick={this.addReview} data-yelpid={this.props.restaurant.yelpId} data-restaurantname={this.props.restaurant.restaurantName} className="fas fa-comment-dots fa-2x col-6 hover"></i>
                                 <i onClick={this.deleteRestaurant} data-yelpid={this.props.restaurant.yelpId} className="fas fa-trash-alt fa-2x col-6 hover"></i></>
