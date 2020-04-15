@@ -22,10 +22,10 @@ Try the application live at [finder.com](https://finder.johnjhc.com/)
 
 ## Features
 
--   User can log-in with user name
+-   User can log-in with username
 -   User can log-in as a guest
--   User can sign-up with a desired user name
--   User is greeted with a message containing their user name
+-   User can sign-up with a desired username
+-   User is greeted with a message containing their username
 -   User can view profile page to locate "search", "location", "logout" button
 -   User can set a search location
 -   User can search restaurants by keywords
