@@ -15,7 +15,7 @@ Try the application live at [finder.com](https://finder.johnjhc.com/)
 - PostgreSQL
 - Node.js
 - Express.js
-- jQuery
+- Fetch
 - Media Queries
 - Bootstrap
 - APIs
