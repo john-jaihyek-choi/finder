@@ -1,5 +1,5 @@
 import React from "react";
-import LikedReviewedCards from './LikedReviewedCards'
+import LikedReviewedCards from './likedReviewedCards'
 import Details from './details';
 
 export default class LikedReviewedRestaurants extends React.Component {
