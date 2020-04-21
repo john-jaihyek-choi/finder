@@ -66,13 +66,9 @@ Try the application live at [finder.com](https://finder.johnjhc.com/)
   ```shell
   npm run db:import
   ```
-7. Access the finder Postgresql database server using pgweb in your default web browser
-  ```shell
-  pgweb --db=finder
-  ```
 
-8. Start the project
+7. Start the project
   ```shell
   npm run dev
   ```
-9. Open your default web browser and navigate to http://localhost:3000/ to see the result!
+8. Open your default web browser and navigate to http://localhost:3000/ to see the result!
