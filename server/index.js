@@ -62,7 +62,7 @@ app.get('/api/users', (req, res, next) => {
     .then(result => {
       const users = result.rows;
       if (!result) {
-        res.status(404).json({ error: 'Cannot be found' })
+        return res.status(404).json({ error: 'Cannot be found' })
       }
       res.status(200).json(users)
     })
