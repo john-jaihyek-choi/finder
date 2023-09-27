@@ -6,7 +6,7 @@ Finder is a dynamic web application for hungry people where the user can search 
 
 Try the application live at [finder.com](https://finder.johnjhc.com/)
 
-## Technologies To Be Used
+## Technologies and Tools Used
 
 - HTML5
 - CSS3
