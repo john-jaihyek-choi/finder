@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A food search application which allows its users to conveniently search food based on location.",
   "main": "server/index.js",
+  "type": "module",
   "scripts": {
     "dev": "npm-run-all --silent --parallel dev:*",
     "dev:client": "webpack serve --mode=development --config webpack.config.js",
@@ -24,9 +25,9 @@
   "dependencies": {
     "dotenv": "8.2.0",
     "dotenv-webpack": "1.7.0",
-    "express": "4.17.1",
+    "express": "4.19.2",
     "express-session": "1.17.0",
-    "node-fetch": "2.6.0",
+    "node-fetch": "3.3.2",
     "pg": "8.11.5",
     "react": "16.12.0",
     "react-bootstrap": "1.0.0-beta.17",

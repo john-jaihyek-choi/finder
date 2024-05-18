@@ -1,4 +1,7 @@
-const fetch = require("node-fetch");
+// const fetch = require("node-fetch");
+import fetch from "node-fetch";
+import dotenv from "dotenv";
+dotenv.config();
 const apiKey = "Bearer " + process.env.YELP_API_KEY;
 
 function searchAllRestaurants(lat, long, term, location, radius) {
@@ -45,4 +48,4 @@ const getReviews = function (yelpId) {
     });
 };
 
-module.exports = { getRestaurantDetails, searchAllRestaurants };
+export { getRestaurantDetails, searchAllRestaurants };

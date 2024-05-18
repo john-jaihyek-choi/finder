@@ -1,13 +1,23 @@
-require("dotenv/config");
-const Dotenv = require("dotenv-webpack");
+import dotenv from "dotenv";
+import DotenvWebpack from "dotenv-webpack";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const path = require("path");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const clientPath = path.join(__dirname, "client/");
 const publicPath = path.join(__dirname, "server/public/");
+dotenv.config();
+// const Dotenv = require("dotenv-webpack");
 
-module.exports = {
-  plugins: [new Dotenv()],
+// const path = require("path");
+
+// const clientPath = path.join(__dirname, "client/");
+// const publicPath = path.join(__dirname, "server/public/");
+
+export default {
+  plugins: [new DotenvWebpack()],
   resolve: {
     extensions: [".js", ".jsx"],
   },
