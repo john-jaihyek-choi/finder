@@ -1,7 +1,11 @@
-const pg = require('pg');
+require("dotenv").config(); // Load environment variables
+const { Pool } = require("pg");
 
-const db = new pg.Pool({
-  connectionString: process.env.DATABASE_URL
-});
+const config = {
+  connectionString: process.env.DATABASE_URL,
+};
+const db = new Pool(config);
 
-module.exports = db;
+module.exports = {
+  query: (text, params) => db.query(text, params),
+};
