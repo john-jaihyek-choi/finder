@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "A food search application which allows its users to conveniently search food based on location.",
   "main": "server/index.js",
+  "type": "module",
   "scripts": {
     "dev": "npm-run-all --silent --parallel dev:*",
-    "dev:client": "webpack-dev-server",
+    "dev:client": "webpack serve --mode=development --config webpack.config.js",
     "dev:server": "nodemon dotenv/config server/index.js",
     "db:import": "source .env; psql $DATABASE_URL < database/dump.sql",
     "db:export": "source .env; pg_dump -c -O $DATABASE_URL > database/dump.sql",
@@ -24,10 +25,10 @@
   "dependencies": {
     "dotenv": "8.2.0",
     "dotenv-webpack": "1.7.0",
-    "express": "4.17.1",
+    "express": "4.19.2",
     "express-session": "1.17.0",
-    "node-fetch": "2.6.0",
-    "pg": "7.17.1",
+    "node-fetch": "3.3.2",
+    "pg": "8.11.5",
     "react": "16.12.0",
     "react-bootstrap": "1.0.0-beta.17",
     "react-bootstrap-range-slider": "0.3.1",
@@ -41,8 +42,8 @@
     "babel-loader": "8.0.6",
     "nodemon": "2.0.2",
     "npm-run-all": "4.1.5",
-    "webpack": "4.41.5",
-    "webpack-cli": "3.3.10",
-    "webpack-dev-server": "3.10.1"
+    "webpack": "5.91.0",
+    "webpack-cli": "5.1.4",
+    "webpack-dev-server": "5.0.4"
   }
 }
