@@ -69,9 +69,6 @@ app.get("/api/users", (req, res, next) => {
   from "users"
   where not "userName" = 'Guest';
   `;
-
-  console.log(`running /api/users...`);
-
   db.query(sql)
     .then((result) => {
       if (!result) {
