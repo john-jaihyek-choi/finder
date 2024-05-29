@@ -7,15 +7,6 @@ import staticMiddleware from "./static-middleware.js";
 import sessionMiddleware from "./session-middleware.js";
 dotenv.config();
 
-// const express = require("express");
-// const { getRestaurantDetails } = require("./yelp");
-// const { searchAllRestaurants } = require("./yelp");
-
-// const db = require("./database");
-// const ClientError = require("./client-error");
-// const staticMiddleware = require("./static-middleware");
-// const sessionMiddleware = require("./session-middleware");
-
 const app = express();
 
 app.use(staticMiddleware);
