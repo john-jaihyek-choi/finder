@@ -4,7 +4,13 @@ Finder is a dynamic web application for hungry people where the user can search 
 
 ## Update (08/02/2024):
 
-Since July 2024, Yelp API have switched from free model to pay-to-use model. Along with it, the amount of information it provides were also affected. Some examples include - restaurant listing photos, reviews, etc. As a remedy for this limitation, the app now lacks features such as multiple image view for detailed restaurant view and reviews view. Starting September 2024, the API will be shut down due to a complete pay-to-use model, and therefore the restaurant search feature won't be available.
+Since July 2024, Yelp API have switched from free model to pay-to-use model. Along with it, the amount of information it provides were also affected. Some examples include - restaurant listing photos, reviews, etc. Due to this limitation, the app now lacks features such as multiple image view for detailed restaurant view and reviews view. Starting September 2024, the API will be shut down due to a complete pay-to-use model, and therefore the restaurant search feature won't be available.
+
+References on the background behind Yelp's sudden shift from free to pay-to-use model:
+
+- ["After 10 Years, Yelp Gave My App 4 Days"](https://www.observationalhazard.com/2024/07/after-10-years-yelp-gave-my-app-4-days_29.html)
+- [Hacker News Thread](https://news.ycombinator.com/item?id=41104597)
+- ["Yelp’s lack of transparency around API charges angers developers"](https://techcrunch.com/2024/08/02/yelps-lack-of-transparency-around-api-charges-angers-developers/)
 
 ## Live Demo
 
