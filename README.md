@@ -18,7 +18,7 @@
     <a href="https://github.com/john-jaihyek-choi/finder"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://finder.johnjhc.com">Live Demo</a>
+    <a href="https://finder.johnjhc.com" target="_blank">Live Demo</a>
     ·
     <a href="https://github.com/john-jaihyek-choi/finder/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
