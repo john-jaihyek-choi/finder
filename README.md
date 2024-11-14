@@ -86,7 +86,7 @@ References on the background behind Yelp's sudden shift from free to pay-to-use 
 
 ## About The Project
 
-Finder is a dynamic full-stack web application that enables users to search for restaurants based on user-specified locations. The front-end is built using stateful React components, optimized for a seamless user experience (UI/UX) and mobile responsiveness, with CSS3 and Bootstrap 4 for styling.
+Finder is a dynamic full-stack web application (mobile first) that enables users to search for restaurants based on user-specified locations. The front-end is built using stateful React components, optimized for a seamless user experience (UI/UX) and mobile responsiveness, with CSS3 and Bootstrap 4 for styling.
 
 A key challenge was efficiently handling multiple requests to the Yelp API using Node Fetch to retrieve and store essential restaurant data. The application stores restaurant information in a database, filtering entries with SQL queries to prevent duplicates. Updates are handled with SQL UPDATE queries, ensuring the database remains current. This data is then utilized to populate the "Liked Restaurants" page when users submit entries via a Fetch POST request.
 
