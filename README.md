@@ -76,7 +76,9 @@ References on the background behind Yelp's sudden shift from free to pay-to-use 
 
 ## Preview
 
-![](server/public/images/finder.gif)
+<p align="center">
+  <img src="server/public/images/finder.gif" alt="Description" style="width: 300px;">
+</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
