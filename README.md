@@ -275,7 +275,7 @@ List of resources found helpful during development -->
 [issues-shield]: https://img.shields.io/github/issues/john-jaihyek-choi/finder?style=for-the-badge
 [issues-url]: https://github.com/john-jaihyek-choi/finderues
 [license-shield]: https://img.shields.io/github/license/john-jaihyek-choi/finder?style=for-the-badge
-[license-url]: https://github.com/john-jaihyek-choi/finder/master/LICENSE.txt
+[license-url]: https://github.com/john-jaihyek-choi/finder/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/johnjaihyekchoi
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
