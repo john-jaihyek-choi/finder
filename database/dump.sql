@@ -939,9 +939,6 @@ COPY public.users ("userId", "distanceRadius", "userName") FROM stdin;
 167	10	TracyLuu
 168	10	Tim
 170	5	Cody
-213	5	SpongeBob
-215	5	Patrick
-217	15	Guest
 \.
 
 
