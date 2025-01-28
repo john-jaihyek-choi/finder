@@ -253,7 +253,10 @@ export default class CardStack extends React.Component {
     this.state.showDetails ? (icon = "arrow-left") : (icon = "user-alt");
 
     return (
-      <div className="mx-auto vh-100 d-flex flex-column align-items-center">
+      <div
+        className="mx-auto vh-100 d-flex flex-column align-items-center"
+        style={{ maxWidth: "550px", width: "100%" }}
+      >
         <div className="container">
           <div className="flex-row my-5">
             <div className="h-100 mt-4 d-flex align-items-start justify-content-around">
