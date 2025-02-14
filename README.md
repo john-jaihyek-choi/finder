@@ -90,7 +90,7 @@ Finder is a dynamic full-stack web application (mobile first) that enables users
 
 A key challenge was efficiently handling multiple requests to the Yelp API using Node Fetch to retrieve and store essential restaurant data. The application stores restaurant information in a database, filtering entries with SQL queries to prevent duplicates. Updates are handled with SQL UPDATE queries, ensuring the database remains current. This data is then utilized to populate the "Liked Restaurants" page when users submit entries via a Fetch POST request.
 
-Through developing this project, I strengthened my skills in full-stack development, including handling server requests from the front-end, creating robust back-end endpoints, and gaining a deeper understanding of React’s state management and lifecycle methods.
+Through this project, I strengthened my skills in full-stack development, including handling server requests from the front-end, creating robust back-end endpoints, and gaining a deeper understanding of React’s state management and lifecycle methods.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
