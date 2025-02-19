@@ -1,18 +1,9 @@
-import dotenv from "dotenv";
 import express from "express";
 import { getRestaurantDetails, searchAllRestaurants } from "./yelp.js";
 import db from "./database.js";
 import ClientError from "./client-error.js";
 import staticMiddleware from "./static-middleware.js";
 import sessionMiddleware from "./session-middleware.js";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const envPath = path.resolve(__dirname, "../.env");
-
-dotenv.config({ path: envPath });
 
 const app = express();
 
