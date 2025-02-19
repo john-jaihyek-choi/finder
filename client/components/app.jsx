@@ -1,15 +1,14 @@
-import React from 'react';
-import SignUp from './signUp';
-import Splash from './splash';
-import CardStack from './cardStack';
-import GuestLogIn from './guestLogIn';
-import CurrentSearch from './currentSearch';
-import LikedReviewedRestaurants from './likedReviewedRestaurants';
-import WriteReview from './writeReview';
-import Login from './login';
-import SetLocation from './setLocation';
-import UserHomepage from './userHomepage';
-
+import React from "react";
+import SignUp from "./signUp";
+import Splash from "./splash";
+import CardStack from "./cardStack";
+import GuestLogIn from "./guestLogIn";
+import CurrentSearch from "./currentSearch";
+import LikedReviewedRestaurants from "./likedReviewedRestaurants";
+import WriteReview from "./writeReview";
+import Login from "./login";
+import SetLocation from "./setLocation";
+import UserHomepage from "./userHomepage";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -20,12 +19,12 @@ export default class App extends React.Component {
       likedRestaurants: [],
       reviewedRestaurants: [],
       review: {},
-      currentQuery: '',
+      currentQuery: "",
       cardStack: null,
       index: null,
       location: null,
-      locationPermission: null
-    }
+      locationPermission: null,
+    };
     this.setView = this.setView.bind(this);
     this.getLikedRestaurants = this.getLikedRestaurants.bind(this);
     this.getReviewedRestaurants = this.getReviewedRestaurants.bind(this);
@@ -42,78 +41,75 @@ export default class App extends React.Component {
 
   setView(viewMode) {
     this.setState({
-      view: viewMode
+      view: viewMode,
     });
   }
 
-  userIdentification (userInfoObj) {
+  userIdentification(userInfoObj) {
     this.setState({
-      userInfo: userInfoObj
-    })
+      userInfo: userInfoObj,
+    });
   }
 
   getLikedRestaurants() {
-    fetch('/api/likedRestaurants')
-      .then(result => result.json())
-      .then(likedRestaurantsArr =>
+    fetch("/api/likedRestaurants")
+      .then((result) => result.json())
+      .then((likedRestaurantsArr) =>
         this.setState({
-          likedRestaurants: likedRestaurantsArr
+          likedRestaurants: likedRestaurantsArr,
         })
       )
-      .catch(err => console.error(err))
+      .catch((err) => console.error(err));
   }
 
   getReviewedRestaurants() {
-    fetch('/api/reviewedRestaurants')
-      .then(result => result.json())
-      .then(reviewedRestaurants =>
+    fetch("/api/reviewedRestaurants")
+      .then((result) => result.json())
+      .then((reviewedRestaurants) =>
         this.setState({
-          reviewedRestaurants: reviewedRestaurants
+          reviewedRestaurants: reviewedRestaurants,
         })
       )
-      .catch(err => console.error(err))
+      .catch((err) => console.error(err));
   }
 
   deleteRestaurant(yelpId, tableName) {
-    fetch('/api/likedReviewedRestaurants', {
-        method: 'DELETE',
-        headers: { 'Content-Type' : 'application/json' },
-        body: JSON.stringify({
-          yelpId: yelpId,
-          tableName: tableName
-        })
-      })
-        .then(result =>
-            this.getLikedRestaurants()
-        )
-        .catch(err => console.error(err))
+    fetch("/api/likedReviewedRestaurants", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        yelpId: yelpId,
+        tableName: tableName,
+      }),
+    })
+      .then((result) => this.getLikedRestaurants())
+      .catch((err) => console.error(err));
   }
 
   getReview(yelpId, restaurantName, from) {
-      this.from = from;
-      fetch(`/api/reviews?yelpId=${yelpId}&restaurantName=${restaurantName}`)
-          .then(result => result.json())
-          .then(review => {
-              this.setState({
-                review: review
-              })
-            }
-          )
-          .catch(err => console.error(err))
+    this.from = from;
+    fetch(`/api/reviews?yelpId=${yelpId}&restaurantName=${restaurantName}`)
+      .then((result) => result.json())
+      .then((review) => {
+        this.setState({
+          review: review,
+        });
+      })
+      .catch((err) => console.error(err));
   }
 
   postReview(yelpId, note, thumbsRate, newReview) {
-    fetch('/api/reviews', {
-      method: `${newReview ? 'POST' : 'PATCH'}`,
-      headers: { 'Content-Type' : 'application/json' },
+    fetch("/api/reviews", {
+      method: `${newReview ? "POST" : "PATCH"}`,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-          thumbsRate: thumbsRate,
-          note: note,
-          yelpId: yelpId
-      })
+        thumbsRate: thumbsRate,
+        note: note,
+        yelpId: yelpId,
+      }),
     })
-      .then(result => result.json())
-      .catch(err => console.error(err))
+      .then((result) => result.json())
+      .catch((err) => console.error(err));
   }
 
   searchQuery(currentQuery) {
@@ -125,33 +121,65 @@ export default class App extends React.Component {
       lat: lat,
       long: long,
       keyword: keyword,
-      radius: radius
-    }
-    this.setState({ location: locationObj, index: 0, cardStack: null })
+      radius: radius,
+    };
+    this.setState({ location: locationObj, index: 0, cardStack: null });
   }
 
   locationPrompt(promptStatus) {
-    this.setState({ locationPermission: promptStatus })
+    this.setState({ locationPermission: promptStatus });
   }
 
   saveCardStackPos(restaurants, index) {
-    this.setState({ cardStack: restaurants, index })
+    this.setState({ cardStack: restaurants, index });
   }
 
   render() {
     if (this.state.view === "login") {
-      return <Login setView={this.setView} userIdentification={this.userIdentification} />;
+      return (
+        <Login
+          setView={this.setView}
+          userIdentification={this.userIdentification}
+        />
+      );
     }
     if (this.state.view === "signup") {
-      return <SignUp setView={this.setView} userIdentification={this.userIdentification}/>;
+      return (
+        <SignUp
+          setView={this.setView}
+          userIdentification={this.userIdentification}
+        />
+      );
     }
     if (this.state.view === "splash") {
-      return <Splash setView={this.setView} setLocation={this.setLocation} userInfo={this.state.userInfo} locationPrompt={this.locationPrompt} locationPermission={this.state.locationPermission}/>;
+      return (
+        <Splash
+          setView={this.setView}
+          setLocation={this.setLocation}
+          userInfo={this.state.userInfo}
+          locationPrompt={this.locationPrompt}
+          locationPermission={this.state.locationPermission}
+        />
+      );
     }
     if (this.state.view === "cardstack") {
-      return <CardStack setView={this.setView} getLikedRestaurants={this.getLikedRestaurants} location={this.state.location} currentQuery={this.state.currentQuery} index={this.state.index} cardStack={this.state.cardStack} saveCardStackPos={this.saveCardStackPos} location={this.state.location} locationPermission={this.state.locationPermission}/>;
+      return (
+        <CardStack
+          setView={this.setView}
+          getLikedRestaurants={this.getLikedRestaurants}
+          location={this.state.location}
+          currentQuery={this.state.currentQuery}
+          index={this.state.index}
+          cardStack={this.state.cardStack}
+          saveCardStackPos={this.saveCardStackPos}
+          locationPermission={this.state.locationPermission}
+        />
+      );
     }
-    if (this.state.view === "likedRestaurants" || this.state.view === "reviewed") {
+    if (
+      this.state.view === "likedRestaurants" ||
+      this.state.view === "reviewed"
+    ) {
       return (
         <LikedReviewedRestaurants
           setView={this.setView}
@@ -162,20 +190,54 @@ export default class App extends React.Component {
           postReview={this.postReview}
           likedRestaurantsArr={this.state.likedRestaurants}
           reviewedRestaurantsArr={this.state.reviewedRestaurants}
-          viewState={this.state.view}/>
-      )
+          viewState={this.state.view}
+        />
+      );
     }
     if (this.state.view === "search") {
-      return <CurrentSearch searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} location={this.state.location} />;
+      return (
+        <CurrentSearch
+          searchQuery={this.searchQuery}
+          setView={this.setView}
+          currentQuery={this.state.currentQuery}
+          location={this.state.location}
+        />
+      );
     }
     if (this.state.view === "locationSettings") {
-      return <SetLocation searchQuery={this.searchQuery} setView={this.setView} currentQuery={this.state.currentQuery} setLocation={this.setLocation} location={this.state.location} userInfo={this.state.userInfo} locationPermission={this.state.locationPermission}/>;
+      return (
+        <SetLocation
+          searchQuery={this.searchQuery}
+          setView={this.setView}
+          currentQuery={this.state.currentQuery}
+          setLocation={this.setLocation}
+          location={this.state.location}
+          userInfo={this.state.userInfo}
+          locationPermission={this.state.locationPermission}
+        />
+      );
     }
     if (this.state.view === "writeReview") {
-      return <WriteReview setView={this.setView} from={this.from} postReview={this.postReview} reviewInfo={this.state.review}/>;
+      return (
+        <WriteReview
+          setView={this.setView}
+          from={this.from}
+          postReview={this.postReview}
+          reviewInfo={this.state.review}
+        />
+      );
     }
-    if (this.state.view === "profile"){
-      return <UserHomepage setView={this.setView} location={this.state.location} searchQuery={this.searchQuery} currentQuery={this.state.currentQuery} userInfo={this.state.userInfo} locationPermission={this.state.locationPermission}/>
+    if (this.state.view === "profile") {
+      return (
+        <UserHomepage
+          setView={this.setView}
+          location={this.state.location}
+          searchQuery={this.searchQuery}
+          currentQuery={this.state.currentQuery}
+          userInfo={this.state.userInfo}
+          locationPermission={this.state.locationPermission}
+        />
+      );
     }
   }
 }

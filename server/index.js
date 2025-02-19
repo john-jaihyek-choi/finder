@@ -41,7 +41,7 @@ app.post("/api/users", (req, res, next) => {
     values ($1)
     returning *
   `;
-  const guestUsersValue = [10];
+  const guestUsersValue = [1];
 
   db.query(guestUser, guestUsersValue)
     .then((result) => {

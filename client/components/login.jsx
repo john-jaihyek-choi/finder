@@ -28,14 +28,7 @@ export default class Login extends React.Component {
   }
 
   guestLogin() {
-    fetch("/api/guest/", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((result) => result.json())
-      .then((data) => this.props.userIdentification(data))
-      .catch((err) => console.error(err));
-
+    this.login(1);
     this.props.setView("splash");
   }
 
