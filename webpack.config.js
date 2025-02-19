@@ -5,16 +5,12 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const envPath = path.resolve(__dirname, ".env");
+
+dotenv.config({ path: envPath });
 
 const clientPath = path.join(__dirname, "client/");
 const publicPath = path.join(__dirname, "server/public/");
-dotenv.config();
-// const Dotenv = require("dotenv-webpack");
-
-// const path = require("path");
-
-// const clientPath = path.join(__dirname, "client/");
-// const publicPath = path.join(__dirname, "server/public/");
 
 export default {
   plugins: [new DotenvWebpack()],
@@ -43,11 +39,11 @@ export default {
     static: publicPath,
     historyApiFallback: true,
     host: "0.0.0.0",
-    port: process.env.DEV_SERVER_PORT || 3000,
+    port: process.env.DEV_SERVER_PORT || 3001,
     proxy: [
       {
         context: ["/api"],
-        target: `http://localhost:${process.env.PORT || 3001}`,
+        target: `http://localhost:${process.env.PORT || 3000}`,
       },
     ],
     client: {
