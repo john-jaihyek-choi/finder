@@ -254,9 +254,6 @@ ALTER TABLE ONLY public.users ALTER COLUMN "userId" SET DEFAULT nextval('public.
 --
 
 COPY public."likedRestaurants" ("userId", "yelpId") FROM stdin;
-78	rXqaMZ1tBO5UonmJgUZAiQ
-78	e_Aeg05DEV-qnvQO-siT3Q
-78	hQQ6nkfFB7ycnnQNq1ulqw
 75	r8mVBfEmgHnDsCd9Qd5Vfw
 75	Yu3O4TRsa1TBKxT31fi8hw
 75	V8KXkj4sDhRlS5G6z8-79g
@@ -264,6 +261,27 @@ COPY public."likedRestaurants" ("userId", "yelpId") FROM stdin;
 75	hXz1kntWDwj2TKssW3Jyyg
 75	ZsNsQchXY0SG5puyDSnqgA
 75	RHHxlEvOuNNjdUDZNfV2qQ
+75	pGgSP2TXG7BD7pNuIesF5g
+75	n47rPxxsovfxavIF8qINaw
+75	8bi_Ndg2rhIzpPk9XflDBg
+75	9N2U5imZm3I8kmxsOwpTnA
+75	CWCU_tF7vQDg7jCfmxBRiQ
+75	lR2x_WgZ8aPMW6zBFwVP9Q
+75	x7r6sctYfWmM_KKB3m9Ubw
+1	YuRAhKAykFl6HE_nw3fYZA
+1	dEvWDG9Lie28A9WsQL8wVw
+1	QJVNh8FD2qeAbPE7v4SPKg
+1	np2mUH5pvQ7HKMlu6eFVug
+1	s9dH6m5OuHsPsjUZtSvL5w
+1	srFOEkULduscjmC_ZGCe5g
+1	uYr0cUdpLnkKWzwpc_e8bQ
+1	g7bcMLWoSo76BBJRTIQ94Q
+1	iVFkAcNvVsMOdae2Pn1Wag
+1	F1ViQ4gEmu4jvG0B1ExONQ
+1	q2jGJCh3t1jmxg9ow1gx6g
+1	z60ZttlcLtvmBJ2gjrhaqw
+1	X1vlcGlz_XeNyQSGfi7mWA
+1	1hoNidu0R7gqs5To64gpTA
 \.
 
 
@@ -937,8 +955,7 @@ COPY public.users ("userId", "distanceRadius", "userName") FROM stdin;
 79	10	WayneDaniels
 80	10	JudyChiang
 167	10	TracyLuu
-168	10	Tim
-170	5	Cody
+1	5	Guest
 \.
 
 
